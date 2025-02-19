@@ -1,0 +1,49 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f5f5;  ;
+}
+.menu-izquierda {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #8ECAE6;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.4s ease;
+}
+
+.menu-izquierda.encogido {
+  width: 60px;
+  overflow: hidden;
+}
+
+.menu-izquierda.encogido ul {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.menu-izquierda ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.menu-izquierda li {
+  margin-bottom: 10px;
+}
+
+.menu-izquierda a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.menu-izquierda a:hover {
+  color: #ccc;
+}
