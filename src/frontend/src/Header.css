@@ -1,15 +1,16 @@
-/* @import './variables.css';  */
+@import './variables.css'; 
 
 #main-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
-    padding: 1rem;
+    padding: 0.1rem;
     margin: 0;
+    font-family: var(--fuente-titulo);
 }
 
 #login-register-box {
     position: absolute;
-    top: 1rem;
+    top: 1.5rem;
     right: 1rem;
     display: flex;
     gap: 1rem;
@@ -19,18 +20,22 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: #0077cc;
+    background-color: var(--color-oscuro);
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    font-family: var(--fuente-primaria);
 }
 
 #login-button:hover, #register-button:hover {
-    background-color: #0066cc;
+    background-color: var(--color-secundario);
 }
 
 #main-header {
     position: relative;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    align-items: center;
 }

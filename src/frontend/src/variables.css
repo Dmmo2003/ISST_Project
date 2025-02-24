@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap');
+
+
 :root {
-    --titulo-fuente: 'Poppins Sans-Serif';
-  }
+  --fuente-primaria: 'Inter', sans-serif;
+  --fuente-titulo: 'Poppins', sans-serif;
+  --fuente-titulos-secundarios: 'Montserrat', sans-serif;
+  --fuente-destacar: 'Space Grotesk', sans-serif;
+  /* Colores (estado de prueba) */
+  --color-primario: #8ECAE6;
+  --color-secundario: #219EBC;
+  --color-oscuro: #023047;
+  --color-enfasis: #FFB703;
+  --color-destacar: #FB8500;
+}
