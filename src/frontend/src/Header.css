@@ -1,4 +1,4 @@
-@import './variables.css'; 
+@import './variables.css';
 
 #main-title {
     font-size: 2rem;
@@ -9,33 +9,82 @@
 }
 
 #login-register-box {
-    position: absolute;
+    /* position: absolute;
     top: 1.5rem;
-    right: 1rem;
+    right: 1rem; */
     display: flex;
     gap: 1rem;
+    margin-right: 2rem;
 }
 
 #login-button, #register-button {
     padding: 0.5rem 1rem;
+    margin-right: 2rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background-color: var(--color-oscuro);
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    font-family: var(--fuente-primaria);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #login-button:hover, #register-button:hover {
     background-color: var(--color-secundario);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
+
 #main-header {
-    position: relative;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding-left: 0;
+    padding-right: 0;
+    padding: 0.4rem;
+    background-color: white;
+    color: var(--color-oscuro);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+/* background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.4rem;
+    align-items: center;
+} */
+
+.boton-menu {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.8rem;
+}
+
+.boton-menu:hover {
+    background-color: var(--color-enfasis-03);
+}
+
+/* #boton-menu .icon {
+
+    color: var(--color-destacar);
+    font-variation-settings:
+        'FILL'0,
+        'wght'400,
+        'GRAD'0,
+        'opsz'24
+} */
+.material-symbols-rounded {
+    color: var(--color-destacar);
 }

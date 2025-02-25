@@ -1,0 +1,10 @@
+@import './variables.css';
+
+#main-footer {
+    background-color: var(--color-oscuro);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    font-family: var(--fuente-primaria);
+    z-index: 900;
+}

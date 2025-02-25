@@ -1,8 +1,9 @@
 import React from "react";
+import "./Footer.css";
 
 function Footer() {
     return (
-        <footer>
+        <footer id="main-footer">
             <h1>Prueba3</h1>
         </footer>
     )
