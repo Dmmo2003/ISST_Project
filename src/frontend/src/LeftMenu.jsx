@@ -1,12 +1,15 @@
 import React from "react";
 import "./LeftMenu.css";
 
-function LeftMenu({CloseIcon, toggleMenu}) {
+function LeftMenu({ CloseIcon, toggleMenu }) {
     return (
         <div className="menu-izquierda">
-            <button id="boton-encoger" className="boton-encoger" onClick={toggleMenu}>
-                <CloseIcon/>
-            </button>
+            <div id="boton-encoger-box">
+                <button id="boton-encoger" className="boton-encoger" onClick={toggleMenu}>
+                    <CloseIcon fontSize="large" />
+                </button>
+            </div>
+
             <ul>
                 {/* Ver como hacer para que segun donde estemos se remarque el boton */}
                 <li><a href="#">Opción 1</a></li>
@@ -17,7 +20,7 @@ function LeftMenu({CloseIcon, toggleMenu}) {
                 <li><a href="#">Opción 4</a></li>
                 <li><a href="#">Opción 5</a></li>
             </ul>
-        </div>  
+        </div>
     )
 }
 

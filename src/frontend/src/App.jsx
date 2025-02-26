@@ -34,9 +34,15 @@ function App() {
 
   return (
     <div id="root">
-      <Header  toggleMenu={toggleMenu} MenuIcon={MenuIcon}/>
+      {/* Fondo oscurecido */}
+      {menuAbierto && (
+        <div className="overlay" onClick={() => setMenuAbierto(false)}></div>
+      )}
+
+      
       <LeftMenu  CloseIcon={CloseIcon} toggleMenu={toggleMenu}/>
-      <div id="main-content">
+      <Header  toggleMenu={toggleMenu} MenuIcon={MenuIcon} clasname="contenido"/>
+      <div id="main-content" className="contenido">
         <h1>Prueba2</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum nulla vel quam blandit, et pulvinar sapien volutpat. Maecenas venenatis nisl non iaculis ultricies. Maecenas scelerisque maximus odio, vitae pulvinar sapien viverra vel. Cras a vestibulum quam, eleifend lacinia tortor. Aliquam a tellus venenatis, dignissim eros in, pulvinar dolor. Maecenas pretium dui vitae placerat fermentum. Ut imperdiet eu ex et sagittis. Sed bibendum a dui vitae ullamcorper. Cras maximus, massa tempus sodales convallis, odio metus vestibulum orci, id tempor mi diam sed nulla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam eget cursus elit. Duis id magna erat. Maecenas sit amet purus mi. Ut finibus risus diam, at fringilla dolor fringilla a.
           Sed vitae ligula at mi lacinia gravida. Etiam vel tristique mi. Nam tincidunt porttitor tempus. Sed eu quam sem. Ut eget pharetra purus, quis ornare dolor. Etiam neque dolor, auctor eu arcu sit amet, condimentum vestibulum mauris. Integer semper ex sit amet lectus consequat euismod. Etiam auctor volutpat velit, in pretium lorem ullamcorper et. Duis eu leo eget ante posuere viverra. Donec sit amet nibh sit amet est aliquam malesuada. Maecenas rutrum bibendum tortor nec bibendum. Quisque ultrices pulvinar ligula, vel ultricies lacus pellentesque a. Vivamus facilisis massa vitae est rutrum ultrices. Aliquam erat volutpat. Mauris tempor eros et elit condimentum maximus. Fusce condimentum enim non nibh aliquam, nec placerat elit pharetra.
