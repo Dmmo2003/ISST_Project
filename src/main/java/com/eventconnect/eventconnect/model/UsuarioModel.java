@@ -35,4 +35,12 @@ public class UsuarioModel {
 
     @Column(nullable = false)
     private LocalDate fechaNacimiento;
+
+    @ManyToMany
+    @JoinTable(
+        name = "Usuario_Evento", // Coincide con el nombre exacto de la tabla en la BD
+        joinColumns = @JoinColumn(name = "Usuario_Id"), // Coincide con la columna en BD
+        inverseJoinColumns = @JoinColumn(name = "Evento_Id") // Coincide con la columna en BD
+    )
+    private List<EventoModel> eventosSeguidos = new ArrayList<>();
 }
