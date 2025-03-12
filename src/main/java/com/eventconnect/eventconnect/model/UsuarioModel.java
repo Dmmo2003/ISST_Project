@@ -3,6 +3,7 @@ package com.eventconnect.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "usuarios") // Nombre de la tabla en la BD
@@ -14,13 +15,13 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // ID autoincremental
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 255) // Debe ser único
+    @Column(nullable = false, unique = true, length = 255)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 255) // Debe ser único
+    @Column(nullable = false, unique = true, length = 255)
     private String correo;
 
-    @Column(nullable = false, length = 255) // La contraseña no debe ser única
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(nullable = false, length = 255)
@@ -29,6 +30,9 @@ public class UsuarioModel {
     @Column(nullable = false, length = 255)
     private String primerApellido;
 
-    @Column(length = 255) // Segundo apellido es opcional
+    @Column(length = 255)
     private String segundoApellido;
+
+    @Column(nullable = false)
+    private LocalDate fechaNacimiento;
 }
