@@ -36,4 +36,17 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario abandonarEvento(Long usuarioId, Long eventoId) {
+        Evento evento = eventoRepository.findById(eventoId)
+            .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+    
+        if (usuario.getEventosInscritos().contains(evento)) {
+            usuario.getEventosInscritos().remove(evento);
+            usuarioRepository.save(usuario);
+        } else {
+            throw new RuntimeException("El usuario no está inscrito en este evento");
+        }   
+        return usuario;
+    }
 }
