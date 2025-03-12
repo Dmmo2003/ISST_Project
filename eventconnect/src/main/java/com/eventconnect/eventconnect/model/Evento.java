@@ -2,6 +2,8 @@ package com.eventconnect.eventconnect.model;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "eventos")
@@ -30,6 +32,11 @@ public class Evento {
     @Column(name = "categoria", nullable = false)
     private String categoria;
 
+    // Relación ManyToMany con Usuario
+    @ManyToMany(mappedBy = "eventosSeguidos")
+    private List<UsuarioModel> seguidores = new ArrayList<>();
+
+    
     // Getters and Setters
     public int getId() {
         return id;
