@@ -34,4 +34,9 @@ public class UsuarioController {
     public void eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
     }
+
+    @DeleteMapping("/{usuarioId}/abandonar/{eventoId}")
+    public Usuario abandonarEvento(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
+        return usuarioService.abandonarEvento(usuarioId, eventoId);
+    }
 }
