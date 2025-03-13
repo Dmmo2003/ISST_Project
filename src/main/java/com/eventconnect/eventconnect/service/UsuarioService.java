@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import com.eventconnect.eventconnect.repository.EventoRepository;
 
 @Service
 public class UsuarioService {
@@ -13,6 +14,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private EventoRepository eventoRepository;
+    
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
@@ -37,6 +41,30 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+ //Permite a un usuario seguir un evento
+    public void seguirEvento(Long usuarioId, Long eventoId) {
+        UsuarioModel usuario = usuarioRepository.findById(usuarioId)
+                            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Evento evento = eventoRepository.findById(eventoId)
+                            .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+
+        if (!usuario.getEventosSeguidos().contains(evento)) { 
+            usuario.getEventosSeguidos().add(evento);
+            usuarioRepository.save(usuario);
+        } else {
+            throw new RuntimeException("El usuario ya sigue este evento");
+        }
+    }
+
+    
+ //Obtiene la lista de eventos seguidos por un usuario
+    public List<Evento> obtenerEventosSeguidos(Long usuarioId) {
+        UsuarioModel usuario = usuarioRepository.findById(usuarioId)
+                            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return usuario.getEventosSeguidos();
+    }  
+
+  ////Permite a un usuario abandonar un evento en el que está inscrito  
     public Usuario abandonarEvento(Long usuarioId, Long eventoId) {
         Evento evento = eventoRepository.findById(eventoId)
             .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
