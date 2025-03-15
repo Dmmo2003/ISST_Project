@@ -1,23 +1,36 @@
 package models;
+
+import jakarta.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "Mensaje")  // Vincula con la tabla en la base de datos
 public class MensajeModel {
 
-    private Long id; // Cambiado de Int a Long
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto_increment
+    private int id;  // Lo cambié a int, ya que en tu BD los IDs son INT
 
+    @Column(nullable = false)
     private String contenido;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     private Date fecha;
 
-    private String remitente;
+    @ManyToOne
+    @JoinColumn(name = "Remitente_Id", nullable = false)  // Relación con Usuario
+    private UsuarioModel remitente;
 
-    private String grupo;
+    @ManyToOne
+    @JoinColumn(name = "Grupo_Id", nullable = false)  // Relación con Grupo
+    private GrupoModel grupo;
 
-    // Constructor vacío (necesario para JPA)
+    // Constructor vacío (JPA lo necesita)
     public MensajeModel() {}
 
     // Constructor con parámetros
-    public MensajeModel(String contenido, Date fecha, String remitente, String grupo) {
+    public MensajeModel(String contenido, Date fecha, UsuarioModel remitente, GrupoModel grupo) {
         this.contenido = contenido;
         this.fecha = fecha;
         this.remitente = remitente;
@@ -25,55 +38,18 @@ public class MensajeModel {
     }
 
     // Getters y Setters
-    public Long getId() { // Cambiado el tipo de retorno a Long
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(Long id) { // Cambiado el tipo a Long
-        this.id = id;
-    }
+    public String getContenido() { return contenido; }
+    public void setContenido(String contenido) { this.contenido = contenido; }
 
-    public String getContenido() {
-        return contenido;
-    }
+    public Date getFecha() { return fecha; }
+    public void setFecha(Date fecha) { this.fecha = fecha; }
 
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
+    public UsuarioModel getRemitente() { return remitente; }
+    public void setRemitente(UsuarioModel remitente) { this.remitente = remitente; }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getRemitente() {
-        return remitente;
-    }
-
-    public void setRemitente(String remitente) {
-        this.remitente = remitente;
-    }
-
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
-    }
-
-    // Método toString() para depuración
-    public String toString() {
-        return "Mensaje{" +
-                "id=" + id +
-                ", contenido='" + contenido + '\'' +
-                ", fecha=" + fecha +
-                ", remitente=" + (remitente != null ? remitente : "null") +
-                ", grupo=" + (grupo != null ? grupo : "null") +
-                '}';
-    }
+    public GrupoModel getGrupo() { return grupo; }
+    public void setGrupo(GrupoModel grupo) { this.grupo = grupo; }
 }
-

@@ -20,7 +20,7 @@ public class MensajeController {
     }
 
     @GetMapping("/{id}")
-    public MensajeModel obtenerPorId(@PathVariable Long id) {
+    public MensajeModel obtenerPorId(@PathVariable int id) {
         return mensajeService.obtenerPorId(id);
     }
 
@@ -30,12 +30,12 @@ public class MensajeController {
     }
 
     @PutMapping("/{id}")
-    public MensajeModel actualizarMensaje(@PathVariable Long id, @RequestBody MensajeModel mensaje) {
+    public MensajeModel actualizarMensaje(@PathVariable int id, @RequestBody MensajeModel mensaje) {
         return mensajeService.actualizarMensaje(id, mensaje);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarMensaje(@PathVariable Long id) {
+    public void eliminarMensaje(@PathVariable int id) {
         mensajeService.eliminarMensaje(id);
     }
 }

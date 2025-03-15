@@ -3,12 +3,11 @@ package services;
 
 
 import models.MensajeModel;
-import com.eventconnect.mensaje.repository.MensajeRepository;
+import repositories.MensajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MensajeServiceImpl implements MensajeService {
@@ -22,7 +21,7 @@ public class MensajeServiceImpl implements MensajeService {
     }
 
     @Override
-    public MensajeModel obtenerPorId(Long id) {
+    public MensajeModel obtenerPorId(int id) {
         return mensajeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mensaje no encontrado con id: " + id));
     }
@@ -33,7 +32,7 @@ public class MensajeServiceImpl implements MensajeService {
     }
 
     @Override
-    public MensajeModel actualizarMensaje(Long id, MensajeModel mensaje) {
+    public MensajeModel actualizarMensaje(int id, MensajeModel mensaje) {
         MensajeModel existente = obtenerPorId(id);
         existente.setContenido(mensaje.getContenido());
         existente.setFecha(mensaje.getFecha());
@@ -43,17 +42,9 @@ public class MensajeServiceImpl implements MensajeService {
     }
 
     @Override
-    public void eliminarMensaje(Long id) {
+    public void eliminarMensaje(int id) {
         MensajeModel mensaje = obtenerPorId(id);
         mensajeRepository.delete(mensaje);
     }
 
-    // Métodos adicionales (si los necesitas)
-    public List<MensajeModel> obtenerMensajesPorGrupo(Long grupoId) {
-        return mensajeRepository.findByGrupoId(grupoId);
-    }
-
-    public List<MensajeModel> obtenerMensajesPorRemitente(Long remitenteId) {
-        return mensajeRepository.findByRemitenteId(remitenteId);
-    }
 }
