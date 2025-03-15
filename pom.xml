@@ -38,6 +38,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+//API de Persistencia JPA
+		    <dependency>
+		        <groupId>jakarta.persistence</groupId>
+		        <artifactId>jakarta.persistence-api</artifactId>
+		        <version>3.1.0</version>
+		    </dependency>
+
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -49,6 +58,14 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+//Conector de MySQL
+	    	<dependency>
+	        	<groupId>mysql</groupId>
+	        	<artifactId>mysql-connector-j</artifactId>
+	        	<scope>runtime</scope>
+	    	</dependency>		
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
