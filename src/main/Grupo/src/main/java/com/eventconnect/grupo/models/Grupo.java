@@ -1,4 +1,4 @@
-package com.eventconnect.grupo_service.models;
+package com.eventconnect.grupo.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

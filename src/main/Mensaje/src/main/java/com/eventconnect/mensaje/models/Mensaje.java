@@ -1,5 +1,6 @@
 package com.eventconnect.mensaje.models;
 
+import com.eventconnect.usuario.Usuario;
 import jakarta.persistence.*;
 import java.util.Date;
 

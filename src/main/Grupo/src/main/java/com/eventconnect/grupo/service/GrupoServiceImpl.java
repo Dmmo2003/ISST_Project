@@ -1,11 +1,11 @@
-package com.eventconnect.grupo_service.service;
+package com.eventconnect.grupo.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.eventconnect.grupo_service.models.Grupo;
-import com.eventconnect.grupo_service.repository.GrupoRepository;
+import com.eventconnect.grupo.models.Grupo;
+import com.eventconnect.grupo.repository.GrupoRepository;
 
 @Service
 public class GrupoServiceImpl implements GrupoService {

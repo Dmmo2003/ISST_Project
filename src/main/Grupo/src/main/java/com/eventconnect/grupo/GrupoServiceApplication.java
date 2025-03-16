@@ -1,4 +1,4 @@
-package com.eventconnect.grupo_service;
+package com.eventconnect.grupo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
-package com.eventconnect.grupo_service.service;
+package com.eventconnect.grupo.service;
 import java.util.List;
 
-import com.eventconnect.grupo_service.models.Grupo;
+import com.eventconnect.grupo.models.Grupo;
 
 public interface GrupoService {
     List<Grupo> obtenerTodosGrupos();

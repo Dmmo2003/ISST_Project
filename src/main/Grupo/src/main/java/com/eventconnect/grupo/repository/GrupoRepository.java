@@ -1,11 +1,11 @@
-package com.eventconnect.grupo_service.repository;
+package com.eventconnect.grupo.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.eventconnect.grupo_service.models.Grupo;
+import com.eventconnect.grupo.models.Grupo;
 
 @Repository
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
