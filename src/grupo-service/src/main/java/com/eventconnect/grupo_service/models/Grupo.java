@@ -13,9 +13,9 @@ import lombok.Setter;
 @Builder
 public class Grupo {
 
-    private String id;
+    private int id;
     private String nombre;
     private String descripcion;
-    private String adminId;
-    private String eventoId;
+    private int adminId;
+    private int eventoId;
 }
