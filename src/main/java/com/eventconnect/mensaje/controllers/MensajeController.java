@@ -1,7 +1,7 @@
-package controllers;
+package com.eventconnect.mensaje.controllers;
 
-import models.MensajeModel;
-import services.MensajeService;
+import com.eventconnect.mensaje.models.Mensaje;
+import com.eventconnect.mensaje.services.MensajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,22 +15,22 @@ public class MensajeController {
     private MensajeService mensajeService;
 
     @GetMapping
-    public List<MensajeModel> obtenerTodos() {
+    public List<Mensaje> obtenerTodos() {
         return mensajeService.obtenerTodos();
     }
 
     @GetMapping("/{id}")
-    public MensajeModel obtenerPorId(@PathVariable int id) {
+    public Mensaje obtenerPorId(@PathVariable int id) {
         return mensajeService.obtenerPorId(id);
     }
 
     @PostMapping
-    public MensajeModel crearMensaje(@RequestBody MensajeModel mensaje) {
+    public Mensaje crearMensaje(@RequestBody Mensaje mensaje) {
         return mensajeService.crearMensaje(mensaje);
     }
 
     @PutMapping("/{id}")
-    public MensajeModel actualizarMensaje(@PathVariable int id, @RequestBody MensajeModel mensaje) {
+    public Mensaje actualizarMensaje(@PathVariable int id, @RequestBody Mensaje mensaje) {
         return mensajeService.actualizarMensaje(id, mensaje);
     }
 

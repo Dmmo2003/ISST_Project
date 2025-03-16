@@ -1,9 +1,10 @@
-package services;
+package com.eventconnect.mensaje.services;
 
 
 
-import models.MensajeModel;
-import repositories.MensajeRepository;
+import com.eventconnect.mensaje.models.Mensaje;
+
+import com.eventconnect.mensaje.repositories.MensajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +17,24 @@ public class MensajeServiceImpl implements MensajeService {
     private MensajeRepository mensajeRepository;
 
     @Override
-    public List<MensajeModel> obtenerTodos() {
+    public List<Mensaje> obtenerTodos() {
         return mensajeRepository.findAll();
     }
 
     @Override
-    public MensajeModel obtenerPorId(int id) {
+    public Mensaje obtenerPorId(int id) {
         return mensajeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mensaje no encontrado con id: " + id));
     }
 
     @Override
-    public MensajeModel crearMensaje(MensajeModel mensaje) {
+    public Mensaje crearMensaje(Mensaje mensaje) {
         return mensajeRepository.save(mensaje);
     }
 
     @Override
-    public MensajeModel actualizarMensaje(int id, MensajeModel mensaje) {
-        MensajeModel existente = obtenerPorId(id);
+    public Mensaje actualizarMensaje(int id, Mensaje mensaje) {
+        Mensaje existente = obtenerPorId(id);
         existente.setContenido(mensaje.getContenido());
         existente.setFecha(mensaje.getFecha());
         existente.setRemitente(mensaje.getRemitente());
@@ -43,7 +44,7 @@ public class MensajeServiceImpl implements MensajeService {
 
     @Override
     public void eliminarMensaje(int id) {
-        MensajeModel mensaje = obtenerPorId(id);
+        Mensaje mensaje = obtenerPorId(id);
         mensajeRepository.delete(mensaje);
     }
 

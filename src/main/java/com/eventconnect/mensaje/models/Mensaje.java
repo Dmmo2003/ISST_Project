@@ -1,11 +1,11 @@
-package models;
+package com.eventconnect.mensaje.models;
 
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "Mensaje")  // Vincula con la tabla en la base de datos
-public class MensajeModel {
+public class Mensaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto_increment
@@ -20,17 +20,17 @@ public class MensajeModel {
 
     @ManyToOne
     @JoinColumn(name = "Remitente_Id", nullable = false)  // Relación con Usuario
-    private UsuarioModel remitente;
+    private Usuario remitente;
 
     @ManyToOne
     @JoinColumn(name = "Grupo_Id", nullable = false)  // Relación con Grupo
-    private GrupoModel grupo;
+    private Grupo grupo;
 
     // Constructor vacío (JPA lo necesita)
-    public MensajeModel() {}
+    public Mensaje() {}
 
     // Constructor con parámetros
-    public MensajeModel(String contenido, Date fecha, UsuarioModel remitente, GrupoModel grupo) {
+    public Mensaje(String contenido, Date fecha, Usuario remitente, Grupo grupo) {
         this.contenido = contenido;
         this.fecha = fecha;
         this.remitente = remitente;
@@ -47,9 +47,9 @@ public class MensajeModel {
     public Date getFecha() { return fecha; }
     public void setFecha(Date fecha) { this.fecha = fecha; }
 
-    public UsuarioModel getRemitente() { return remitente; }
-    public void setRemitente(UsuarioModel remitente) { this.remitente = remitente; }
+    public Usuario getRemitente() { return remitente; }
+    public void setRemitente(Usuario remitente) { this.remitente = remitente; }
 
-    public GrupoModel getGrupo() { return grupo; }
-    public void setGrupo(GrupoModel grupo) { this.grupo = grupo; }
+    public Grupo getGrupo() { return grupo; }
+    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
 }
