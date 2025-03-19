@@ -1,4 +1,4 @@
-package main.java.com.eventconnect.eventconnect.controller;
+package main.java.com.eventconnect.usuario.controllers;
 
 import com.eventconnect.model.UsuarioModel;
 import com.eventconnect.service.UsuarioService;
