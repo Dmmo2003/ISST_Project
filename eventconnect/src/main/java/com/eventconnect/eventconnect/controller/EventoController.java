@@ -1,4 +1,4 @@
-package com.eventconnect.eventconnect.controller;
+package com.eventconnect.evento.controllers;
 
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.service.EventoService;
