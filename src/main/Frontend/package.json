@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-navigation-menu": "^1.2.5",
+    "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
     "@tailwindcss/vite": "^4.0.14",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

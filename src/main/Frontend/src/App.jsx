@@ -8,10 +8,12 @@ function App() {
 
   return (
     <>
+
+
       <Header />
       <div className='columns-3'>
         <div className=" flex flex-col items-center justify-center min-h-svh">
-        <Button variant="destructive">Destructive</Button>
+          <Button variant="destructive">Destructive</Button>
         </div>
         <div className=" flex flex-col items-center justify-center min-h-svh">
           <Button>Click me</Button>
