@@ -1,27 +1,30 @@
 import { useState } from 'react'
-import './App.css'
-import { Button } from "@/components/ui/button"
+
+import { Route, Routes } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 import Header from './Header'
+import MainPage from './MainPage'
+import LoginPage from './LoginPage'
+import RegisterPage from './RegisterPage'
+import NoMatch from './NoMatch'
+import './App.css'
 
 
 function App() {
+  const navigate = useNavigate();
+
 
   return (
     <>
-
-
       <Header />
-      <div className='columns-3'>
-        <div className=" flex flex-col items-center justify-center min-h-svh">
-          <Button variant="destructive">Destructive</Button>
-        </div>
-        <div className=" flex flex-col items-center justify-center min-h-svh">
-          <Button>Click me</Button>
-        </div>
-        <div className=" flex flex-col items-center justify-center min-h-svh">
-          <Button>Click me</Button>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/Register" element={<RegisterPage />} />
+        <Route path='*' element={<NoMatch />} />
+        
+      </Routes>
     </>
   )
 }

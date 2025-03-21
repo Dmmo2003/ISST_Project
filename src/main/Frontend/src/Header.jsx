@@ -126,8 +126,9 @@ const callsToAction = [
  * - `space-y-2`: Establece el espacio vertical entre los elementos en 2px.
  * - `py-6`: Establece el padding vertical en 6px.
 **/
-export default function Header() {
+export default function Header( props ) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const handleLoginClick = props.handleLoginClick
 
     return (
 
@@ -136,11 +137,11 @@ export default function Header() {
 
                 {/* Logo */}
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5 pr-20">
+                    <a href="/" className="-m-1.5 p-1.5 pr-20">
                         <span className="sr-only">Your Company</span>
                         <img
                             alt=""
-                            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                            src="../public/vite.svg"
                             className="h-8 w-auto"
                         />
                     </a>
@@ -223,7 +224,7 @@ export default function Header() {
 
                 {/* Botón de login SOLO DESKTOP */}
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-md/6 font-semibold text-gray-900">
+                    <a href="/login" className="text-md/6 font-semibold text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
@@ -238,7 +239,7 @@ export default function Header() {
                             <span className="sr-only">Your Company</span>
                             <img
                                 alt=""
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                                src="../public/vite.svg"
                                 className="h-8 w-auto"
                             />
                         </a>
@@ -293,7 +294,7 @@ export default function Header() {
                             </div>
                             <div className="py-6">
                                 <a
-                                    href="#"
+                                    href="/login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                 >
                                     Log in
