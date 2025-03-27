@@ -14,8 +14,7 @@ const Perfil = () => {
         const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
         setUsuario(usuarioActual);
         const eventos = usuarioActual.gruposSeguidos.map(grupo => {
-          const evento = data.eventos.find(evento => evento.id === grupo.eventoId);
-          return evento;
+          return data.eventos.find(evento => evento.id === grupo.eventoId);
         });
         setEventosSeguidos(eventos);
         setLoading(false);
@@ -32,6 +31,14 @@ const Perfil = () => {
 
   const handleEditProfile = () => {
     navigate('/editar-perfil');
+  };
+
+  const handleUnfollow = (eventoId) => {
+    setEventosSeguidos(prevEventos => prevEventos.filter(evento => evento.id !== eventoId));
+  };
+
+  const handleMoreInfo = (eventoId) => {
+    navigate(`/evento/${eventoId}`);
   };
 
   return (
@@ -68,6 +75,23 @@ const Perfil = () => {
               <p className="text-gray-600"><strong>Ubicación:</strong> {evento.ubicacion}</p>
               <p className="text-gray-600"><strong>Categoría:</strong> {evento.categoria}</p>
               <p className="text-gray-500 text-sm mt-2">{evento.descripcion}</p>
+
+              {/* Botones de acción */}
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={() => handleUnfollow(evento.id)}
+                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition duration-300"
+                >
+                  Dejar de seguir
+                </button>
+                <button
+                  onClick={() => handleMoreInfo(evento.id)}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
+                >
+                  + Info
+                </button>
+              </div>
+
             </div>
           ))}
         </div>
