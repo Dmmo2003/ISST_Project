@@ -20,7 +20,7 @@ import { LoginForm } from "@/components/ui/login-form"
  *
  * Las clases de tailwind se componen de prefijos que indican la propiedad CSS que se est  modificando, seguido de un valor que indica el valor de la propiedad.
  * Por ejemplo, la clase "bg-muted" se compone del prefijo "bg" que indica que se est  modificando la propiedad "background-color", y el valor "muted" que indica que el color de fondo es un color claro.
- * La documentaci n de tailwind se puede encontrar en https://tailwindcss.com/docs/utility-first
+ * La documentacion de tailwind se puede encontrar en https://tailwindcss.com/docs/utility-first
  */
 export default function LoginPage() {
     return (

@@ -9,6 +9,7 @@ import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
 import NoMatch from './NoMatch'
 import './App.css'
+import ListaEventos from './ListaEventos';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
+        <Route path="/eventos" element={<ListaEventos />} />
         <Route path='*' element={<NoMatch />} />
         
       </Routes>
