@@ -7,6 +7,8 @@ import Header from './Header'
 import MainPage from './MainPage'
 import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
+import PerfilPage from './PerfilPage'
+import EditarPerfilPage from './EditarPerfilPage';
 import NoMatch from './NoMatch'
 import './App.css'
 
@@ -22,6 +24,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
+        <Route path="/perfil" element={<PerfilPage />} />
+        <Route path="/editar-perfil" element={<EditarPerfilPage />} />
         <Route path='*' element={<NoMatch />} />
         
       </Routes>
