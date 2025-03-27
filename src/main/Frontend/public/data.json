@@ -1,0 +1,81 @@
+{
+  "usuarios": [
+    {
+      "username": "fer1234",
+      "correo": "fer126969@example.com",
+      "password": "hashedpassword123",
+      "nombre": "Fernando",
+      "primerApellido": "Garcia",
+      "segundoApellido": "Fernández",
+      "fechaNacimiento": "1995-03-27",
+      "gruposSeguidos": [
+        {
+          "id": 1,
+          "nombre": "Grupo de Blockchain",
+          "descripcion": "Grupo de discusión sobre el futuro de Blockchain.",
+          "adminId": 1,
+          "eventoId": 1
+        },
+        {
+          "id": 2,
+          "nombre": "Grupo de AI Hackathon",
+          "descripcion": "Grupo de preparativos para el Hackathon de IA.",
+          "adminId": 2,
+          "eventoId": 2
+        }
+      ]
+    },
+    {
+      "username": "maria123",
+      "correo": "maria123@example.com",
+      "password": "hashedpassword456",
+      "nombre": "María",
+      "primerApellido": "García",
+      "segundoApellido": "López",
+      "fechaNacimiento": "1992-11-05",
+      "gruposSeguidos": [
+        {
+          "id": 1,
+          "nombre": "Grupo de Blockchain",
+          "descripcion": "Grupo de discusión sobre el futuro de Blockchain.",
+          "adminId": 1,
+          "eventoId": 1
+        }
+      ]
+    }
+  ],
+  "eventos": [
+    {
+      "id": 1,
+      "nombre": "Conferencia de Blockchain",
+      "fecha": "2025-04-15T10:00:00",
+      "ubicacion": "Madrid, España",
+      "categoria": "Tecnología",
+      "descripcion": "Una conferencia sobre el futuro de blockchain y su impacto en la sociedad."
+    },
+    {
+      "id": 2,
+      "nombre": "Hackathon AI",
+      "fecha": "2025-06-20T09:00:00",
+      "ubicacion": "Barcelona, España",
+      "categoria": "Inteligencia Artificial",
+      "descripcion": "Un hackathon sobre soluciones innovadoras en inteligencia artificial."
+    }
+  ],
+  "grupos": [
+    {
+      "id": 1,
+      "nombre": "Grupo de Blockchain",
+      "descripcion": "Grupo de discusión sobre el futuro de Blockchain.",
+      "adminId": 1,
+      "eventoId": 1
+    },
+    {
+      "id": 2,
+      "nombre": "Grupo de AI Hackathon",
+      "descripcion": "Grupo de preparativos para el Hackathon de IA.",
+      "adminId": 2,
+      "eventoId": 2
+    }
+  ]
+}
