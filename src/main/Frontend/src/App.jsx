@@ -8,7 +8,6 @@ import MainPage from './MainPage'
 import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
 import PerfilPage from './PerfilPage'
-import EditarPerfilPage from './EditarPerfilPage';
 import NoMatch from './NoMatch'
 import './App.css'
 
