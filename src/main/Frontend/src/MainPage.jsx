@@ -76,7 +76,7 @@ const MainPage = () => {
         </div>
 
         {/* Columna izquierda con texto */}
-        <div className="bg-[#FB8500] p-8 w-1/3 h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
+        <div className="bg-[#FB8500]/70 p-8 w-1/3 h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
           {/* Imagen logoL */}
           <div className="mb-8">
             <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto" /> {/* Aquí lo hacemos 4 veces más grande */}
