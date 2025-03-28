@@ -12,11 +12,11 @@ const images = [
 ];
 
 const testimonials = [
-  "He probado esta web en varias ocasiones y me encanta, 100% recomendado. -Ana María, 25 años.",
-  "Esta app ha facilitado mi vida al encontrar eventos que me interesan. -Carlos, 30 años.",
-  "Muy fácil de usar y he conocido mucha gente interesante. -Lucía, 28 años.",
-  "Excelente plataforma, siempre encuentro eventos cercanos a mi. -José, 35 años.",
-  "Me ayudó a asistir a conferencias que no me quería perder. -María, 26 años."
+  `"He probado esta web en varias ocasiones y me encanta, 100% recomendado." -Ana María, 25 años.`,
+  `"Esta app ha facilitado mi vida al encontrar eventos que me interesan." -Carlos, 30 años.`,
+  `"Muy fácil de usar y he conocido mucha gente interesante." -Lucía, 28 años.`,
+  `"Excelente plataforma, siempre encuentro eventos cercanos a mi." -José, 35 años.`,
+  `"Me ayudó a asistir a conferencias que no me quería perder." -María, 26 años.`
 ];
 
 const MainPage = () => {
@@ -55,7 +55,7 @@ const MainPage = () => {
         </div>
         
         {/* Botón de login */}
-        <Button className="flex items-center gap-2 bg-orange-500 text-white hover:bg-orange-600">
+        <Button className="flex items-center gap-2 bg-[#FB8500] text-white hover:bg-orange-600">
           <User className="w-5 h-5" />
           <span className="block">Login</span>
         </Button>
@@ -76,7 +76,12 @@ const MainPage = () => {
         </div>
 
         {/* Columna izquierda con texto */}
-        <div className="bg-[#FFB703] p-8 w-1/3 relative z-10">
+        <div className="bg-[#FB8500] p-8 w-1/3 relative z-10">
+          {/* Imagen logoL */}
+          <div className="mb-4">
+            <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto" /> {/* Aquí lo hacemos 4 veces más grande */}
+          </div>
+
           {/* Título */}
           <h2 className="text-3xl font-bold text-center text-white mb-4">
             Únete a la mejor comunidad de eventos del mundo hoy mismo
@@ -94,7 +99,7 @@ const MainPage = () => {
         </div>
 
         {/* Botón a la derecha */}
-        <Button className="bg-orange-500 text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 -ml-10">
+        <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 -ml-10">
           Comencemos
         </Button>
       </div>
