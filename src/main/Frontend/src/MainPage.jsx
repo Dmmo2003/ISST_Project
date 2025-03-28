@@ -55,10 +55,13 @@ const MainPage = () => {
         </div>
         
         {/* Botón de login */}
-        <Button className="flex items-center gap-2 bg-[#FB8500] text-white hover:bg-orange-600">
-          <User className="w-5 h-5" />
-          <span className="block">Login</span>
-        </Button>
+        <div className="flex items-center gap-4">
+          <span className="text-white">¿Ya tienes cuenta?</span>
+          <Button className="flex items-center gap-2 bg-[#FB8500] text-white hover:bg-orange-600">
+            <User className="w-5 h-5" />
+            <span className="block">Iniciar Sesión</span>
+          </Button>
+        </div>
       </nav>
       
       {/* Sección central con fondo dinámico */}
@@ -98,10 +101,10 @@ const MainPage = () => {
           </div>
         </div>
 
-        {/* Botón a la derecha */}
-        <div className="ml-auto mr-[54px]">
-          <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30">
-            Comencemos
+        {/* Botón con frase y "Comencemos" */}
+        <div className="ml-auto mr-[162px]"> {/* Aumento de la separación */}
+          <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 text-center">
+            <div className="block">¡Comencemos!</div>
           </Button>
         </div>
       </div>
