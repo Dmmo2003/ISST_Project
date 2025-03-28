@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
   const [eventosSeguidos, setEventosSeguidos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false); // Estado para el Dialog
+  const [nombre, setNombre] = useState('');
+  const [usuarioName, setUsuarioName] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +24,8 @@ const Perfil = () => {
       .then((data) => {
         const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
         setUsuario(usuarioActual);
+        setNombre(usuarioActual.nombre);
+        setUsuarioName(usuarioActual.username);
         const eventos = usuarioActual.gruposSeguidos.map(grupo => {
           return data.eventos.find(evento => evento.id === grupo.eventoId);
         });
@@ -31,7 +43,16 @@ const Perfil = () => {
   }
 
   const handleEditProfile = () => {
-    navigate('/editar-perfil');
+    setOpen(true); // Abre el Dialog
+  };
+
+  const handleSave = () => {
+    if (contraseña !== confirmarContraseña) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+    // Aquí podrías agregar la lógica para guardar los cambios
+    setOpen(false);
   };
 
   const handleUnfollow = (eventoId) => {
@@ -50,12 +71,61 @@ const Perfil = () => {
           <h2 className="text-3xl font-semibold">Perfil de {usuario.nombre}</h2>
           <div className="flex gap-4">
             <ThemeToggle />
-            <button
-              onClick={handleEditProfile}
-              className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
-            >
-              Editar Perfil
-            </button>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+                <button onClick={handleEditProfile} className="bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300">Editar Perfil</button>
+              </DialogTrigger>
+              <DialogContent className="max-w-lg">
+                <DialogHeader>
+                  <h2 className="text-xl font-bold">Editar Perfil</h2>
+                </DialogHeader>
+                <div className="w-full p-6 bg-white rounded-2xl">
+                  <div className="flex flex-col items-center">
+                    <Input
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      className="mt-3 text-center"
+                      placeholder="Introduce tu nombre"
+                    />
+                    <Input
+                      value={usuarioName}
+                      onChange={(e) => setUsuarioName(e.target.value)}
+                      className="text-center"
+                      placeholder="Introduce tu nombre de usuario"
+                    />
+                    <Badge variant="secondary" className="mt-2">
+                      Desarrollador Web
+                    </Badge>
+                  </div>
+
+                  <div className="text-center">
+                    <Label htmlFor="contraseña" className="mt-4">Contraseña</Label>
+                    <Input
+                      id="contraseña"
+                      type="password"
+                      value={contraseña}
+                      onChange={(e) => setContraseña(e.target.value)}
+                      placeholder="Introduce tu nueva contraseña"
+                    />
+                    <Label htmlFor="confirmar-contraseña" className="mt-4">Confirmar Contraseña</Label>
+                    <Input
+                      id="confirmar-contraseña"
+                      type="password"
+                      value={confirmarContraseña}
+                      onChange={(e) => setConfirmarContraseña(e.target.value)}
+                      placeholder="Confirma tu nueva contraseña"
+                    />
+                  </div>
+
+                  <div className="flex justify-center mt-6">
+                    <Button onClick={handleSave}>Guardar cambios</Button>
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="secondary" onClick={() => setOpen(false)}>Cerrar</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
         <div className="mt-4 text-lg">

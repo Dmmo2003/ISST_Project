@@ -26,7 +26,6 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Register" element={<RegisterPage />} />
           <Route path="/perfil" element={<PerfilPage />} />
-          <Route path="/editar-perfil" element={<EditarPerfilPage />} />
           <Route path='*' element={<NoMatch />} />
 
         </Routes>
