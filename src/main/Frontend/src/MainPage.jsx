@@ -76,7 +76,7 @@ const MainPage = () => {
         </div>
 
         {/* Columna izquierda con texto */}
-        <div className="bg-[#FFB703] p-8 w-1/3">
+        <div className="bg-[#FFB703] p-8 w-1/3 relative z-10">
           {/* Título */}
           <h2 className="text-3xl font-bold text-center text-white mb-4">
             Únete a la mejor comunidad de eventos del mundo hoy mismo
