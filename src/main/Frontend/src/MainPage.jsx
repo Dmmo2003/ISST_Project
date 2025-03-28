@@ -76,19 +76,19 @@ const MainPage = () => {
         </div>
 
         {/* Columna izquierda con texto */}
-        <div className="bg-[#FB8500] p-8 w-1/3 relative z-10">
+        <div className="bg-[#FB8500] p-8 w-1/3 h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
           {/* Imagen logoL */}
-          <div className="mb-4">
+          <div className="mb-8">
             <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto" /> {/* Aquí lo hacemos 4 veces más grande */}
           </div>
 
           {/* Título */}
-          <h2 className="text-3xl font-bold text-center text-white mb-4">
+          <h2 className="text-3xl font-bold text-center text-white mb-10">
             Únete a la mejor comunidad de eventos del mundo hoy mismo
           </h2>
 
           {/* Descripción */}
-          <p className="text-lg text-center text-white mb-8">
+          <p className="text-lg text-center text-white mb-10">
             EventConnect es la plataforma definitiva para descubrir, unirte y participar en eventos de todo tipo. Ya sea que estés buscando actividades locales o eventos internacionales, ¡tenemos algo para ti! Únete hoy y comienza a explorar.
           </p>
 
@@ -99,9 +99,11 @@ const MainPage = () => {
         </div>
 
         {/* Botón a la derecha */}
-        <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 -ml-10">
-          Comencemos
-        </Button>
+        <div className="ml-auto mr-40">
+          <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30">
+            Comencemos
+          </Button>
+        </div>
       </div>
       
       {/* Espacio inferior reservado */}
