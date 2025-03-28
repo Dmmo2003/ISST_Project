@@ -76,10 +76,10 @@ const MainPage = () => {
         </div>
 
         {/* Columna izquierda con texto */}
-        <div className="bg-[#FB8500]/70 p-8 w-1/3 h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
+        <div className="bg-[#FB8500]/70 p-8 w-[30%] h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
           {/* Imagen logoL */}
           <div className="mb-8">
-            <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto" /> {/* Aquí lo hacemos 4 veces más grande */}
+            <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto rounded-xl" /> {/* Borde redondeado */}
           </div>
 
           {/* Título */}
@@ -99,15 +99,26 @@ const MainPage = () => {
         </div>
 
         {/* Botón a la derecha */}
-        <div className="ml-auto mr-40">
+        <div className="ml-auto mr-[54px]">
           <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30">
             Comencemos
           </Button>
         </div>
       </div>
       
-      {/* Espacio inferior reservado */}
-      <div className="h-20 bg-gray-200"></div>
+      {/* Sección inferior con información legal */}
+      <div className="bg-gray-800 text-white p-4 mt-auto">
+        <div className="max-w-screen-xl mx-auto flex justify-between items-center">
+          {/* Información legal */}
+          <p className="text-sm">© 2025 EventConnect. Todos los derechos reservados.</p>
+          <div className="flex gap-10">
+            <a href="/terms" className="text-blue-400 text-sm">Términos y condiciones</a>
+            <a href="/privacy" className="text-blue-400 text-sm">Política de privacidad</a>
+            <a href="mailto:contacto@eventconnect.com" className="text-blue-400 text-sm">Contacto</a>
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 };
