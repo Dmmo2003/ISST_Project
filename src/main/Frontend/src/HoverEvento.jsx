@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { CalendarIcon, MapPin } from "lucide-react"
 
@@ -25,14 +25,12 @@ export default function HoverEvento(props) {
         setPosition({ x: e.domEvent.clientX, y: e.domEvent.clientY });
 
         setTimeout(() => {
-            setVisible(true);
-        }, 500);
+               setVisible(true); 
+        }, 1000);
     };
 
     const handleMouseOut = () => {
-        setTimeout(() => {
             setVisible(false);
-        }, 250);
     };
 
 

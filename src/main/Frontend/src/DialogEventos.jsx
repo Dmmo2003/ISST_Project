@@ -11,14 +11,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import GooglePlacesAutocomplete from "react-google-autocomplete";
+import config from "./config/config";
+
+const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
 export default function DialogEventos() {
   const [evento, setEvento] = useState({
     nombre: "",
     fecha: "",
     ubicacion: "",
+    latitud: "",
+    longitud: "",
     descripcion: "",
     categoria: ""
   });
@@ -27,18 +33,24 @@ export default function DialogEventos() {
     setEvento({ ...evento, [e.target.name]: e.target.value });
   };
 
-  const handleCategoriaChange = (value) => {
-    setEvento({ ...evento, categoria: value });
-  };
+  const handleUbicacionChange = (place) => {
+    if (place && place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
 
-  const handleSubmit = () => {
-    console.log("Evento creado:", evento);
+      setEvento({
+        ...evento,
+        ubicacion: place.formatted_address,
+        latitud: lat,
+        longitud: lng
+      });
+    }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full mt-4" >Crear Evento</Button>
+        <Button className="w-full mt-4">Crear Evento</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -58,7 +70,15 @@ export default function DialogEventos() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="ubicacion" className="text-right">Ubicación</Label>
-            <Input id="ubicacion" name="ubicacion" value={evento.ubicacion} onChange={handleChange} className="col-span-3" />
+            <GooglePlacesAutocomplete
+              apiKey={API_GOOGLE_MAPS_KEY}
+              onPlaceSelected={handleUbicacionChange}
+              options={{
+                types: ["geocode"],
+                componentRestrictions: { country: "es" }
+              }}
+              className="col-span-3 w-full border rounded-md px-3 py-2"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="descripcion" className="text-right">Descripción</Label>
@@ -66,7 +86,7 @@ export default function DialogEventos() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Categoría</Label>
-            <Select onValueChange={handleCategoriaChange}>
+            <Select onValueChange={(value) => setEvento({ ...evento, categoria: value })}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Selecciona una categoría" />
               </SelectTrigger>
@@ -81,7 +101,7 @@ export default function DialogEventos() {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleSubmit}>Crear Evento</Button>
+          <Button onClick={() => console.log("Evento creado:", evento)}>Crear Evento</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,52 +1,177 @@
 export const eventosMock = [
-    { 
-        id: 1, 
-        nombre: "Concierto de Rock", 
-        ubicacion: "Madrid", 
-        direccion: "Gran Vía, 1", 
-        fecha: "2025-04-10", 
-        etiquetas: ["Música"], 
-        lat: 40.4168, 
-        lng: -3.7038
+    {
+        id: 1,
+        nombre: "Concierto de Rock",
+        ubicacion: "Madrid",
+        direccion: "Gran Vía, 1",
+        fecha: "2025-04-10",
+        etiquetas: ["Música"],
+        lat: 40.4168,
+        lng: -3.7038,
+        descripcion: "Un concierto de rock inolvidable con las mejores bandas nacionales e internacionales. ¡Ven a disfrutar de la música en vivo!"
     },
-    { 
-        id: 2, 
-        nombre: "Feria de Tecnología", 
-        ubicacion: "Barcelona", 
-        direccion: "Avenida Diagonal, 50", 
-        fecha: "2025-05-15", 
-        etiquetas: ["Tecnología"], 
-        lat: 41.4036, 
-        lng: 2.1744
+    {
+        id: 2,
+        nombre: "Feria de Tecnología",
+        ubicacion: "Barcelona",
+        direccion: "Avenida Diagonal, 50",
+        fecha: "2025-05-15",
+        etiquetas: ["Tecnología"],
+        lat: 41.4036,
+        lng: 2.1744,
+        descripcion: "La feria de tecnología más grande de Europa. Ven a conocer las últimas innovaciones, gadgets y tendencias del sector tecnológico."
     },
-    { 
-        id: 3, 
-        nombre: "Festival de Jazz", 
-        ubicacion: "Sevilla", 
-        direccion: "Plaza Nueva, 10", 
-        fecha: "2025-06-22", 
-        etiquetas: ["Música", "Festival"], 
-        lat: 37.3891, 
-        lng: -5.9845
+    {
+        id: 3,
+        nombre: "Festival de Jazz",
+        ubicacion: "Sevilla",
+        direccion: "Plaza Nueva, 10",
+        fecha: "2025-06-22",
+        etiquetas: ["Música", "Festival"],
+        lat: 37.3891,
+        lng: -5.9845,
+        descripcion: "Un festival único para los amantes del jazz. Disfruta de los mejores músicos de jazz en el corazón de Sevilla."
     },
-    { 
-        id: 4, 
-        nombre: "Hackathon de IA", 
-        ubicacion: "Valencia", 
-        direccion: "Calle Colón, 20", 
-        fecha: "2025-07-30", 
-        etiquetas: ["Tecnología", "Programación"], 
-        lat: 39.4699, 
-        lng: -0.3763
+    {
+        id: 4,
+        nombre: "Hackathon de IA",
+        ubicacion: "Valencia",
+        direccion: "Calle Colón, 20",
+        fecha: "2025-07-30",
+        etiquetas: ["Tecnología", "Programación"],
+        lat: 39.4699,
+        lng: -0.3763,
+        descripcion: "Un evento para programadores y entusiastas de la inteligencia artificial. Participa, aprende y compite por grandes premios."
     },
-    { 
-        id: 5, 
-        nombre: "Exposición de Arte", 
-        ubicacion: "Bilbao", 
-        direccion: "Museo Guggenheim", 
-        fecha: "2025-09-12", 
-        etiquetas: ["Arte"], 
-        lat: 43.2684, 
-        lng: -2.9350
+    {
+        id: 5,
+        nombre: "Exposición de Arte",
+        ubicacion: "Bilbao",
+        direccion: "Museo Guggenheim",
+        fecha: "2025-09-12",
+        etiquetas: ["Arte"],
+        lat: 43.2684,
+        lng: -2.9350,
+        descripcion: "Una exposición fascinante de arte moderno y contemporáneo, con obras de artistas internacionales. Ven a explorar el mundo del arte."
     },
+    {
+        id: 6,
+        nombre: "Concierto de Rock",
+        usuario: "John Doe",
+        ubicacion: "Madrid",
+        direccion: "Gran Vía, 1",
+        fecha: "2025-04-10",
+        etiquetas: ["Música"],
+        lat: 40.4168,
+        lng: -3.7038,
+        descripcion: "Un concierto de rock inolvidable con las mejores bandas nacionales e internacionales. ¡Ven a disfrutar de la música en vivo!"
+    },
+    {
+        id: 7,
+        nombre: "Festival de Jazz",
+        usuario: "Jane Smith",
+        ubicacion: "Madrid",
+        direccion: "Calle de Alcalá, 50",
+        fecha: "2025-05-15",
+        etiquetas: ["Música", "Jazz"],
+        lat: 40.4189,
+        lng: -3.6936,
+        descripcion: "Un festival único para los amantes del jazz. Disfruta de los mejores músicos de jazz en el corazón de Madrid."
+    },
+    {
+        id: 8,
+        nombre: "Feria del Libro",
+        usuario: "Carlos Pérez",
+        ubicacion: "Madrid",
+        direccion: "Parque del Retiro",
+        fecha: "2025-06-20",
+        etiquetas: ["Cultura", "Libros"],
+        lat: 40.4154,
+        lng: -3.6840,
+        descripcion: "Disfruta de una feria literaria con una selección de libros y autores. Un evento perfecto para los amantes de la lectura y la cultura."
+    },
+    {
+        id: 9,
+        nombre: "Maratón de Madrid",
+        usuario: "Ana López",
+        ubicacion: "Madrid",
+        direccion: "Plaza de Cibeles",
+        fecha: "2025-03-30",
+        etiquetas: ["Deporte", "Carrera"],
+        lat: 40.4192,
+        lng: -3.6922,
+        descripcion: "Únete a la maratón más famosa de Madrid. Una experiencia única para corredores de todos los niveles."
+    },
+    {
+        id: 10,
+        nombre: "Conferencia de Tecnología",
+        usuario: "Luis Gómez",
+        ubicacion: "Madrid",
+        direccion: "IFEMA",
+        fecha: "2025-07-12",
+        etiquetas: ["Tecnología", "Conferencias"],
+        lat: 40.4675,
+        lng: -3.6170,
+        descripcion: "Una conferencia donde los expertos en tecnología compartirán sus conocimientos y debatirán sobre las tendencias del futuro."
+    },
+    {
+        id: 11,
+        nombre: "Exposición de Arte Contemporáneo",
+        usuario: "María Fernández",
+        ubicacion: "Madrid",
+        direccion: "Museo Reina Sofía",
+        fecha: "2025-08-05",
+        etiquetas: ["Arte", "Exposición"],
+        lat: 40.4086,
+        lng: -3.6944,
+        descripcion: "Una exposición de arte contemporáneo que muestra las obras más vanguardistas de la escena artística global."
+    },
+    {
+        id: 12,
+        nombre: "Feria Gastronómica",
+        usuario: "Pedro Sánchez",
+        ubicacion: "Madrid",
+        direccion: "Plaza Mayor",
+        fecha: "2025-09-10",
+        etiquetas: ["Gastronomía"],
+        lat: 40.4154,
+        lng: -3.7074,
+        descripcion: "Descubre los sabores más exquisitos en esta feria gastronómica. Cocina tradicional y moderna se dan cita en un solo lugar."
+    },
+    {
+        id: 13,
+        nombre: "Torneo de Ajedrez",
+        usuario: "Sofía Ramírez",
+        ubicacion: "Madrid",
+        direccion: "Casa de Campo",
+        fecha: "2025-10-22",
+        etiquetas: ["Juegos", "Ajedrez"],
+        lat: 40.4142,
+        lng: -3.7456,
+        descripcion: "Un torneo de ajedrez para todos los niveles. Desafía a tus amigos o a jugadores profesionales en un ambiente competitivo."
+    },
+    {
+        id: 14,
+        nombre: "Concierto de Música Clásica",
+        usuario: "Elena Torres",
+        ubicacion: "Madrid",
+        direccion: "Teatro Real",
+        fecha: "2025-11-18",
+        etiquetas: ["Música", "Clásica"],
+        lat: 40.4183,
+        lng: -3.7104,
+        descripcion: "Disfruta de una noche mágica de música clásica en uno de los teatros más emblemáticos de Madrid."
+    },
+    {
+        id: 15,
+        nombre: "Ciclo de Cine Independiente",
+        usuario: "David Martín",
+        ubicacion: "Madrid",
+        direccion: "Cine Doré",
+        fecha: "2025-12-05",
+        etiquetas: ["Cine", "Independiente"],
+        lat: 40.4133,
+        lng: -3.7024,
+        descripcion: "Ven a disfrutar de lo mejor del cine independiente con una selección de películas de diversos géneros y estilos."
+    }
 ];
