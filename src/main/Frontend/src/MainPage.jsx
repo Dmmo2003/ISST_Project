@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { User, Search } from "lucide-react";
 
 const images = [
   "/images/event1.jpg",
@@ -40,30 +38,6 @@ const MainPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between p-4 bg-gray-900 text-white shadow-md">
-        {/* Logo y nombre */}
-        <div className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="Logo" className="h-8 w-8" />
-          <span className="text-xl font-bold">EventConnect</span>
-        </div>
-        
-        {/* Barra de búsqueda */}
-        <div className="flex-1 mx-4 max-w-md relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <Input type="text" placeholder="Buscar eventos..." className="w-full bg-gray-800 text-white border-gray-600 pl-10" />
-        </div>
-        
-        {/* Botón de login */}
-        <div className="flex items-center gap-4">
-          <span className="text-white">¿Ya tienes cuenta?</span>
-          <Button className="flex items-center gap-2 bg-[#FB8500] text-white hover:bg-orange-600">
-            <User className="w-5 h-5" />
-            <span className="block">Iniciar Sesión</span>
-          </Button>
-        </div>
-      </nav>
-      
       {/* Sección central con fondo dinámico */}
       <div className="flex-1 relative overflow-hidden flex items-center justify-between px-10">
         {/* Imágenes de fondo */}
@@ -82,7 +56,7 @@ const MainPage = () => {
         <div className="bg-[#FB8500]/70 p-8 w-[30%] h-full absolute top-0 left-0 z-10 flex flex-col justify-between">
           {/* Imagen logoL */}
           <div className="mb-8">
-            <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto rounded-xl" /> {/* Borde redondeado */}
+            <img src="/images/logoL.png" alt="Logo L" className="w-96 mx-auto rounded-xl" />
           </div>
 
           {/* Título */}
@@ -102,7 +76,7 @@ const MainPage = () => {
         </div>
 
         {/* Botón con frase y "Comencemos" */}
-        <div className="ml-auto mr-[162px]"> {/* Aumento de la separación */}
+        <div className="ml-auto mr-[162px]">
           <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 text-center">
             <div className="block">¡Comencemos!</div>
           </Button>
@@ -121,7 +95,6 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };

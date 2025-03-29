@@ -1,240 +1,332 @@
-import React from "react";
-import { useState, useEffect } from 'react'
+import React, { Fragment } from "react";
+import { useState } from 'react';
 import {
-    Dialog,
-    DialogPanel,
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-} from '@headlessui/react'
+  Dialog,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition
+} from '@headlessui/react';
 import {
-    ArrowPathIcon,
-    Bars3Icon,
-    ChartPieIcon,
-    CursorArrowRaysIcon,
-    FingerPrintIcon,
-    SquaresPlusIcon,
-    XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-
-
+  ArrowPathIcon,
+  Bars3Icon,
+  ChartPieIcon,
+  CursorArrowRaysIcon,
+  FingerPrintIcon,
+  SquaresPlusIcon,
+  XMarkIcon,
+  MagnifyingGlassIcon
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, UserIcon, CogIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/20/solid';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const products = [
-    { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-    { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-    { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-    { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-    { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
+  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
+  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
+  { name: 'Security', description: 'Your customers\' data will be safe and secure', href: '#', icon: FingerPrintIcon },
+  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
+  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
+];
+
 const callsToAction = [
-    { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-    { name: 'Contact sales', href: '#', icon: PhoneIcon },
-]
+  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+];
 
-export default function Header(props) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
-    const navigate = props.navigate
-    const user = props.user
-    console.log("user", props.user);
+const userNavigation = [
+  { name: 'Your Profile', href: '/perfil', icon: UserIcon },
+  { name: 'Settings', href: '#', icon: CogIcon },
+  { name: 'Sign out', href: '#', icon: ArrowRightOnRectangleIcon },
+];
 
+export default function Header({ navigate, user, onLogout }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    const handleLogout = () => {
-        // Clear user session
-        localStorage.removeItem('userEmail');
-        navigate('/');
+  const handleLogout = () => {
+    onLogout();
+    window.location.reload(); // Recarga la página después de logout
+  };
 
-    };
+  return (
+    <header className="bg-gray-900 text-white shadow-md sticky top-0 z-50">
+      <nav className="mx-auto px-4 py-4" aria-label="Global">
+        <div className="flex items-center justify-between">
+          
+          {/* Logo y nombre */}
+          <div className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
+              <img src="/images/logo.png" alt="Logo" className="h-8 w-8" />
+              <span className="text-xl font-bold">EventConnect</span>
+            </a>
+          </div>
+          
+          {/* Menú de navegación principal (desktop) */}
+          <div className="hidden md:flex md:items-center md:gap-8">
+            <PopoverGroup className="flex gap-x-8">
+              <Popover className="relative">
+                <PopoverButton className="flex items-center gap-x-1 text-sm font-medium text-white hover:text-gray-300 focus:outline-none">
+                  Product
+                  <ChevronDownIcon className="h-5 w-5 flex-none text-gray-300" aria-hidden="true" />
+                </PopoverButton>
 
-    return (
-
-        <header className="bg-white">
-            <nav aria-label="Global" className="mx-auto flex items-center justify-between p-6 lg:px-8">
-
-                {/* Logo */}
-                <div className="flex lg:flex-1">
-                    <a href="/" className="-m-1.5 p-1.5 pr-20">
-                        <span className="sr-only">Your Company</span>
-                        <img
-                            alt=""
-                            src="../public/vite.svg"
-                            className="h-8 w-auto"
-                        />
-                    </a>
-
-                    {/* Menú de productos SOLO DESKTOP */}
-                    <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-                        <Popover className="relative">
-                            <PopoverButton className="flex items-center gap-x-1 text-md/6 font-semibold text-gray-900">
-                                Product
-                                <ChevronDownIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
-                            </PopoverButton>
-
-                            <PopoverPanel
-                                transition
-                                className="absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-                            >
-
-                                {/* Productos */}
-                                <div className="p-4">
-                                    {products.map((item) => (
-                                        <div
-                                            key={item.name}
-                                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
-                                        >
-                                            <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                                <item.icon aria-hidden="true" className="size-6 text-gray-600 group-hover:text-indigo-600" />
-                                            </div>
-                                            <div className="flex-auto">
-                                                <a href={item.href} className="block font-semibold text-gray-900">
-                                                    {item.name}
-                                                    <span className="absolute inset-0" />
-                                                </a>
-                                                <p className="mt-1 text-gray-600">{item.description}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Acciones */}
-                                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                                    {callsToAction.map((item) => (
-                                        <a
-                                            key={item.name}
-                                            href={item.href}
-                                            className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
-                                        >
-                                            <item.icon aria-hidden="true" className="size-5 flex-none text-gray-400" />
-                                            {item.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            </PopoverPanel>
-                        </Popover>
-
-                        <a href="#" className="text-md/6 font-semibold text-gray-900">
-                            Features
-                        </a>
-                        <a href="#" className="text-md/6 font-semibold text-gray-900">
-                            Marketplace
-                        </a>
-                        <a href="#" className="text-md/6 font-semibold text-gray-900">
-                            Company
-                        </a>
-                    </PopoverGroup>
-                </div>
-
-                {/* Botón de apertura de menú SOLO MOVIL */}
-                <div className="flex lg:hidden">
-                    <button
-                        type="button"
-                        onClick={() => setMobileMenuOpen(true)}
-                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <Bars3Icon aria-hidden="true" className="size-6" />
-                    </button>
-                </div>
-
-
-
-                {/* Botón de login SOLO DESKTOP */}
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/login" className="text-md/6 font-semibold text-gray-900">
-                        Log in <span aria-hidden="true">&rarr;</span>
-                    </a>
-                </div>
-            </nav>
-
-            {/* Menú de productos SOLO MOVIL */}
-            <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                <div className="fixed inset-0 z-10" />
-                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                    <div className="flex items-center justify-between">
-                        <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
-                            <img
-                                alt=""
-                                src="../public/vite.svg"
-                                className="h-8 w-auto"
-                            />
-                        </a>
-                        <button
-                            type="button"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-200"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-150"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
+                >
+                  <PopoverPanel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                    <div className="p-4">
+                      {products.map((item) => (
+                        <div
+                          key={item.name}
+                          className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                         >
-                            <span className="sr-only">Close menu</span>
-                            <XMarkIcon aria-hidden="true" className="size-6" />
-                        </button>
-                    </div>
-                    <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="space-y-2 py-6">
-                                <Disclosure as="div" className="-mx-3">
-                                    <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                                        Product
-                                        <ChevronDownIcon aria-hidden="true" className="size-5 flex-none group-data-open:rotate-180" />
-                                    </DisclosureButton>
-                                    <DisclosurePanel className="mt-2 space-y-2">
-                                        {[...products, ...callsToAction].map((item) => (
-                                            <DisclosureButton
-                                                key={item.name}
-                                                as="a"
-                                                href={item.href}
-                                                className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                            >
-                                                {item.name}
-                                            </DisclosureButton>
-                                        ))}
-                                    </DisclosurePanel>
-                                </Disclosure>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Features
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Marketplace
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Company
-                                </a>
-                            </div>
-                            <div className="py-6">
-                                {user && user.email ? (
-                                    <Avatar>
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                        <AvatarFallback>CN</AvatarFallback>
-                                    </Avatar>
-                                ) : (
-                                    <a
-                                        href="/login"
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                    >
-                                        Iniciar sesión
-                                    </a>
-                                )}
-
-                            </div>
+                          <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                            <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                          </div>
+                          <div className="flex-auto">
+                            <a href={item.href} className="block font-semibold text-gray-900">
+                              {item.name}
+                              <span className="absolute inset-0" />
+                            </a>
+                            <p className="mt-1 text-gray-600">{item.description}</p>
+                          </div>
                         </div>
+                      ))}
                     </div>
-                </DialogPanel>
-            </Dialog>
-        </header>
-    )
+                    <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                      {callsToAction.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                        >
+                          <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </PopoverPanel>
+                </Transition>
+              </Popover>
+
+              <a href="#" className="text-sm font-medium text-white hover:text-gray-300">
+                Features
+              </a>
+              <a href="#" className="text-sm font-medium text-white hover:text-gray-300">
+                Marketplace
+              </a>
+              <a href="#" className="text-sm font-medium text-white hover:text-gray-300">
+                Company
+              </a>
+            </PopoverGroup>
+          </div>
+
+          {/* Barra de búsqueda */}
+          <div className="hidden md:flex flex-1 mx-4 max-w-md relative">
+            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Input 
+              type="text" 
+              placeholder="Buscar eventos..." 
+              className="w-full bg-gray-800 text-white border-gray-600 pl-10" 
+            />
+          </div>
+
+          {/* Menú de usuario (derecha) */}
+          <div className="flex items-center gap-4">
+            {/* Botón de login/menú usuario (desktop) */}
+            <div className="hidden md:flex md:items-center">
+              {user ? (
+                <Menu as="div" className="relative ml-3">
+                  <div className="flex items-center space-x-4">
+                    <MenuButton className="relative flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                      <span className="absolute -inset-1.5" />
+                      <span className="sr-only">Open user menu</span>
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user.avatarUrl || "https://github.com/shadcn.png"} alt="User avatar" />
+                        <AvatarFallback>
+                          {user.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                    </MenuButton>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      {userNavigation.map((item) => (
+                        <MenuItem key={item.name}>
+                          {({ active }) => (
+                            <a
+                              href={item.href}
+                              onClick={item.name === 'Sign out' ? handleLogout : null}
+                              className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700`}
+                            >
+                              <item.icon className="mr-2 h-4 w-4" aria-hidden="true" />
+                              {item.name}
+                            </a>
+                          )}
+                        </MenuItem>
+                      ))}
+                    </MenuItems>
+                  </Transition>
+                </Menu>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <span className="text-white">¿Ya tienes cuenta?</span>
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    className="flex items-center gap-2 bg-[#FB8500] text-white hover:bg-orange-600"
+                  >
+                    <UserIcon className="w-5 h-5" />
+                    <span>Iniciar Sesión</span>
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {/* Botón de menú móvil */}
+            <div className="flex md:hidden">
+              <button
+                type="button"
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-300 hover:text-white"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Menú móvil */}
+      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+        <div className="fixed inset-0 z-10" />
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="flex items-center justify-between">
+            <a href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+              <img src="/images/logo.png" alt="Logo" className="h-8 w-8" />
+              <span className="text-xl font-bold text-white">EventConnect</span>
+            </a>
+            <button
+              type="button"
+              className="-m-2.5 rounded-md p-2.5 text-gray-300 hover:text-white"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sr-only">Close menu</span>
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="mt-6 flow-root">
+            <div className="-my-6 divide-y divide-gray-500/10">
+              <div className="space-y-2 py-6">
+                <Disclosure as="div" className="-mx-3">
+                  <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-white hover:bg-gray-800">
+                    Product
+                    <ChevronDownIcon
+                      className="h-5 w-5 flex-none text-gray-300"
+                      aria-hidden="true"
+                    />
+                  </DisclosureButton>
+                  <DisclosurePanel className="mt-2 space-y-2">
+                    {[...products, ...callsToAction].map((item) => (
+                      <DisclosureButton
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-white hover:bg-gray-800"
+                      >
+                        {item.name}
+                      </DisclosureButton>
+                    ))}
+                  </DisclosurePanel>
+                </Disclosure>
+                <a
+                  href="#"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                >
+                  Features
+                </a>
+                <a
+                  href="#"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                >
+                  Marketplace
+                </a>
+                <a
+                  href="#"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                >
+                  Company
+                </a>
+              </div>
+              <div className="py-6">
+                {user ? (
+                  <div className="flex items-center space-x-4">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user.avatarUrl || "https://github.com/shadcn.png"} alt="User avatar" />
+                      <AvatarFallback>
+                        {user.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium text-white">{user.email}</p>
+                      <button
+                        onClick={handleLogout}
+                        className="text-sm font-medium text-gray-300 hover:text-white"
+                      >
+                        Sign out
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Input 
+                        type="text" 
+                        placeholder="Buscar eventos..." 
+                        className="w-full bg-gray-800 text-white border-gray-600 pl-10 mb-4" 
+                      />
+                    </div>
+                    <Button
+                      onClick={() => {
+                        navigate('/login');
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full bg-[#FB8500] hover:bg-orange-600 text-white"
+                    >
+                      Iniciar Sesión
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </DialogPanel>
+      </Dialog>
+    </header>
+  );
 }
