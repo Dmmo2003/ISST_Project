@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { data } from "./constants/data";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
@@ -18,8 +19,9 @@ const Perfil = () => {
   const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    fetch("/data.json")
+    fetch(data)
       .then((response) => response.json())
       .then((data) => {
         const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
@@ -73,7 +75,7 @@ const Perfil = () => {
             <ThemeToggle />
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <button onClick={handleEditProfile} className="bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300">Editar Perfil</button>
+                <Button onClick={handleEditProfile} >Editar Perfil</Button>
               </DialogTrigger>
               <DialogContent className="max-w-lg">
                 <DialogHeader>
@@ -152,18 +154,19 @@ const Perfil = () => {
 
               {/* Botones de acción */}
               <div className="mt-4 flex justify-between">
-                <button
+                <Button 
+                  variant="destructive"
                   onClick={() => handleUnfollow(evento.id)}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition duration-300"
+                  //className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition duration-300"
                 >
                   Dejar de seguir
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => handleMoreInfo(evento.id)}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
+                 // className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
                 >
                   +Info
-                </button>
+                </Button>
               </div>
             </div>
           ))}
