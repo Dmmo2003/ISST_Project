@@ -12,7 +12,7 @@ const images = [
 ];
 
 const testimonials = [
-  `"He probado esta web en varias ocasiones y me encanta, 100% recomendado." -Ana María, 25 años.`,
+  `"He probado esta web muchas veces y me encanta, 100% recomendado." -Ana, 25 años.`,
   `"Esta app ha facilitado mi vida al encontrar eventos que me interesan." -Carlos, 30 años.`,
   `"Muy fácil de usar y he conocido mucha gente interesante." -Lucía, 28 años.`,
   `"Excelente plataforma, siempre encuentro eventos cercanos a mi." -José, 35 años.`,
