@@ -243,7 +243,7 @@ const Perfil = () => {
               eventos={eventosSeguidos} 
               navigate={navigate} 
               onAction={handleAbandonarEvento}
-              actionText="Abandonar"
+              actionText="Dejar de Seguir"
             />
             <ProfileSection 
               title="Eventos que Has Creado" 

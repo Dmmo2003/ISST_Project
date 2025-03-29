@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   "/images/event1.jpg",
@@ -20,6 +21,7 @@ const testimonials = [
 const MainPage = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const navigate = useNavigate(); // Hook de navegación
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,6 +37,18 @@ const MainPage = () => {
       clearInterval(testimonialInterval);
     };
   }, []);
+
+  const handleButtonClick = () => {
+    // Verifica si el usuario está autenticado
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      // Si está autenticado, navega al mapa de eventos
+      navigate('/eventos');
+    } else {
+      // Si no está autenticado, navega a la página de registro
+      navigate('/register');
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -77,12 +91,15 @@ const MainPage = () => {
 
         {/* Botón con frase y "Comencemos" */}
         <div className="ml-auto mr-[162px]">
-          <Button className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 text-center">
+          <Button
+            className="bg-[#FB8500] text-white text-4xl px-16 py-8 rounded-md shadow-md hover:bg-orange-600 relative z-30 text-center"
+            onClick={handleButtonClick} // Evento de clic
+          >
             <div className="block">¡Comencemos!</div>
           </Button>
         </div>
       </div>
-      
+
       {/* Sección inferior con información legal */}
       <div className="bg-gray-800 text-white p-4 mt-auto">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
