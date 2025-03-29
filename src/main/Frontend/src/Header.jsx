@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Dialog,
     DialogPanel,
@@ -21,6 +21,10 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+
+
 
 const products = [
     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -34,101 +38,20 @@ const callsToAction = [
     { name: 'Contact sales', href: '#', icon: PhoneIcon },
 ]
 
-
-
-/**
- * Componente de cabecera que representa el menú de navegación global.
- * 
- * - Contiene un logo de la empresa, enlaces a secciones como Producto, Características, 
- *   Mercado y Compañía, y un botón de inicio de sesión.
- * - Utiliza Popover para mostrar un menú desplegable de productos en pantallas grandes.
- * - Utiliza Dialog para gestionar un menú móvil.
- * 
- * Elementos del return:
- * - `<header>`: Contiene el componente completo, con fondo blanco.
- * - `<nav>`: Barra de navegación principal, con enlaces y logo.
- * - `<a>`: Enlaces a diferentes secciones de la aplicación.
- * - `<PopoverGroup>`: Agrupa los elementos Popover para el menú de productos.
- * - `<Popover>`: Elemento desplegable para productos.
- * - `<PopoverButton>`: Botón que abre el menú desplegable.
- * - `<PopoverPanel>`: Panel que contiene los elementos del menú desplegable.
- * - `<Dialog>`: Menú lateral para dispositivos móviles.
- * - `<DialogPanel>`: Contenido del menú móvil.
- * - `<Disclosure>`: Elemento desplegable dentro del menú móvil.
- * 
- * TODO: Reemplazar los enlaces `#` y el logo con valores reales.
- * 
- * Tailwind classes:
- * - `bg-white`: Fondo blanco.
- * - `mx-auto`: Centra el contenido horizontalmente.
- * - `flex items-center justify-between`: Establece el contenido como flexbox y justifica los elementos entre sí.
- * - `p-6 lg:px-8`: Establece el padding en 6px en pantallas pequeñas y 8px en pantallas grandes.
- * - `hidden lg:flex`: Oculta el contenido en pantallas pequeñas y lo muestra en pantallas grandes.
- * - `flex lg:flex-1`: Establece el contenido como flexbox y lo hace ocupar el 100% del ancho en pantallas grandes.
- * - `gap-x-12`: Establece el espacio entre los elementos en 12px.
- * - `relative`: Establece el posición del elemento como relativa.
- * - `absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in`: Establece el estilo del menú desplegable.
- * - `size-6`: Establece el tamaño del icono en 6px.
- * - `size-11`: Establece el tamaño del icono en 11px.
- * - `flex-none`: Establece el contenido como flexbox y no permite que se cambie de tamaño.
- * - `text-gray-600`: Establece el color del texto como gris claro.
- * - `text-gray-900`: Establece el color del texto como gris oscuro.
- * - `group-hover:bg-gray-50`: Establece el color del fondo del grupo al pasar por encima como gris claro.
- * - `group-hover:text-indigo-600`: Establece el color del texto del grupo al pasar por encima como azul.
- * - `grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50`: Establece el estilo del grid.
- * - `flow-root`: Establece el contenido como un contenedor de flujo.
- * - `space-y-2 py-6`: Establece el espacio vertical entre los elementos en 2px y el padding en 6px.
- * - `rounded-lg`: Establece el estilo del borde como redondeado.
- * - `p-2.5`: Establece el padding en 2.5px.
- * - `text-sm/7`: Establece el tamaño del texto como pequeño.
- * - `font-semibold`: Establece el estilo del texto como seminegrito.
- * - `-mx-3`: Establece el margen horizontal en -3px.
- * - `-m-2.5`: Establece el margen en -2.5px.
- * - `rounded-md`: Establece el estilo del borde como redondeado.
- * - `p-1.5`: Establece el padding en 1.5px.
- * - `pr-20`: Establece el padding horizontal derecho en 20px.
- * - `flex items-center justify-center`: Establece el contenido como flexbox y justifica los elementos entre sí.
- * - `text-md/6`: Establece el tamaño del texto como mediano.
- * - `font-semibold`: Establece el estilo del texto como seminegrito.
- * - `text-gray-900`: Establece el color del texto como gris oscuro.
- * - `hover:bg-gray-50`: Establece el color del fondo al pasar por encima como gris claro.
- * - `hover:text-indigo-600`: Establece el color del texto al pasar por encima como azul.
- * - `group-data-open:rotate-180`: Establece el estilo del icono al abrir el menú como rotado 180 grados.
- * - `flex-auto`: Establece el contenido como flexbox y lo hace ocupar el ancho disponible.
- * - `mt-6`: Establece el margen superior en 6px.
- * - `space-y-2`: Establece el espacio vertical entre los elementos en 2px.
- * - `py-6`: Establece el padding vertical en 6px.
- * - `divide-y divide-gray-500/10`: Establece el estilo del borde como divisor horizontal.
- * - `bg-gray-50`: Establece el color del fondo como gris claro.
- * - `-mx-3`: Establece el margen horizontal en -3px.
- * - `block`: Establece el contenido como un bloque.
- * - `rounded-lg py-2 pr-3.5 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del menú desplegable.
- * - `-my-6`: Establece el margen vertical en -6px.
- * - `space-y-2`: Establece el espacio vertical entre los elementos en 2px.
- * - `-mx-3 block rounded-lg px-3 py-2 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del menú desplegable.
- * - `fixed inset-0 z-10`: Establece el estilo del menú lateral como fijo en pantalla.
- * - `lg:hidden`: Oculta el contenido en pantallas grandes.
- * - `fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10`: Establece el estilo del menú lateral.
- * - `flex items-center justify-between`: Establece el contenido como flexbox y justifica los elementos entre sí.
- * - `-m-2.5 rounded-md p-2.5 text-gray-700`: Establece el estilo del botón de cierre del menú lateral.
- * - `sr-only`: Establece el contenido como no visible.
- * - `group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del menú desplegable.
- * - `mt-2 space-y-2`: Establece el margen superior en 2px y el espacio vertical entre los elementos en 2px.
- * - `block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del menú desplegable.
- * - `py-6`: Establece el padding vertical en 6px.
- * - `space-y-2`: Establece el espacio vertical entre los elementos en 2px.
- * - `bg-gray-50`: Establece el color del fondo como gris claro.
- * - `lg:flex lg:flex-1 lg:justify-end`: Establece el contenido como flexbox y lo hace ocupar el 100% del ancho en pantallas grandes y justifica los elementos a la derecha.
- * - `text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del botón de inicio de sesión.
- * - `mt-2`: Establece el margen superior en 2px.
- * - `flex items-center justify-center rounded-lg py-2 pr-3.5 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50`: Establece el estilo del menú desplegable.
- * - `group-data-open:rotate-180`: Establece el estilo del icono al abrir el menú como rotado 180 grados.
- * - `space-y-2`: Establece el espacio vertical entre los elementos en 2px.
- * - `py-6`: Establece el padding vertical en 6px.
-**/
-export default function Header( props ) {
+export default function Header(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const handleLoginClick = props.handleLoginClick
+    const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+    const navigate = props.navigate
+    const user = props.user
+    console.log("user", props.user);
+
+
+    const handleLogout = () => {
+        // Clear user session
+        localStorage.removeItem('userEmail');
+        navigate('/');
+
+    };
 
     return (
 
@@ -293,12 +216,20 @@ export default function Header( props ) {
                                 </a>
                             </div>
                             <div className="py-6">
-                                <a
-                                    href="/login"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Log in
-                                </a>
+                                {user && user.email ? (
+                                    <Avatar>
+                                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                ) : (
+                                    <a
+                                        href="/login"
+                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                    >
+                                        Iniciar sesión
+                                    </a>
+                                )}
+
                             </div>
                         </div>
                     </div>
