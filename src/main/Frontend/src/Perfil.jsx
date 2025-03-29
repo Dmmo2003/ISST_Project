@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { data } from "./constants/data";
+import data from "./constants/data";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
@@ -20,24 +20,35 @@ const Perfil = () => {
   const navigate = useNavigate();
 
 
+  // useEffect(() => {
+  //   fetch(data)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
+  //       setUsuario(usuarioActual);
+  //       setNombre(usuarioActual.nombre);
+  //       setUsuarioName(usuarioActual.username);
+  //       const eventos = usuarioActual.gruposSeguidos.map(grupo => {
+  //         return data.eventos.find(evento => evento.id === grupo.eventoId);
+  //       });
+  //       setEventosSeguidos(eventos);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error al cargar los datos:", error);
+  //       setLoading(false);
+  //     });
+  // }, []);
   useEffect(() => {
-    fetch(data)
-      .then((response) => response.json())
-      .then((data) => {
-        const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
-        setUsuario(usuarioActual);
-        setNombre(usuarioActual.nombre);
-        setUsuarioName(usuarioActual.username);
-        const eventos = usuarioActual.gruposSeguidos.map(grupo => {
-          return data.eventos.find(evento => evento.id === grupo.eventoId);
-        });
-        setEventosSeguidos(eventos);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al cargar los datos:", error);
-        setLoading(false);
-      });
+    const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
+    setUsuario(usuarioActual);
+    setNombre(usuarioActual.nombre);
+    setUsuarioName(usuarioActual.username);
+    const eventos = usuarioActual.gruposSeguidos.map(grupo => {
+      return data.eventos.find(evento => evento.id === grupo.eventoId);
+    });
+    setEventosSeguidos(eventos);
+    setLoading(false);
   }, []);
 
   if (loading) {
@@ -154,16 +165,16 @@ const Perfil = () => {
 
               {/* Botones de acción */}
               <div className="mt-4 flex justify-between">
-                <Button 
+                <Button
                   variant="destructive"
                   onClick={() => handleUnfollow(evento.id)}
-                  //className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition duration-300"
+                //className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition duration-300"
                 >
                   Dejar de seguir
                 </Button>
                 <Button
                   onClick={() => handleMoreInfo(evento.id)}
-                 // className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
+                // className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
                 >
                   +Info
                 </Button>

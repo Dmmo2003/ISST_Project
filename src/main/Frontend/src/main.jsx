@@ -12,11 +12,11 @@ const googleMapsApiKey = config.googleMapsApiKey
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <StrictMode>
-      <LoadScript googleMapsApiKey={googleMapsApiKey}>
+      {/* <LoadScript googleMapsApiKey={googleMapsApiKey}> */}
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </LoadScript>
+      {/* </LoadScript> */}
     </StrictMode>
   </BrowserRouter>
 )

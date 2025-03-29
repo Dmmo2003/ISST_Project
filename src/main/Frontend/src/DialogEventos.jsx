@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import GooglePlacesAutocomplete from "react-google-autocomplete";
+import { LoadScript } from "@react-google-maps/api";
 import config from "./config/config";
 
 const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
@@ -70,6 +71,7 @@ export default function DialogEventos() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="ubicacion" className="text-right">Ubicación</Label>
+            {/* <LoadScript googleMapsApiKey={API_GOOGLE_MAPS_KEY}> */}
             <GooglePlacesAutocomplete
               apiKey={API_GOOGLE_MAPS_KEY}
               onPlaceSelected={handleUbicacionChange}
@@ -79,6 +81,7 @@ export default function DialogEventos() {
               }}
               className="col-span-3 w-full border rounded-md px-3 py-2"
             />
+            {/* </LoadScript> */}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="descripcion" className="text-right">Descripción</Label>

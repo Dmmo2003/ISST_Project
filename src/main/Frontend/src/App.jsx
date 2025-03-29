@@ -22,25 +22,26 @@ function App() {
       setUser({ email: userEmail });
     }
   }, []);
-  
+
 
   // Si no hay usuario autenticado, mostrar MainPage en la ruta raíz
   // Si hay un usuario autenticado, redirigir a ListaEventos en la ruta raíz
   return (
     <>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Header  navigate={navigate} user={user}/>
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <Header navigate={navigate} user={user} />
         <Routes>
           {/* Ruta principal dinámica según el estado de autenticación */}
-          <Route path="/" element={user ? <ListaEventos /> : <MainPage />} />
+          {/* <Route path="/" element={user ? <ListaEventos /> : <MainPage />} /> */}
+          <Route path="/" element={<MainPage />} />
 
           {/* Otras rutas */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/perfil" element={<PerfilPage />} />
-          {/* <Route path="/eventos" element={<ListaEventos />} /> */}
+          <Route path="/eventos" element={<ListaEventos />} />
           <Route path="*" element={<NoMatch />} />
-      </Routes>
+        </Routes>
       </ThemeProvider>
     </>
   );
