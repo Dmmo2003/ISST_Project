@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import datos_probar from "./constants/datos_probar.json";
 import GroupList from "./GroupList";
+import { useParams } from "react-router-dom";
 
 const EventDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -18,6 +19,7 @@ const EventDetails = () => {
         <CardHeader className="text-center">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">{event.name}</h1>
           <p className="text-gray-500 text-sm md:text-base">{event.date}</p>
+
         </CardHeader>
         <CardContent>
           <p className="text-justify text-gray-700 text-sm md:text-base">
