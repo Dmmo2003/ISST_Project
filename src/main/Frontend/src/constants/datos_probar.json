@@ -4,24 +4,27 @@
     "name": "Concierto Pink Floyd Madrid",
     "date": "2025-04-28",
     "description": "Un concierto de aproximadamente dos horas",
-    "location": "Santiago Bernabeu",
+    "location": "Santiago Bernabéu",
     "groups": [
       {
         "id": 1,
-        "name": "Grupo1",
-        "description": "Grupo de fans de Pink Floyd",
+        "name": "Grupo fans",
+        "description": "Somos fans de Pink Floyd",
+        "icon": "/images/group1.gif",
         "members": 9
       },
       {
         "id": 2,
-        "name": "Grupo2",
-        "description": "Organizadores del evento",
+        "name": "Grupo organizadores",
+        "description": "Somos los organizadores del evento del concierto de Pink Floyd",
+        "icon": "/images/group2.jpg",
         "members": 4
       },
       {
         "id": 3,
-        "name": "Grupo3",
-        "description": "Equipo de producción",
+        "name": "Grupo producción",
+        "description": "Somos el equipo de producción del concierto de Pink Floyd",
+        "icon": "/images/group3.png",
         "members": 7
       }
     ]
