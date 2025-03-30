@@ -8,7 +8,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function AcordeonEventos({ eventosFiltrados }) {
+export default function AcordeonEventos({ eventosFiltrados, navigate }) {
     return (
         <Accordion type="single" collapsible className="w-full space-y-2">
             {eventosFiltrados.map((evento) => (
@@ -34,7 +34,7 @@ export default function AcordeonEventos({ eventosFiltrados }) {
                                     ⏰ <strong>Horario:</strong> {evento.hora || "No especificado"}
                                 </p>
                                 <div className="pt-2">
-                                    <Button className="w-full">
+                                    <Button className="w-full" onClick={() => navigate(`/eventos/${evento.id}`)}>
                                         ⭐ Me interesa
                                     </Button>
                                 </div>

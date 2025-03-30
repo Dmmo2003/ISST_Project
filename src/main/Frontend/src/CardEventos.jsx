@@ -5,7 +5,7 @@ import DialogEventos from "./DialogEventos";
 import AcordeonEventos from "./AcordeonEventos";
 
 export default function CardEventos(props) {
-    const { eventosFiltrados } = props;
+    const { eventosFiltrados, navigate } = props;
     return (
         <>
             <Card className="flex-1 h-full flex flex-col">
@@ -14,7 +14,7 @@ export default function CardEventos(props) {
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col overflow-hidden">
                     <ScrollArea className="flex-1 overflow-y-auto">
-                        <AcordeonEventos eventosFiltrados={eventosFiltrados} />
+                        <AcordeonEventos eventosFiltrados={eventosFiltrados} navigate={navigate} />
                     </ScrollArea>
 
                     {/* Dialog para crear eventos */}

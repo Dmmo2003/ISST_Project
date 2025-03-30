@@ -45,8 +45,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/perfil" element={<PerfilPage />} />
-          <Route path="/event-details" element={<EventDetails />} />
-          <Route path="/eventos" element={<ListaEventos />} />
+          <Route path="/eventos/:id" element={<EventDetails />} />
+          <Route path="/eventos" element={<ListaEventos  navigate={navigate}/>} />
           <Route path="*" element={<NoMatch />} />
             
         </Routes>
