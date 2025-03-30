@@ -320,7 +320,7 @@ const ProfileSection = ({ title, eventos, navigate, onAction, actionText }) => {
                         variant="outline" 
                         size="sm"
                         className="mr-2 border-primary text-primary hover:bg-primary/10"
-                        onClick={() => navigate(`/evento/${evento.id}`)}
+                        onClick={() => navigate(`/eventos/${evento.id}`)}
                       >
                         Ver detalles
                       </Button>

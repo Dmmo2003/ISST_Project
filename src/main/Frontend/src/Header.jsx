@@ -45,16 +45,16 @@ const callsToAction = [
 ];
 
 const userNavigation = [
-  { name: 'Your Profile', href: '/perfil', icon: UserIcon },
-  { name: 'Settings', href: '#', icon: CogIcon },
-  { name: 'Sign out', href: '#', icon: ArrowRightOnRectangleIcon },
+  { name: 'Mi Perfil', href: '/perfil', icon: UserIcon },
+  { name: 'Ajustes', href: '#', icon: CogIcon },
+  { name: 'Cerrar Sesión', href: '#', icon: ArrowRightOnRectangleIcon },
 ];
 
-export default function Header({ navigate, user, onLogout }) {
+export default function Header({ navigate, user }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    onLogout();
+    localStorage.removeItem('user');
     window.location.reload(); // Recarga la página después de logout
   };
 
@@ -180,7 +180,7 @@ export default function Header({ navigate, user, onLogout }) {
                           {({ active }) => (
                             <a
                               href={item.href}
-                              onClick={item.name === 'Sign out' ? handleLogout : null}
+                              onClick={item.name === 'Cerrar Sesión' ? handleLogout : null}
                               className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700`}
                             >
                               <item.icon className="mr-2 h-4 w-4" aria-hidden="true" />
@@ -297,7 +297,7 @@ export default function Header({ navigate, user, onLogout }) {
                         onClick={handleLogout}
                         className="text-sm font-medium text-gray-300 hover:text-white"
                       >
-                        Sign out
+                        Cerrar Sesión
                       </button>
                     </div>
                   </div>
