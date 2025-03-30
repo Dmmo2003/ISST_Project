@@ -19,12 +19,13 @@ const containerStyle = {
 };
 const googleMapsApiKey = config.googleMapsApiKey
 
-export default function ListaEventos() {
+export default function ListaEventos(props) {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedEtiqueta, setSelectedEtiqueta] = useState("todas");
     const [diasFiltro, setDiasFiltro] = useState(30);
     const [ubicacion, setUbicacion] = useState({ lat: 40.4168, lng: -3.7038 });
     const [currentDate] = useState(new Date());
+    const navigate = props.navigate
 
 
     useEffect(() => {
@@ -81,7 +82,7 @@ export default function ListaEventos() {
 
                 {/* Lista de eventos */}
                 <div className="w-full lg:col-span-3 flex flex-col h-[400px] lg:h-[800px]">
-                    <CardEventos eventosFiltrados={eventosFiltrados}/>
+                    <CardEventos eventosFiltrados={eventosFiltrados} navigate={navigate}/>
                 </div>
 
                 {/* Filtros */}

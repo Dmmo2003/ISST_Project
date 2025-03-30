@@ -77,7 +77,7 @@ export default function DialogEventos() {
               onPlaceSelected={handleUbicacionChange}
               options={{
                 types: ["geocode"],
-                componentRestrictions: { country: "es" }
+                componentRestrictions: {  country: "es"}
               }}
               className="col-span-3 w-full border rounded-md px-3 py-2"
             />
