@@ -12,6 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { registrarUsuario } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react"
 
 export function RegisterForm({ className, ...props }) {
   const [formData, setFormData] = useState({
@@ -26,6 +29,9 @@ export function RegisterForm({ className, ...props }) {
   });
 
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -34,16 +40,39 @@ export function RegisterForm({ className, ...props }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Validar que las contraseñas coincidan
     if (formData.password !== formData.confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
-    //TODO : Logica de registro
-    console.log("Datos de registro:", formData);
-    setError("");
+
+    setLoading(true);
+
+    try {
+      await registrarUsuario({
+        nombre: formData.nombre,
+        apellido1: formData.apellido1,
+        apellido2: formData.apellido2,
+        correo: formData.correo,
+        username: formData.username,
+        fechaNacimiento: formData.fechaNacimiento,
+        password: formData.password,
+      });
+
+      setSuccessMessage("Registro exitoso, redirigiendo...");
+      setError("");
+
+      // Redirigir al usuario a la pantalla de login después de 2 segundos
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Error en el registro");
+      setSuccessMessage("");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -162,21 +191,47 @@ export function RegisterForm({ className, ...props }) {
                   required
                 />
               </div>
-              {/* Gestión de errores */}
+
+              {/* Mensajes de error y éxito */}
               {error && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4 mr-2" />
-                  <div>
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{error}</AlertDescription>
-                  </div>
+                  <AlertCircle className="h-4 w-4 " />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>
+                    {error}
+                  </AlertDescription>
                 </Alert>
               )}
-              <Button type="submit" className="w-full">
-                Registrarse
-              </Button>
+
+              {successMessage && (
+                <Alert variant="success">
+                  <AlertCircle className="h-4 w-4 mr-2" />
+                  <AlertTitle>Éxito</AlertTitle>
+                  <AlertDescription>
+                    {successMessage}
+                  </AlertDescription>
+                </Alert>
+              )}
+              {loading ? (
+                <Button disabled>
+                  <Loader2 className="animate-spin" />
+                  Registrando...
+                </Button>
+              ) : (
+                <Button type="submit" className="w-full">
+                  Registrarse
+                </Button>
+              )}
+
+              <div className="text-center text-sm">
+                ¿Ya tienes una cuenta?{" "}
+                <a href="/login" className="underline underline-offset-4">
+                  Inicia sesión
+                </a>
+              </div>
             </div>
           </form>
+
         </CardContent>
       </Card>
       <div className="text-center text-xs text-muted-foreground">

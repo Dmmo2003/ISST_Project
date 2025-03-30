@@ -28,6 +28,7 @@
     "@react-google-maps/api": "^2.20.6",
     "@shadcn/ui": "^0.0.4",
     "@tailwindcss/vite": "^4.0.14",
+    "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",

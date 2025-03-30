@@ -11,6 +11,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
+import { iniciarSesion } from "../../api/auth";
+import { AlertCircle } from "lucide-react"
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+import { Loader2 } from "lucide-react"
+
 
 
 
@@ -18,25 +27,34 @@ import { useNavigate } from 'react-router-dom';
 export function LoginForm({ className, ...props }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-   
+
         // Verificar las credenciales
         console.log('Email:', email);
         console.log('Password:', password);
-   
-        if (email && password) {
-            // Guardar las credenciales en localStorage
-            localStorage.setItem('user', email);
-   
-            // Mostrar un mensaje de éxito
-            alert('Inicio de sesión exitoso');
-            navigate('/');
-        } else {
-            alert('Por favor, ingresa tus credenciales');
+
+        if (!email || !password) {
+            setError("Por favor, ingresa tu correo y contraseña.");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const data = await iniciarSesion(email, password);
+            localStorage.setItem("token", data.token); // Guardar el token en localStorage
+            console.log(data, "Token guardado en localStorage", localStorage.getItem("token"));
+            alert("Inicio de sesión exitoso");
+            navigate("/");
+        } catch (error) {
+            setError("Credenciales incorrectas. Inténtalo de nuevo.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -95,12 +113,30 @@ export function LoginForm({ className, ...props }) {
                                         required
                                     />
                                 </div>
-                                <Button type="submit" className="w-full">
-                                    Iniciar sesión
-                                </Button>
+                                {/* Mensaje de error */}
+                                {error && (
+                                    <Alert variant="destructive">
+                                        <AlertCircle className="h-4 w-4" />
+                                        <AlertTitle>Error</AlertTitle>
+                                        <AlertDescription>
+                                            {error}
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                                {loading ? (
+                                    <Button disabled>
+                                        <Loader2 className="animate-spin" />
+                                        Iniciando sesión
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="w-full">
+                                        Iniciar sesión
+                                    </Button>
+                                )}
                             </div>
+
                             <div className="text-center text-sm">
-                                No tienes una cuenta?{" "}
+                                ¿No tienes una cuenta?{" "}
                                 <a href="/register" className="underline underline-offset-4">
                                     Regístrate
                                 </a>
@@ -109,9 +145,9 @@ export function LoginForm({ className, ...props }) {
                     </form>
                 </CardContent>
             </Card>
+
             <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-                Al continuar, aceptas los <a href="#">Términos y condiciones</a>{" "}
-                y <a href="#">Políticas de privacidad</a>.
+                Al continuar, aceptas los <a href="#">Términos y condiciones</a>{" "} y <a href="#">Políticas de privacidad</a>.
             </div>
         </div>
     );

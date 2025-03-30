@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useNavigate } from 'react-router-dom';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { getUsuario, getEventosSeguidos, updateUsuario } from './api/perfil'; // Importamos las funciones de la API
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { 
@@ -13,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import data from "./constants/data";
+
 
 // Paleta de colores
 const colors = {
@@ -29,7 +32,6 @@ const Perfil = () => {
   const [open, setOpen] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
-
   // Estado para el formulario de edición
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
@@ -37,19 +39,31 @@ const Perfil = () => {
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
   const [confirmarContraseña, setConfirmarContraseña] = useState('');
-
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-    setTimeout(() => {
-      const usuarioActual = data.usuarios.find(u => u.username === "fer1234");
-      
-      if (usuarioActual) {
-        setUsuario(usuarioActual);
-        setNombre(usuarioActual.nombre || '');
-        setApellido(usuarioActual.apellido || '');
-        setUsuarioName(usuarioActual.username || '');
-        setCorreo(usuarioActual.correo || '');
+    const fetchData = async () => {
+      try {
+        const usuarioData = await getUsuario(userId);
+        setUsuario(usuarioData);
+        setNombre(usuarioData.nombre);
+        setUsuarioName(usuarioData.username);
+
+        const eventosData = await getEventosSeguidos(userId);
+        setEventosSeguidos(eventosData);
+
+      } catch (error) {
+        console.error('Error al cargar los datos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
 
         const eventosSeguidos = usuarioActual.gruposSeguidos 
           ? usuarioActual.gruposSeguidos
@@ -58,17 +72,27 @@ const Perfil = () => {
           : [];
         setEventosSeguidos(eventosSeguidos);
 
-        const eventosCreados = data.eventos 
-          ? data.eventos.filter(evento => evento && evento.creador === usuarioActual.username)
-          : [];
-        
-        setEventosCreados(eventosCreados);
-      }
-      
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const handleEditProfile = () => setOpen(true);
 
+  const handleSave = async () => {
+    if (contraseña && contraseña !== confirmarContraseña) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
+    try {
+      setError('');
+      const updatedUser = await updateUsuario(userId, {
+        nombre,
+        username: usuarioName,
+        ...(contraseña && { password: contraseña }) // Solo enviar la contraseña si se ha cambiado
+      });
+
+      setUsuario(updatedUser); // Actualizar el estado con los nuevos datos
+      setOpen(false);
+    } catch (error) {
+      setError('Error al actualizar el perfil. Inténtalo de nuevo.');
+    }
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {

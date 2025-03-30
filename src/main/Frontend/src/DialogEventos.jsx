@@ -16,6 +16,8 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import GooglePlacesAutocomplete from "react-google-autocomplete";
 import { LoadScript } from "@react-google-maps/api";
 import config from "./config/config";
+import { crearEvento } from "./api/eventos";
+
 
 const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
@@ -48,6 +50,27 @@ export default function DialogEventos() {
     }
   };
 
+  const handleCrearEvento = async () => {
+    try {
+      await crearEvento(evento); // Llamamos a la API
+      console.log("Evento creado con éxito:", evento);
+      // Opcional: cerrar el diálogo después de la creación
+      setEvento({
+        nombre: "",
+        fecha: "",
+        ubicacion: "",
+        latitud: "",
+        longitud: "",
+        descripcion: "",
+        categoria: ""
+      });
+    } catch (error) {
+      console.error("Error al crear el evento:", error);
+    }
+  };
+
+
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -77,7 +100,7 @@ export default function DialogEventos() {
               onPlaceSelected={handleUbicacionChange}
               options={{
                 types: ["geocode"],
-                componentRestrictions: {  country: "es"}
+                componentRestrictions: { country: "es" }
               }}
               className="col-span-3 w-full border rounded-md px-3 py-2"
             />
@@ -104,7 +127,7 @@ export default function DialogEventos() {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={() => console.log("Evento creado:", evento)}>Crear Evento</Button>
+          <Button onClick={handleCrearEvento}>Crear Evento</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
