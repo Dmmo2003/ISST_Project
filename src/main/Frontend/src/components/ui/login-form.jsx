@@ -30,7 +30,7 @@ export function LoginForm({ className, ...props }) {
    
         if (email && password) {
             // Guardar las credenciales en localStorage
-            localStorage.setItem('userEmail', email);
+            localStorage.setItem('user', email);
    
             // Mostrar un mensaje de éxito
             alert('Inicio de sesión exitoso');
