@@ -1,4 +1,4 @@
-package com.eventconnect.eventconnect.models;
+package com.eventconnect.eventconnect.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
