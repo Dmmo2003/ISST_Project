@@ -13,30 +13,35 @@ public class Evento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(nullable = false)
     private String nombre;
 
-    @Column(name = "fecha", nullable = false)
+    @Column(nullable = false)
     private Timestamp fecha;
 
-    @Column(name = "ubicacion", nullable = false)
+    @Column(nullable = false)
     private String ubicacion;
 
-    @Column(name = "organizador_id", nullable = false)
-    private int organizadorId;
+    @ManyToOne
+    @JoinColumn(name = "organizador_id", nullable = false)
+    private Usuario organizador;
 
-    @Lob
-    @Column(name = "descripcion", nullable = false)
+    @Column(nullable = false)
     private String descripcion;
 
-    @Column(name = "categoria", nullable = false)
+    @Column(nullable = false)
     private String categoria;
 
-    // Relación ManyToMany con Usuario
-    @ManyToMany(mappedBy = "eventosSeguidos")
-    private List<Usuario> seguidores = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_evento",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private List<Usuario> seguidores;
 
-    
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+    private List<Grupo> grupos;
     // Getters and Setters
     public int getId() {
         return id;
@@ -71,11 +76,11 @@ public class Evento {
     }
 
     public int getOrganizadorId() {
-        return organizadorId;
+        return organizador.getId();
     }
 
     public void setOrganizadorId(int organizadorId) {
-        this.organizadorId = organizadorId;
+        this.organizador.setId(organizador.getId());
     }
 
     public String getDescripcion() {

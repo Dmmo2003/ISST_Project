@@ -2,6 +2,7 @@ package com.eventconnect.eventconnect.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -31,6 +32,24 @@ public class Usuario {
 
     @Column(nullable = false)
     private String contraseña;
+
+    @Column(nullable = false)
+    private String tipo;  // "persona" o "empresa"
+
+    @Column(name = "CIF")
+    private String cif;  // Solo si es tipo 'empresa'
+
+    @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
+    private List<Evento> eventosOrganizados;
+
+    @ManyToMany(mappedBy = "seguidores")
+    private List<Evento> eventosSeguidos;
+
+    @ManyToMany(mappedBy = "miembros")
+    private List<Grupo> grupos;
+
+    @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
+    private List<Mensaje> mensajesEnviados;
 
     // Constructor vacío (JPA lo necesita)
     public Usuario() {

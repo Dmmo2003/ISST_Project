@@ -39,8 +39,8 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.findById(id).map(grupoExistente -> {
             grupoExistente.setNombre(grupo.getNombre());
             grupoExistente.setDescripcion(grupo.getDescripcion());
-            grupoExistente.setAdminId(grupo.getAdminId());
-            grupoExistente.setEventoId(grupo.getEventoId());
+            grupoExistente.setAdmin(grupo.getAdmin());
+            grupoExistente.setEvento(grupo.getEvento());
             return grupoRepository.save(grupoExistente);
         }).orElseThrow(() -> new RuntimeException("Grupo no encontrado con ID: " + id));
     }

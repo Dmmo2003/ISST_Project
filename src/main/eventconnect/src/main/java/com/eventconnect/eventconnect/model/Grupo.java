@@ -2,7 +2,6 @@ package com.eventconnect.eventconnect.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "grupos")
@@ -12,37 +11,41 @@ public class Grupo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(nullable = false)
     private String nombre;
 
     @Lob
-    @Column(name = "descripcion", nullable = false)
+    @Column(nullable = false)
     private String descripcion;
 
-    @Column(name = "admin_id", nullable = false)
-    private int adminId;
+    @ManyToOne
+    @JoinColumn(name = "admin_id", nullable = false)
+    private Usuario admin;
 
-    @Column(name = "evento_id", nullable = false)
-    private int eventoId;
+    @ManyToOne
+    @JoinColumn(name = "evento_id", nullable = false)
+    private Evento evento;
 
-    // Relación ManyToMany con Usuario (opcional, si los grupos tienen miembros)
     @ManyToMany
     @JoinTable(
-        name = "grupo_usuarios",
+        name = "usuario_grupo",
         joinColumns = @JoinColumn(name = "grupo_id"),
         inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private List<Usuario> miembros = new ArrayList<>();
+    private List<Usuario> miembros;
+
+    @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL)
+    private List<Mensaje> mensajes;
 
     // Constructores
     public Grupo() {}
 
-    public Grupo(int id, String nombre, String descripcion, int adminId, int eventoId) {
+    public Grupo(int id, String nombre, String descripcion, Usuario admin, Evento evento) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.adminId = adminId;
-        this.eventoId = eventoId;
+        this.admin = admin;  // Ahora pasamos el objeto Usuario en vez de un id
+        this.evento = evento;  // Ahora pasamos el objeto Evento
     }
 
     // Getters y Setters
@@ -70,20 +73,20 @@ public class Grupo {
         this.descripcion = descripcion;
     }
 
-    public int getAdminId() {
-        return adminId;
+    public Usuario getAdmin() {
+        return admin;
     }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public void setAdmin(Usuario admin) {
+        this.admin = admin;
     }
 
-    public int getEventoId() {
-        return eventoId;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setEventoId(int eventoId) {
-        this.eventoId = eventoId;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
     public List<Usuario> getMiembros() {
@@ -92,5 +95,13 @@ public class Grupo {
 
     public void setMiembros(List<Usuario> miembros) {
         this.miembros = miembros;
+    }
+
+    public List<Mensaje> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(List<Mensaje> mensajes) {
+        this.mensajes = mensajes;
     }
 }

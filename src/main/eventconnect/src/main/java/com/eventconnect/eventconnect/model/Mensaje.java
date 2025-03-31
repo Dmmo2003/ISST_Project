@@ -8,8 +8,8 @@ import java.util.Date;
 public class Mensaje {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto_increment
-    private int id;  // Lo cambié a int, ya que en tu BD los IDs son INT
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(nullable = false)
     private String contenido;
@@ -19,11 +19,11 @@ public class Mensaje {
     private Date fecha;
 
     @ManyToOne
-    @JoinColumn(name = "Remitente_Id", nullable = false)  // Relación con Usuario
+    @JoinColumn(name = "remitente_id", nullable = false)
     private Usuario remitente;
 
     @ManyToOne
-    @JoinColumn(name = "Grupo_Id", nullable = false)  // Relación con Grupo
+    @JoinColumn(name = "grupo_id", nullable = false)
     private Grupo grupo;
 
     // Constructor vacío (JPA lo necesita)
