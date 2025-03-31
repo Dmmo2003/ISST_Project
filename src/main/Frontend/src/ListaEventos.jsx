@@ -46,7 +46,9 @@ export default function ListaEventos(props) {
         const cargarEventos = async () => {
             try {
                 const eventosBackend = await obtenerEventos();
+                console.log(eventosBackend);
                 setEventos(eventosBackend);
+                console.log(eventos);
             } catch (error) {
                 console.error("No se pudieron cargar los eventos:", error);
             }

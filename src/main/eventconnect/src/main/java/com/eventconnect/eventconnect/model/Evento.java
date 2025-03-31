@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
-@Table(name = "eventos")
+@Table(name = "Evento")
 public class Evento {
 
     @Id
@@ -26,10 +26,10 @@ public class Evento {
     @JoinColumn(name = "organizador_id", nullable = false)
     private Usuario organizador;
 
-    @Column(nullable = false)
+   // @Column(nullable = false)
     private String descripcion;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String categoria;
 
     @ManyToMany
@@ -78,9 +78,11 @@ public class Evento {
     public int getOrganizadorId() {
         return organizador.getId();
     }
-
     public void setOrganizadorId(int organizadorId) {
-        this.organizador.setId(organizador.getId());
+        if (this.organizador == null) {
+            this.organizador = new Usuario(); // Aseguramos que no sea null
+        }
+        this.organizador.setId(organizadorId);
     }
 
     public String getDescripcion() {

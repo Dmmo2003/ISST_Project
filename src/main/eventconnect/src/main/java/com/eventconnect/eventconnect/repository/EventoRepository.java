@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
     
-    List<Evento> findByAdminId(int adminId);
-    
-    List<Evento> findByOrganizadorId(int organizadorId);
-    
+
 
 }
