@@ -50,7 +50,7 @@ export default function HoverEvento(props) {
                 });
         }
     }, [evento.ubicacion]);
-    
+
 
     async function obtenerCoordenadas(direccion) {
         const apiKey = "AIzaSyDom-bBHqqlpEbgMtYHU97FnxkssLgSn40"; // Usa tu clave de Google Maps
