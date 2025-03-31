@@ -1,22 +1,12 @@
 import api from "./api";
 import axios from "axios";
 
-const API_BASE_URL = '/api/eventos';
-// Obtener todos los eventos
-export const fetchEventos = async () => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}`); // GET /api/eventos
-        return response.data;
-    } catch (error) {
-        console.error("Error obteniendo eventos:", error);
-        throw error;
-    }
-};
+const API_BASE_URL = 'http://localhost:8080/api/eventos';
 
 // Crear un nuevo evento
 export const crearEvento = async (evento) => {
     try {
-        const response = await api.post(`${API_BASE_URL}`, evento);
+        const response = await axios.post(`${API_BASE_URL}`, evento);
         return response.data;
     } catch (error) {
         console.error("Error creando evento:", error);
@@ -27,7 +17,7 @@ export const crearEvento = async (evento) => {
 // Eliminar un evento por ID
 export const eliminarEvento = async (id) => {
     try {
-        await api.delete(`${API_BASE_URL}/${id}`);
+        await axios.delete(`${API_BASE_URL}/${id}`);
     } catch (error) {
         console.error("Error eliminando evento:", error);
         throw error;

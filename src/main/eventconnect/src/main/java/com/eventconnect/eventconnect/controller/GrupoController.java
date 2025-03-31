@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/grupos")
+@RequestMapping("/api/grupos")
 public class GrupoController {
 
     private final GrupoService grupoService;
@@ -21,7 +22,7 @@ public class GrupoController {
 
     // Obtener todos los grupos
     @GetMapping
-    public ResponseEntity<List<Grupo>> obtenerTodos() {
+    public ResponseEntity<List<Grupo>> obtenerGrupos() {
         return ResponseEntity.ok(grupoService.obtenerTodosGrupos());
     }
 

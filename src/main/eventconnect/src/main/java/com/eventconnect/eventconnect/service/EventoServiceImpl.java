@@ -20,7 +20,10 @@ public class EventoServiceImpl implements EventoService {
 
     @Override
     public List<Evento> obtenerEventos() {
-        return eventoRepository.findAll();
+        List<Evento> eventos = eventoRepository.findAll();
+        System.out.println("Eventos encontrados: " + eventos.size());
+        eventos.forEach(evento -> System.out.println(evento.getNombre()));
+        return eventos;
     }
 
     @Override
