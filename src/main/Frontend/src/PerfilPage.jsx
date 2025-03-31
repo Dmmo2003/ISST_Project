@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-// import { useNavigate } from 'react-router-dom';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { getUsuario, getEventosSeguidos, updateUsuario } from './api/perfil'; // Importamos las funciones de la API
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import data from "./constants/data";
-import AcordeonEventosPerfil from './AcordeonEventosPerfil';
+import { getUsuario, getEventosSeguidos, updateUsuario } from './api/perfil';
 import CardPerfil from './CardPerfil';
 import CardEventosPerfil from './CardEventosPerfil';
 
-
 // Paleta de colores
 const colors = {
-  primary: '#219EBC',    // Azul principal
-  dark: '#023047',       // Azul oscuro (para texto)
-  danger: '#EF4444'      // Rojo para acciones peligrosas
+  primary: '#219EBC',
+  dark: '#023047',
+  danger: '#EF4444'
 };
 
 export default function PerfilPage(props) {
@@ -29,13 +22,10 @@ export default function PerfilPage(props) {
   const [eventosCreados, setEventosCreados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [avatarFile, setAvatarFile] = useState(null);
 
   // Estado para el formulario de edición
   const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
   const [usuarioName, setUsuarioName] = useState('');
-  const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
   const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const [error, setError] = useState('');
@@ -52,7 +42,6 @@ export default function PerfilPage(props) {
 
         const eventosData = await getEventosSeguidos(userId);
         setEventosSeguidos(eventosData);
-
       } catch (error) {
         console.error('Error al cargar los datos:', error);
       } finally {
@@ -63,38 +52,26 @@ export default function PerfilPage(props) {
     fetchData();
   }, [userId]);
 
-  // const eventosSeguidos = usuarioActual.gruposSeguidos 
-  //   ? usuarioActual.gruposSeguidos
-  //       .map(grupo => data.eventos.find(evento => evento && evento.id === grupo.eventoId))
-  //       .filter(Boolean)
-  //   : [];
-  // setEventosSeguidos(eventosSeguidos);
-
-  const handleEditProfile = () => setOpen(true);
-
   const handleSave = async () => {
     if (contraseña && contraseña !== confirmarContraseña) {
       setError("Las contraseñas no coinciden");
       return;
     }
 
-
     try {
       setError('');
       const updatedUser = await updateUsuario(userId, {
         nombre,
         username: usuarioName,
-        ...(contraseña && { password: contraseña }) // Solo enviar la contraseña si se ha cambiado
+        ...(contraseña && { password: contraseña })
       });
 
-      setUsuario(updatedUser); // Actualizar el estado con los nuevos datos
+      setUsuario(updatedUser);
       setOpen(false);
     } catch (error) {
       setError('Error al actualizar el perfil. Inténtalo de nuevo.');
     }
   };
-
-
 
   const handleAbandonarEvento = (eventoId) => {
     setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
@@ -113,14 +90,22 @@ export default function PerfilPage(props) {
         </div>
       </div>
     ) : (
-      <div className="min-h-screen bg-gray-50">
+      <div 
+        className="min-h-screen" 
+        style={{ 
+          backgroundImage: "url('/images/fondoPerfil.jpg')", 
+          backgroundSize: "cover", 
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col lg:flex-row gap-6">
 
             {/* Tarjeta de perfil */}
-            <CardPerfil usuario={usuario} navigate={navigate}/>
+            <CardPerfil usuario={usuario} navigate={navigate} />
 
-            {/* Sección de eventos en columnas paralelas */}
+            {/* Sección de eventos */}
             <div className="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-2 gap-6">
               <CardEventosPerfil
                 title="Eventos que Sigues"
@@ -141,5 +126,5 @@ export default function PerfilPage(props) {
         </div>
       </div>
     )
-  )
-};
+  );
+}

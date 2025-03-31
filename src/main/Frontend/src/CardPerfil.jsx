@@ -1,6 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import DialogPerfil from "./DialogPerfil";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -13,7 +12,6 @@ export default function CardPerfil(props) {
     const setUsuarioName = props.setUsuarioName;
     const setCorreo = props.setCorreo;
     const setContrasena = props.setContrasena;
-
     const navigate = props.navigate;
     const [error, setError] = useState('');
 
@@ -30,18 +28,15 @@ export default function CardPerfil(props) {
         }
     };
 
-
     return (
-        <Card className="w-full lg:w-1/3 bg-white shadow-sm">
+        <Card className="w-full lg:w-1/3 bg-[#FB8500] shadow-sm">
             <div className="p-6">
                 <CardHeader className="flex flex-col items-center">
-
                     <div className="relative group mb-4">
                         <label htmlFor="avatar-upload" className="cursor-pointer">
-
-                            <Avatar className="w-32 h-32 border-2 border-primary">
+                            <Avatar className="w-32 h-32 border-2 border-white">
                                 <AvatarImage src={avatarPreview || "/default-avatar.jpg"} alt={`Avatar de ${usuario.nombre}`} />
-                                <AvatarFallback className="text-3xl font-medium bg-primary text-white">
+                                <AvatarFallback className="text-3xl font-medium bg-white text-[#FB8500]">
                                     {(usuario.nombre && usuario.nombre.charAt(0)) || ''}
                                     {(usuario.apellido && usuario.apellido.charAt(0)) || ''}
                                 </AvatarFallback>
@@ -54,28 +49,35 @@ export default function CardPerfil(props) {
                                 onChange={handleAvatarChange}
                                 className="hidden"
                             />
-
                         </label>
                     </div>
 
-                    <CardTitle className="text-center">
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                    <CardTitle className="text-center text-white">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                             {usuario.nombre || 'Nombre no disponible'} {usuario.apellido || ''}
                         </h2>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-white">
                             @{usuario.username || 'usuario'}
                         </p>
                     </CardTitle>
                 </CardHeader>
 
                 <CardContent className="text-center">
-                    <p className="text-sm break-all text-gray-600">
+                    <p className="text-sm break-all text-white">
                         {usuario.correo || 'correo@no.disponible'}
                     </p>
                 </CardContent>
 
                 <CardFooter className="flex justify-center">
-                    <DialogPerfil usuario={usuario} navigate={navigate} setApellido={setApellido} setNombre={setNombre} setUsuarioName={setUsuarioName} setCorreo={setCorreo} setContrasena={setContrasena}/>
+                    <DialogPerfil 
+                        usuario={usuario} 
+                        navigate={navigate} 
+                        setApellido={setApellido} 
+                        setNombre={setNombre} 
+                        setUsuarioName={setUsuarioName} 
+                        setCorreo={setCorreo} 
+                        setContrasena={setContrasena} 
+                    />
                 </CardFooter>
             </div>
         </Card>

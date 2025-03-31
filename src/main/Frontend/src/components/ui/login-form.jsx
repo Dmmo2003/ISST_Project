@@ -12,18 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
 import { iniciarSesion } from "../../api/auth";
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react";
 import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "@/components/ui/alert"
-import { Loader2 } from "lucide-react"
+} from "@/components/ui/alert";
 
-
-
-
-//TODO LLAMADA AL SERVER PARA OBTENER LA INFORMACION DEL USUARIO
 export function LoginForm({ className, ...props }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -34,10 +29,6 @@ export function LoginForm({ className, ...props }) {
     const handleLogin = async (event) => {
         event.preventDefault();
 
-        // Verificar las credenciales
-        console.log('Email:', email);
-        console.log('Password:', password);
-
         if (!email || !password) {
             setError("Por favor, ingresa tu correo y contraseña.");
             return;
@@ -47,8 +38,7 @@ export function LoginForm({ className, ...props }) {
 
         try {
             const data = await iniciarSesion(email, password);
-            localStorage.setItem("token", data.token); // Guardar el token en localStorage
-            console.log(data, "Token guardado en localStorage", localStorage.getItem("token"));
+            localStorage.setItem("token", data.token);
             alert("Inicio de sesión exitoso");
             navigate("/");
         } catch (error) {
@@ -60,10 +50,10 @@ export function LoginForm({ className, ...props }) {
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <Card>
+            <Card className="bg-[#FB8500] text-white">
                 <CardHeader className="text-center">
-                    <CardTitle className="text-xl">Welcome back</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-xl">Bienvenido de nuevo</CardTitle>
+                    <CardDescription className="text-white">
                         Inicia sesión con tu cuenta de GitHub o Google
                     </CardDescription>
                 </CardHeader>
@@ -71,21 +61,21 @@ export function LoginForm({ className, ...props }) {
                     <form onSubmit={handleLogin}>
                         <div className="grid gap-6">
                             <div className="flex flex-col gap-4">
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full bg-white text-[#FB8500] hover:bg-gray-200">
                                     Inicia sesión con GitHub
                                 </Button>
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full bg-white text-[#FB8500] hover:bg-gray-200">
                                     Inicia sesión con Google
                                 </Button>
                             </div>
-                            <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-                                <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                            <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-white">
+                                <span className="relative z-10 bg-[#FB8500] px-2 text-white">
                                     O ingresa tus credenciales
                                 </span>
                             </div>
                             <div className="grid gap-6">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="email">Email</Label>
+                                    <Label htmlFor="email" className="text-white">Email</Label>
                                     <Input
                                         id="email"
                                         type="email"
@@ -93,14 +83,15 @@ export function LoginForm({ className, ...props }) {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
+                                        className="bg-white text-black placeholder-black"
                                     />
                                 </div>
                                 <div className="grid gap-2">
                                     <div className="flex items-center">
-                                        <Label htmlFor="password">Contraseña</Label>
+                                        <Label htmlFor="password" className="text-white">Contraseña</Label>
                                         <a
                                             href="#"
-                                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                                            className="ml-auto text-sm text-white underline-offset-4 hover:underline"
                                         >
                                             Olvidaste tu contraseña?
                                         </a>
@@ -108,11 +99,14 @@ export function LoginForm({ className, ...props }) {
                                     <Input
                                         id="password"
                                         type="password"
+                                        placeholder="Tu contraseña"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
+                                        className="bg-white text-black placeholder-black"
                                     />
                                 </div>
+
                                 {/* Mensaje de error */}
                                 {error && (
                                     <Alert variant="destructive">
@@ -123,19 +117,20 @@ export function LoginForm({ className, ...props }) {
                                         </AlertDescription>
                                     </Alert>
                                 )}
+
                                 {loading ? (
-                                    <Button disabled>
+                                    <Button disabled className="bg-white text-[#FB8500]">
                                         <Loader2 className="animate-spin" />
                                         Iniciando sesión
                                     </Button>
                                 ) : (
-                                    <Button type="submit" className="w-full">
+                                    <Button type="submit" className="w-full bg-white text-[#FB8500] hover:bg-gray-200">
                                         Iniciar sesión
                                     </Button>
                                 )}
                             </div>
 
-                            <div className="text-center text-sm">
+                            <div className="text-center text-sm text-white">
                                 ¿No tienes una cuenta?{" "}
                                 <a href="/register" className="underline underline-offset-4">
                                     Regístrate
@@ -146,7 +141,7 @@ export function LoginForm({ className, ...props }) {
                 </CardContent>
             </Card>
 
-            <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
+            <div className="text-balance text-center text-xs text-white [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-gray-300">
                 Al continuar, aceptas los <a href="#">Términos y condiciones</a>{" "} y <a href="#">Políticas de privacidad</a>.
             </div>
         </div>

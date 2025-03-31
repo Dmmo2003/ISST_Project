@@ -14,23 +14,25 @@ const EventDetails = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <Card className="rounded-2xl shadow-md">
+    <div 
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 sm:px-6 lg:px-8 py-6"
+      style={{ backgroundImage: "url('/images/fondoDetalle.jpg')" }} // Fondo con imagen
+    >
+      <Card className="rounded-2xl shadow-md bg-[#023047] text-white p-6"> 
         <CardHeader className="text-center">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">{event.name}</h1>
-          <p className="text-gray-500 text-sm md:text-base">{event.date}</p>
-
+          <p className="text-white text-sm md:text-base">{event.date}</p>
         </CardHeader>
         <CardContent>
-          <p className="text-justify text-gray-700 text-sm md:text-base">
+          <p className="text-justify text-white text-sm md:text-base">
             {event.description}
           </p>
-          <p className="text-gray-600 mt-4 text-sm md:text-base">
+          <p className="mt-4 text-sm md:text-base">
             Ubicación: <span className="font-medium">{event.location}</span>
           </p>
           <Button 
             onClick={handleFollow} 
-            className="mt-6 w-full md:w-auto"
+            className="mt-6 w-full md:w-auto bg-white text-[#023047] hover:bg-gray-300"
             variant={isFollowing ? "destructive" : "default"}
           >
             {isFollowing ? "Siguiendo ✅" : "Seguir evento"}
@@ -38,8 +40,8 @@ const EventDetails = () => {
         </CardContent>
       </Card>
 
-      <div className="mt-8">
-        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">
+      <div className="mt-8 bg-[#023047] text-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-center">
           Grupos asociados
         </h2>
         <GroupList groups={event.groups} />

@@ -11,10 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { registrarUsuario } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react"
 
 export function RegisterForm({ className, ...props }) {
   const [formData, setFormData] = useState({
@@ -43,7 +42,6 @@ export function RegisterForm({ className, ...props }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar que las contraseñas coincidan
     if (formData.password !== formData.confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
@@ -65,7 +63,6 @@ export function RegisterForm({ className, ...props }) {
       setSuccessMessage("Registro exitoso, redirigiendo...");
       setError("");
 
-      // Redirigir al usuario a la pantalla de login después de 2 segundos
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Error en el registro");
@@ -77,10 +74,10 @@ export function RegisterForm({ className, ...props }) {
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="bg-[#FB8500] text-white">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Crear cuenta</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white">
             Regístrate completando el siguiente formulario.
           </CardDescription>
         </CardHeader>
@@ -88,10 +85,10 @@ export function RegisterForm({ className, ...props }) {
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6">
 
-              {/*Nombre y Primer Apellido */}
+              {/* Nombre y Primer Apellido */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="nombre">Nombre</Label>
+                  <Label htmlFor="nombre" className="text-white">Nombre</Label>
                   <Input
                     id="nombre"
                     name="nombre"
@@ -100,10 +97,11 @@ export function RegisterForm({ className, ...props }) {
                     value={formData.nombre}
                     onChange={handleChange}
                     required
+                    className="bg-white text-black placeholder-black"
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="apellido1">Primer Apellido</Label>
+                  <Label htmlFor="apellido1" className="text-white">Primer Apellido</Label>
                   <Input
                     id="apellido1"
                     name="apellido1"
@@ -112,12 +110,14 @@ export function RegisterForm({ className, ...props }) {
                     value={formData.apellido1}
                     onChange={handleChange}
                     required
+                    className="bg-white text-black placeholder-black"
                   />
                 </div>
               </div>
+
               {/* Segundo Apellido */}
               <div className="grid gap-2">
-                <Label htmlFor="apellido2">Segundo Apellido</Label>
+                <Label htmlFor="apellido2" className="text-white">Segundo Apellido</Label>
                 <Input
                   id="apellido2"
                   name="apellido2"
@@ -125,11 +125,13 @@ export function RegisterForm({ className, ...props }) {
                   placeholder="Segundo apellido (opcional)"
                   value={formData.apellido2}
                   onChange={handleChange}
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
+
               {/* Correo electrónico */}
               <div className="grid gap-2">
-                <Label htmlFor="correo">Correo electrónico</Label>
+                <Label htmlFor="correo" className="text-white">Correo electrónico</Label>
                 <Input
                   id="correo"
                   name="correo"
@@ -138,11 +140,13 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.correo}
                   onChange={handleChange}
                   required
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
+
               {/* Nombre de usuario */}
               <div className="grid gap-2">
-                <Label htmlFor="username">Nombre de usuario</Label>
+                <Label htmlFor="username" className="text-white">Nombre de usuario</Label>
                 <Input
                   id="username"
                   name="username"
@@ -151,11 +155,13 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.username}
                   onChange={handleChange}
                   required
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
+
               {/* Fecha de nacimiento */}
               <div className="grid gap-2">
-                <Label htmlFor="fechaNacimiento">Fecha de Nacimiento</Label>
+                <Label htmlFor="fechaNacimiento" className="text-white">Fecha de Nacimiento</Label>
                 <Input
                   id="fechaNacimiento"
                   name="fechaNacimiento"
@@ -163,11 +169,13 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.fechaNacimiento}
                   onChange={handleChange}
                   required
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
+
               {/* Contraseña */}
               <div className="grid gap-2">
-                <Label htmlFor="password">Contraseña</Label>
+                <Label htmlFor="password" className="text-white">Contraseña</Label>
                 <Input
                   id="password"
                   name="password"
@@ -176,11 +184,13 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
+
               {/* Repetir contraseña */}
               <div className="grid gap-2">
-                <Label htmlFor="confirmPassword">Repetir Contraseña</Label>
+                <Label htmlFor="confirmPassword" className="text-white">Repetir Contraseña</Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -189,6 +199,7 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
+                  className="bg-white text-black placeholder-black"
                 />
               </div>
 
@@ -212,18 +223,20 @@ export function RegisterForm({ className, ...props }) {
                   </AlertDescription>
                 </Alert>
               )}
+
+              {/* Botón de Registro */}
               {loading ? (
-                <Button disabled>
+                <Button disabled className="bg-white text-[#FB8500]">
                   <Loader2 className="animate-spin" />
                   Registrando...
                 </Button>
               ) : (
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full bg-white text-[#FB8500] hover:bg-gray-200">
                   Registrarse
                 </Button>
               )}
 
-              <div className="text-center text-sm">
+              <div className="text-center text-sm text-white">
                 ¿Ya tienes una cuenta?{" "}
                 <a href="/login" className="underline underline-offset-4">
                   Inicia sesión
@@ -231,19 +244,8 @@ export function RegisterForm({ className, ...props }) {
               </div>
             </div>
           </form>
-
         </CardContent>
       </Card>
-      <div className="text-center text-xs text-muted-foreground">
-        Al registrarte, aceptas nuestros{" "}
-        <a href="#" className="underline underline-offset-4 hover:text-primary">
-          Términos de Servicio
-        </a>{" "}
-        y{" "}
-        <a href="#" className="underline underline-offset-4 hover:text-primary">
-          Política de Privacidad
-        </a>.
-      </div>
     </div>
   );
 }
