@@ -44,7 +44,7 @@ function App() {
           {/* Otras rutas */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/perfil" element={<PerfilPage />} />
+          <Route path="/perfil" element={<PerfilPage navigate={navigate}/>} />
           <Route path="/eventos/:id" element={<EventDetails />} />
           <Route path="/eventos" element={<ListaEventos  navigate={navigate}/>} />
           <Route path="*" element={<NoMatch />} />
