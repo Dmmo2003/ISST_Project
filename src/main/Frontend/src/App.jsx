@@ -14,7 +14,8 @@ import './App.css';
 import ListaEventos from './ListaEventos';
 import { ThemeProvider } from "@/components/ui/theme-provider"
 import PerfilPage from './PerfilPage'
-
+import TerminosYCondicionesPage from './TerminosYCondicionesPage';
+import PoliticaPrivacidad from './PoliticaPrivacidad';
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ function App() {
           <Route path="/perfil" element={<PerfilPage navigate={navigate}/>} />
           <Route path="/eventos/:id" element={<EventDetails />} />
           <Route path="/eventos" element={<ListaEventos  navigate={navigate}/>} />
+          <Route path="/terms" element={<TerminosYCondicionesPage navigate={navigate}/>} />
+          <Route path="/privacy" element={<PoliticaPrivacidad navigate={navigate}/>} />
           <Route path="*" element={<NoMatch />} />
             
         </Routes>
