@@ -25,23 +25,68 @@ export default function HoverEvento(props) {
         setPosition({ x: e.domEvent.clientX, y: e.domEvent.clientY });
 
         setTimeout(() => {
-               setVisible(true); 
+            setVisible(true);
         }, 1000);
     };
 
     const handleMouseOut = () => {
-            setVisible(false);
+        setVisible(false);
     };
+
+    useEffect(() => {
+        if (evento.ubicacion) {
+            obtenerCoordenadas(evento.ubicacion)
+                .then((coordenadas) => {
+                    if (coordenadas) {
+                        setEvento(prevEvento => ({
+                            ...prevEvento,
+                            lat: coordenadas.lat,
+                            lng: coordenadas.lng
+                        }));
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error al obtener coordenadas:", error);
+                });
+        }
+    }, [evento.ubicacion]);
+    
+
+    async function obtenerCoordenadas(direccion) {
+        const apiKey = "AIzaSyDom-bBHqqlpEbgMtYHU97FnxkssLgSn40"; // Usa tu clave de Google Maps
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${apiKey}`;
+
+        try {
+            const respuesta = await fetch(url);
+            const datos = await respuesta.json();
+
+            if (datos.status === "OK") {
+                const ubicacion = datos.results[0].geometry.location;
+                return { lat: ubicacion.lat, lng: ubicacion.lng };
+            } else {
+                console.error("Error en la geocodificación:", datos.status);
+                return null;
+            }
+        } catch (error) {
+            console.error("Error al obtener coordenadas:", error);
+            return null;
+        }
+    }
+
+
 
 
     return (
         <>
-            <Marker
-                key={evento.id}
-                position={{ lat: evento.lat, lng: evento.lng }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-            />
+            {evento.lat && evento.lng && !isNaN(evento.lat) && !isNaN(evento.lng) && (
+                <Marker
+                    key={evento.id}
+                    position={{ lat: evento.lat, lng: evento.lng }}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                />
+            )}
+
 
             {visible && position && (
                 <div

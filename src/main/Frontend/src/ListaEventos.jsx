@@ -58,7 +58,7 @@ export default function ListaEventos(props) {
     }, []);
 
     //cambiar eventosMock por eventos
-    const eventosFiltrados = eventosMock.filter((evento) => {
+    const eventosFiltrados = eventos.filter((evento) => {
         const cumpleBusqueda = evento.nombre.toLowerCase().includes(searchTerm.toLowerCase());
         const cumpleEtiqueta = selectedEtiqueta === "todas" || evento.etiquetas.includes(selectedEtiqueta);
         const eventoFecha = new Date(evento.fecha);
