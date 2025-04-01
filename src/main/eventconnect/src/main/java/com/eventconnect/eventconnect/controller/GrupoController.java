@@ -69,4 +69,10 @@ public class GrupoController {
         // Llamamos al servicio para obtener los grupos por eventoId
         return grupoService.encontrarGruposPorEventoId(eventoId);
     }
+
+    @GetMapping("/{grupoId}/usuario/{usuarioId}")
+    public boolean isUserInGroup(@PathVariable int grupoId, @PathVariable int usuarioId) {
+        return grupoService.isUserInGroup(grupoId, usuarioId);
+    }
+    
 }

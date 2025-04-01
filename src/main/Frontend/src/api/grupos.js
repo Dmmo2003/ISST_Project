@@ -44,3 +44,16 @@ export const obtenerTodosGruposConCreador = async () => {
         throw error;
     }
 }
+
+export const usuarioEstaEnGrupo = async (grupoId, usuarioId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${grupoId}/usuario/${usuarioId}`);
+      const isInGroup = await response.json();
+      console.log(isInGroup ? "El usuario está en el grupo" : "El usuario no está en el grupo");
+      return isInGroup;
+    } catch (error) {
+      console.error("Error al comprobar si el usuario está en el grupo", error);
+      return false;
+    }
+  };
+  

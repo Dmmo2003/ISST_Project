@@ -8,12 +8,14 @@ import { UserContext } from "./context/UserContext";
 import { obtenerGruposEvento } from "./api/grupos";
 import { obtenerEventoConOrganizador } from "./api/eventos";
 import { obtenerRelacionUsuarioEvento } from "./api/eventos";
+import { usuarioEstaEnGrupo } from "./api/grupos";
 
 const EventDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [grupos, setGrupos] = useState([]);
   const [evento, setEvento] = useState({});
   const [organizador, setOrganizador] = useState({});
+  const [gruposSeguidos, setGruposSeguidos] = useState([]);
   const event = datos_probar.event;
   const { id } = useParams();
   const { user, logout } = useContext(UserContext);
@@ -59,6 +61,11 @@ const EventDetails = () => {
   const load = async (id) => {
     try {
 
+      if (!user || !user.id) {
+        console.log("Obteniendo user.id");
+        return;
+      }
+
       // Obtener el evento con el organizador
       const data = await obtenerEventoConOrganizador(id);
       if (!data) {
@@ -80,7 +87,7 @@ const EventDetails = () => {
       }
       console.log("Relacion Usuario Evento:", relacionUsuarioEventoBackend);
 
-      
+
       // Obtener los grupos del evento
       const gruposEventoData = await obtenerGruposEvento(id);
       if (!gruposEventoData) {
@@ -88,6 +95,19 @@ const EventDetails = () => {
       }
       setGrupos(gruposEventoData);
       console.log("Grupos del Evento:", gruposEventoData);
+
+      //Obtener relacion Grupo - Usuario
+      const gruposDelUsuario = [];
+
+      grupos.forEach(async (grupo) => {
+        const relacionGrupoUsuarioBackend = await usuarioEstaEnGrupo(grupo.id, user.id);
+        if (relacionGrupoUsuarioBackend) {
+          gruposDelUsuario.push(grupo);
+        }
+      });
+
+      setGruposSeguidos(gruposDelUsuario);
+      console.log("Grupos del Usuario:", gruposDelUsuario);
 
     } catch (error) {
       setError(`Error al cargar los datos: ${error.message}`);
@@ -135,7 +155,7 @@ const EventDetails = () => {
         <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-center mb-4">
           Grupos asociados
         </h2>
-        <GroupList grupos={grupos} />
+        <GroupList grupos={grupos} gruposSeguidos={gruposSeguidos} />
       </div>
     </div>
   );

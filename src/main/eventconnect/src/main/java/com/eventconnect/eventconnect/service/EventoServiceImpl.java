@@ -97,6 +97,7 @@ public class EventoServiceImpl implements EventoService {
         eventoRepository.deleteById(id);
     }
 
+    @Override
     public boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento) {
         // Obtener el usuario por su id
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);

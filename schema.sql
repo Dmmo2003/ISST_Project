@@ -1,67 +1,68 @@
+create DATABASE isst_database;
+use isst_database;
+
 CREATE TABLE Usuario (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(255) UNIQUE NOT NULL,
-    Correo VARCHAR(255) UNIQUE NOT NULL,
-    Contraseña VARCHAR(255) NOT NULL,
-    Nombre VARCHAR(255) NOT NULL,
-    Primer_Apellido VARCHAR(255) NOT NULL,
-    Segundo_Apellido VARCHAR(255),
-    Fecha_nac TIMESTAMP NOT NULL,
-    Tipo ENUM('persona', 'empresa') NOT NULL,  
-    CIF VARCHAR(20) NULL,  
-    CHECK (Tipo IN ('persona', 'empresa')),
-    CHECK (Tipo = 'empresa' AND CIF IS NOT NULL OR Tipo = 'persona' AND CIF IS NULL), 
-    CHECK (Fecha_nac <= CURRENT_TIMESTAMP) 
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombreUsuario VARCHAR(255) UNIQUE NOT NULL,
+    correo VARCHAR(255) UNIQUE NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    primer_Apellido VARCHAR(255),
+    segundo_Apellido VARCHAR(255),
+    fecha_nacimiento TIMESTAMP NOT NULL,
+    tipo ENUM('persona', 'empresa') NOT NULL,
+    CIF VARCHAR(20) NULL,
+    CHECK (tipo = 'empresa' AND CIF IS NOT NULL OR tipo = 'persona' AND CIF IS NULL)
 );
 
+CREATE USER 'admin' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON eventconnect_db.* TO 'admin';
+FLUSH PRIVILEGES;
 
 CREATE TABLE Evento (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(255) NOT NULL,
-    Fecha TIMESTAMP NOT NULL,
-    Ubicacion VARCHAR(255) NOT NULL,
-    Organizador_Id INT NOT NULL,
-    Descripcion TEXT,
-    Categoria VARCHAR(255),
-    FOREIGN KEY (Organizador_Id) REFERENCES Usuario(Id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    fecha TIMESTAMP NOT NULL,
+    ubicacion VARCHAR(255) NOT NULL,
+    organizador_Id INT NOT NULL,
+    descripcion TEXT,
+    categoria VARCHAR(255),
+    FOREIGN KEY (organizador_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE Grupo (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(255) NOT NULL,
-    Evento_Id INT NOT NULL,
-    Admin_Id INT NOT NULL,
-    Descripcion TEXT,
-    FOREIGN KEY (Evento_Id) REFERENCES Evento(Id) ON DELETE CASCADE,
-    FOREIGN KEY (Admin_Id) REFERENCES Usuario(Id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    evento_Id INT NOT NULL,
+    admin_Id INT NOT NULL,
+    descripcion TEXT,
+    FOREIGN KEY (evento_Id) REFERENCES Evento(id) ON DELETE CASCADE,
+    FOREIGN KEY (admin_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE Mensaje (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Contenido VARCHAR(255) NOT NULL,
-    Remitente_Id INT NOT NULL,
-    Grupo_Id INT NOT NULL,
-    Fecha TIMESTAMP NOT NULL,
-    FOREIGN KEY (Remitente_Id) REFERENCES Usuario(Id) ON DELETE CASCADE,
-    FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    contenido VARCHAR(255) NOT NULL,
+    remitente_Id INT NOT NULL,
+    grupo_Id INT NOT NULL,
+    fecha TIMESTAMP NOT NULL,
+    FOREIGN KEY (remitente_Id) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (grupo_Id) REFERENCES Grupo(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE Usuario_Evento (
-    Usuario_Id INT,
-    Evento_Id INT,
-    PRIMARY KEY (Usuario_Id, Evento_Id),
-    FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id) ON DELETE CASCADE,
-    FOREIGN KEY (Evento_Id) REFERENCES Evento(Id) ON DELETE CASCADE
+    usuario_Id INT,
+    evento_Id INT,
+    PRIMARY KEY (usuario_Id, evento_Id),
+    FOREIGN KEY (usuario_Id) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (evento_Id) REFERENCES Evento(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE Usuario_Grupo (
-    Usuario_Id INT,
-    Grupo_Id INT,
-    PRIMARY KEY (Usuario_Id, Grupo_Id),
-    FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id) ON DELETE CASCADE,
-    FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id) ON DELETE CASCADE
+    usuario_Id INT,
+    grupo_Id INT,
+    PRIMARY KEY (usuario_Id, grupo_Id),
+    FOREIGN KEY (usuario_Id) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (grupo_Id) REFERENCES Grupo(id) ON DELETE CASCADE
 );
+
