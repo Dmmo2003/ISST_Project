@@ -114,9 +114,9 @@ export default function HoverEvento(props) {
                                         {evento.descripcion}
                                     </p>
 
-                                    <p className="text-sm">
+                                    {/* <p className="text-sm">
                                         Creado por {evento.usuario ? evento.usuario : "Anonimo"}
-                                    </p>
+                                    </p> */}
 
                                     <div className="flex items-center pt-2">
                                         <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
@@ -128,7 +128,7 @@ export default function HoverEvento(props) {
                                     <div className="flex items-center pt-2">
                                         <MapPin className="mr-2 h-4 w-4 opacity-70" />{" "}
                                         <span className="text-xs text-muted-foreground">
-                                            {evento.direccion}
+                                            {evento.ubicacion}
                                         </span>
                                     </div>
 

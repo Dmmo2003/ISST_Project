@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,62 +14,74 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import GooglePlacesAutocomplete from "react-google-autocomplete";
-import { LoadScript } from "@react-google-maps/api";
 import config from "./config/config";
 import { crearEvento } from "./api/eventos";
-
+import { UserContext } from "./context/UserContext";
 
 const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
 export default function DialogEventos() {
+  const { user } = useContext(UserContext);
+  const usuario = user;
+
   const [evento, setEvento] = useState({
     nombre: "",
-    fecha: "",
+    fecha: "", // Asegúrate de formatear la fecha correctamente
     ubicacion: "",
-    latitud: "",
-    longitud: "",
+    organizadorId: null, // El ID del organizador (usuario) que está creando el evento
     descripcion: "",
     categoria: ""
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleChange = (e) => {
-    setEvento({ ...evento, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEvento((prev) => ({
+      ...prev,
+      [name]: value,
+      organizadorId: user.id, // Aseguramos que el organizador siempre sea el usuario actual
+    }));
   };
 
   const handleUbicacionChange = (place) => {
     if (place && place.geometry) {
-      const lat = place.geometry.location.lat();
-      const lng = place.geometry.location.lng();
-
-      setEvento({
-        ...evento,
+      setEvento((prev) => ({
+        ...prev,
         ubicacion: place.formatted_address,
-        latitud: lat,
-        longitud: lng
-      });
+      }));
     }
   };
 
   const handleCrearEvento = async () => {
+    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria) {
+      setError("Todos los campos son obligatorios.");
+      return;
+    }
+    console.log(evento);
+
+    setError(null); // Limpiar errores previos
+    setLoading(true);
+
     try {
-      await crearEvento(evento); // Llamamos a la API
-      console.log("Evento creado con éxito:", evento);
-      // Opcional: cerrar el diálogo después de la creación
+      await crearEvento(evento);
       setEvento({
         nombre: "",
         fecha: "",
         ubicacion: "",
-        latitud: "",
-        longitud: "",
         descripcion: "",
-        categoria: ""
+        categoria: "",
+        organizador: user.id,
       });
-    } catch (error) {
-      console.error("Error al crear el evento:", error);
+      setLoading(false);
+      // Puedes cerrar el diálogo aquí si es necesario
+    } catch (err) {
+      console.error("Error al crear el evento:", err);
+      setLoading(false);
+      setError("Hubo un problema al crear el evento. Intenta nuevamente.");
     }
   };
-
-
 
   return (
     <Dialog>
@@ -86,15 +98,28 @@ export default function DialogEventos() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="nombre" className="text-right">Nombre</Label>
-            <Input id="nombre" name="nombre" value={evento.nombre} onChange={handleChange} className="col-span-3" />
+            <Input
+              id="nombre"
+              name="nombre"
+              value={evento.nombre}
+              onChange={handleChange}
+              className="col-span-3"
+              placeholder="Nombre del evento"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="fecha" className="text-right">Fecha</Label>
-            <Input id="fecha" name="fecha" type="date" value={evento.fecha} onChange={handleChange} className="col-span-3" />
+            <Input
+              id="fecha"
+              name="fecha"
+              type="date"
+              value={evento.fecha}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="ubicacion" className="text-right">Ubicación</Label>
-            {/* <LoadScript googleMapsApiKey={API_GOOGLE_MAPS_KEY}> */}
             <GooglePlacesAutocomplete
               apiKey={API_GOOGLE_MAPS_KEY}
               onPlaceSelected={handleUbicacionChange}
@@ -104,11 +129,16 @@ export default function DialogEventos() {
               }}
               className="col-span-3 w-full border rounded-md px-3 py-2"
             />
-            {/* </LoadScript> */}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="descripcion" className="text-right">Descripción</Label>
-            <Textarea id="descripcion" name="descripcion" value={evento.descripcion} onChange={handleChange} className="col-span-3 resize-none" />
+            <Textarea
+              id="descripcion"
+              name="descripcion"
+              value={evento.descripcion}
+              onChange={handleChange}
+              className="col-span-3 resize-none"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Categoría</Label>
@@ -126,8 +156,13 @@ export default function DialogEventos() {
             </Select>
           </div>
         </div>
+
+        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
         <DialogFooter>
-          <Button onClick={handleCrearEvento}>Crear Evento</Button>
+          <Button onClick={handleCrearEvento} disabled={loading}>
+            {loading ? "Creando..." : "Crear Evento"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

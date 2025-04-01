@@ -15,5 +15,7 @@ public interface UsuarioService {
 
     void deleteUsuario(int id);
 
-    Optional<Usuario> obtenerUsuarioPorUsername(String username);
+    Optional<Usuario> obtenerUsuarioPorUsername(String nombreUsuario);
+
+    Optional<Usuario> getUsuarioByMailPassword(String correo, String contraseña);
 }

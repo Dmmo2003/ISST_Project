@@ -38,7 +38,7 @@ export default function PerfilPage(props) {
         const usuarioData = await getUsuario(userId);
         setUsuario(usuarioData);
         setNombre(usuarioData.nombre);
-        setUsuarioName(usuarioData.username);
+        setNombreUsuario(usuarioData.nombreUsuario);
 
         const eventosData = await getEventosSeguidos(userId);
         setEventosSeguidos(eventosData);
@@ -62,7 +62,7 @@ export default function PerfilPage(props) {
       setError('');
       const updatedUser = await updateUsuario(userId, {
         nombre,
-        username: usuarioName,
+        nombreUsuario: nombreUsuario,
         ...(contraseña && { password: contraseña })
       });
 

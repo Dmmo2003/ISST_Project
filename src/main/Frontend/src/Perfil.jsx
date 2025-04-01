@@ -34,7 +34,7 @@ export default function Perfil() {
   // Estado para el formulario de edición
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
-  const [usuarioName, setUsuarioName] = useState('');
+  const [nombreUsuario, setNombreUsuario] = useState('');
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
   // const [confirmarContraseña, setConfirmarContraseña] = useState('');
@@ -43,8 +43,8 @@ export default function Perfil() {
 
   const userId = localStorage.getItem('userId');
   useEffect(() => {
-    console.log("CAMBIOS DEL DIALOG", nombre, apellido, usuarioName, correo, contrasena);
-  }, [nombre, apellido, usuarioName, correo, contrasena]);
+    console.log("CAMBIOS DEL DIALOG", nombre, apellido, nombreUsuario, correo, contraseña);
+  }, [nombre, apellido, nombreUsuario, correo, contraseña]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +52,7 @@ export default function Perfil() {
         const usuarioData = await getUsuario(userId);
         setUsuario(usuarioData);
         setNombre(usuarioData.nombre);
-        setUsuarioName(usuarioData.username);
+        setUsuarioName(usuarioData.nombreUsuario);
 
         const eventosData = await getEventosSeguidos(userId);
         setEventosSeguidos(eventosData);

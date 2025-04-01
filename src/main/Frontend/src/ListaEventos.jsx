@@ -11,7 +11,7 @@ import HoverEvento from "./HoverEvento";
 import config from "./config/config";
 import { eventosMock } from "./constants/EventosMock";
 import CardEventos from "./CardEventos";
-import { obtenerEventos } from "./api/eventos";
+import { obtenerEventos, obtenerTodosEventosConOrganizador } from "./api/eventos";
 
 
 const containerStyle = {
@@ -22,6 +22,7 @@ const googleMapsApiKey = config.googleMapsApiKey
 
 export default function ListaEventos(props) {
     const [eventos, setEventos] = useState([]);
+    const [organizadores, setOrganizadores] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedEtiqueta, setSelectedEtiqueta] = useState("todas");
     const [diasFiltro, setDiasFiltro] = useState(30);
@@ -45,10 +46,18 @@ export default function ListaEventos(props) {
         // Obtener eventos desde el backend
         const cargarEventos = async () => {
             try {
+                // const eventosConOrganizadorBackend = await obtenerTodosEventosConOrganizador();
+                // console.log(eventosConOrganizadorBackend);
+
+                // const eventos = eventosConOrganizadorBackend.map((evento) => evento.evento);
+                // const organizadores = eventosConOrganizadorBackend.map((evento) => evento.organizador);
+                // setEventos(eventos);
+                // setOrganizadores(organizadores);
+
                 const eventosBackend = await obtenerEventos();
-                console.log(eventosBackend);
                 setEventos(eventosBackend);
-                console.log(eventos);
+
+
             } catch (error) {
                 console.error("No se pudieron cargar los eventos:", error);
             }
@@ -93,7 +102,7 @@ export default function ListaEventos(props) {
                         }}
                     >
                         {eventosFiltrados.map((evento) => (
-                            <HoverEvento key={evento.id} {...evento} />
+                            <HoverEvento key={evento.id} {...evento}/>
                         ))}
                     </GoogleMap>
                     {/* </LoadScript> */}

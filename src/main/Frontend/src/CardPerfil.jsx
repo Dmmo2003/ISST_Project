@@ -57,7 +57,7 @@ export default function CardPerfil(props) {
                             {usuario.nombre || 'Nombre no disponible'} {usuario.apellido || ''}
                         </h2>
                         <p className="text-sm text-white">
-                            @{usuario.username || 'usuario'}
+                            @{usuario.nombreUsuario || 'usuario'}
                         </p>
                     </CardTitle>
                 </CardHeader>

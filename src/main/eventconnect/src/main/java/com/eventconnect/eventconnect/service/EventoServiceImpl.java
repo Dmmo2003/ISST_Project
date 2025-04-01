@@ -1,21 +1,32 @@
 package com.eventconnect.eventconnect.service;
 
 import com.eventconnect.eventconnect.model.Evento;
+import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
 import com.eventconnect.eventconnect.repository.EventoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.repository.UsuarioRepository;
 
 @Service
 public class EventoServiceImpl implements EventoService {
 
     private final EventoRepository eventoRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public EventoServiceImpl(EventoRepository eventoRepository) {
+    public EventoServiceImpl(EventoRepository eventoRepository, UsuarioRepository usuarioRepository) {
         this.eventoRepository = eventoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -27,14 +38,37 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
+    public Usuario obtenerOrganizadorPorId(int eventoId) {
+        return eventoRepository.findById(eventoId)
+                .map(Evento::getOrganizador)
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+    }
+
+    @Override
+    public List<EventoConOrganizadorDTO> obtenerTodosLosEventosConOrganizadores() {
+        List<Evento> eventos = eventoRepository.findAll(); // Obtener todos los eventos
+        List<EventoConOrganizadorDTO> eventosConOrganizadores = new ArrayList<>();
+
+        for (Evento evento : eventos) {
+            Usuario organizador = evento.getOrganizador(); // Obtener el organizador del evento
+            EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(evento, organizador);
+            eventosConOrganizadores.add(dto);
+        }
+
+        return eventosConOrganizadores; // Retornar la lista con eventos y organizadores
+    }
+
+    @Override
     public Optional<Evento> obtenerEventoPorId(int id) {
         return eventoRepository.findById(id);
     }
 
     @Override
     public Evento crearEvento(Evento evento) {
-        return eventoRepository.save(evento);
+        // Aquí puedes agregar lógica adicional si es necesario (validación, etc.)
+        return eventoRepository.save(evento); // Guardar el evento en la base de datos
     }
+    
 
     @Override
     public Evento actualizarEvento(Evento evento) {

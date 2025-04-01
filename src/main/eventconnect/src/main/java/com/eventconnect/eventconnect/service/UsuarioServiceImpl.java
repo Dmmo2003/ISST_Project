@@ -40,8 +40,36 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     // Obtener un usuario por su nombre de usuario
     @Override
-    public Optional<Usuario> obtenerUsuarioPorUsername(String username) {
-        return usuarioRepository.findByNombreUsuario(username);
+    public Optional<Usuario> obtenerUsuarioPorUsername(String nombreUsuario) {
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
-}
 
+    // Obtener un usuario por su correo y contraseña
+    // @Override
+    // public Optional<Usuario> getUsuarioByMailPassword(String correo, String
+    // contraseña) {
+    // System.out.println(correo);
+    // System.out.println(contraseña);
+    // Optional<Usuario> usuario =
+    // usuarioRepository.findByCorreoAndContrasena(correo, contraseña);
+    // usuario.ifPresentOrElse(
+    // u -> System.out.println("Usuario encontrado: " + u),
+    // () -> System.out.println("Usuario no encontrado")
+    // );
+    // return usuario;
+    // }
+    @Override
+    public Optional<Usuario> getUsuarioByMailPassword(String correo, String contraseña) {
+        System.out.println(correo);
+        System.out.println(contraseña);
+        Optional<Usuario> usuario = usuarioRepository.findByCorreoAndContrasena(correo, contraseña);
+        usuario.ifPresentOrElse(
+                u -> {
+                    System.out.println("Usuario encontrado: " + u);
+                    u.setContraseña(null); // Eliminar la contraseña antes de devolver el objeto
+                },
+                () -> System.out.println("Usuario no encontrado"));
+        return usuario;
+    }
+
+}

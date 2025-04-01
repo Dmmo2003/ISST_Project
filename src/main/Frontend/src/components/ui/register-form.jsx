@@ -18,10 +18,10 @@ import { useNavigate } from "react-router-dom";
 export function RegisterForm({ className, ...props }) {
   const [formData, setFormData] = useState({
     nombre: "",
-    apellido1: "",
-    apellido2: "",
+    primer_apellido: "",
+    segundo_apellido: "",
     correo: "",
-    username: "",
+    nombreUsuario: "",
     fechaNacimiento: "",
     password: "",
     confirmPassword: "",
@@ -52,10 +52,10 @@ export function RegisterForm({ className, ...props }) {
     try {
       await registrarUsuario({
         nombre: formData.nombre,
-        apellido1: formData.apellido1,
-        apellido2: formData.apellido2,
+        primer_apellido: formData.primer_apellido,
+        segundo_apellido: formData.segundo_apellido,
         correo: formData.correo,
-        username: formData.username,
+        nombreUsuario: formData.nombreUsuario,
         fechaNacimiento: formData.fechaNacimiento,
         password: formData.password,
       });
@@ -74,10 +74,10 @@ export function RegisterForm({ className, ...props }) {
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="bg-[#FB8500] text-white">
+      <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Crear cuenta</CardTitle>
-          <CardDescription className="text-white">
+          <CardDescription>
             Regístrate completando el siguiente formulario.
           </CardDescription>
         </CardHeader>
@@ -88,7 +88,7 @@ export function RegisterForm({ className, ...props }) {
               {/* Nombre y Primer Apellido */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
-                  <Label htmlFor="nombre" className="text-white">Nombre</Label>
+                  <Label htmlFor="nombre">Nombre</Label>
                   <Input
                     id="nombre"
                     name="nombre"
@@ -97,17 +97,16 @@ export function RegisterForm({ className, ...props }) {
                     value={formData.nombre}
                     onChange={handleChange}
                     required
-                    className="bg-white text-black placeholder-black"
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="apellido1" className="text-white">Primer Apellido</Label>
+                  <Label htmlFor="primer_apellido">Primer Apellido</Label>
                   <Input
                     id="apellido1"
-                    name="apellido1"
+                    name="primer_apellido"
                     type="text"
                     placeholder="Primer apellido"
-                    value={formData.apellido1}
+                    value={formData.primer_apellido}
                     onChange={handleChange}
                     required
                     className="bg-white text-black placeholder-black"
@@ -117,13 +116,13 @@ export function RegisterForm({ className, ...props }) {
 
               {/* Segundo Apellido */}
               <div className="grid gap-2">
-                <Label htmlFor="apellido2" className="text-white">Segundo Apellido</Label>
+                <Label htmlFor="segundo_apellido">Segundo Apellido</Label>
                 <Input
                   id="apellido2"
-                  name="apellido2"
+                  name="segundo_apellido"
                   type="text"
                   placeholder="Segundo apellido (opcional)"
-                  value={formData.apellido2}
+                  value={formData.segundo_apellido}
                   onChange={handleChange}
                   className="bg-white text-black placeholder-black"
                 />
@@ -131,7 +130,7 @@ export function RegisterForm({ className, ...props }) {
 
               {/* Correo electrónico */}
               <div className="grid gap-2">
-                <Label htmlFor="correo" className="text-white">Correo electrónico</Label>
+                <Label htmlFor="correo">Correo electrónico</Label>
                 <Input
                   id="correo"
                   name="correo"
@@ -146,22 +145,21 @@ export function RegisterForm({ className, ...props }) {
 
               {/* Nombre de usuario */}
               <div className="grid gap-2">
-                <Label htmlFor="username" className="text-white">Nombre de usuario</Label>
+                <Label htmlFor="nombreUsuario">Nombre de usuario</Label>
                 <Input
-                  id="username"
-                  name="username"
+                  id="nombreUsuario"
+                  name="nombreUsuario"
                   type="text"
                   placeholder="Nombre de usuario"
-                  value={formData.username}
+                  value={formData.nombreUsuario}
                   onChange={handleChange}
                   required
-                  className="bg-white text-black placeholder-black"
                 />
               </div>
 
               {/* Fecha de nacimiento */}
               <div className="grid gap-2">
-                <Label htmlFor="fechaNacimiento" className="text-white">Fecha de Nacimiento</Label>
+                <Label htmlFor="fechaNacimiento">Fecha de Nacimiento</Label>
                 <Input
                   id="fechaNacimiento"
                   name="fechaNacimiento"
@@ -169,13 +167,12 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.fechaNacimiento}
                   onChange={handleChange}
                   required
-                  className="bg-white text-black placeholder-black"
                 />
               </div>
 
               {/* Contraseña */}
               <div className="grid gap-2">
-                <Label htmlFor="password" className="text-white">Contraseña</Label>
+                <Label htmlFor="password">Contraseña</Label>
                 <Input
                   id="password"
                   name="password"
@@ -184,13 +181,12 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="bg-white text-black placeholder-black"
                 />
               </div>
 
               {/* Repetir contraseña */}
               <div className="grid gap-2">
-                <Label htmlFor="confirmPassword" className="text-white">Repetir Contraseña</Label>
+                <Label htmlFor="confirmPassword">Repetir Contraseña</Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -199,7 +195,6 @@ export function RegisterForm({ className, ...props }) {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="bg-white text-black placeholder-black"
                 />
               </div>
 
@@ -226,17 +221,17 @@ export function RegisterForm({ className, ...props }) {
 
               {/* Botón de Registro */}
               {loading ? (
-                <Button disabled className="bg-white text-[#FB8500]">
+                <Button disabled className="w-full">
                   <Loader2 className="animate-spin" />
                   Registrando...
                 </Button>
               ) : (
-                <Button type="submit" className="w-full bg-white text-[#FB8500] hover:bg-gray-200">
+                <Button type="submit" className="w-full">
                   Registrarse
                 </Button>
               )}
 
-              <div className="text-center text-sm text-white">
+              <div className="text-center text-sm">
                 ¿Ya tienes una cuenta?{" "}
                 <a href="/login" className="underline underline-offset-4">
                   Inicia sesión
@@ -246,6 +241,16 @@ export function RegisterForm({ className, ...props }) {
           </form>
         </CardContent>
       </Card>
+      <div className="text-center text-xs text-muted-foreground">
+        Al registrarte, aceptas nuestros{" "}
+        <a href="#" className="underline underline-offset-4 hover:text-primary">
+          Términos de Servicio
+        </a>{" "}
+        y{" "}
+        <a href="#" className="underline underline-offset-4 hover:text-primary">
+          Política de Privacidad
+        </a>.
+      </div>
     </div>
   );
 }

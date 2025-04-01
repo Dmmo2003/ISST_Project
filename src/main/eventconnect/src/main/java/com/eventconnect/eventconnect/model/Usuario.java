@@ -4,41 +4,50 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "usuario")
+@Table(name = "Usuario")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
-    private String nombre;
-
-    //@Column(nullable = false)
-    private String apellido1;
-
-    private String apellido2;
-
-    @Column(nullable = false, unique = true)
+    @Column(name = "nombreUsuario", unique = true, nullable = false)
     private String nombreUsuario;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
-    private Date fechaNacimiento;
-
-    @Column(nullable = false, unique = true)
+    @Column(name = "correo", unique = true, nullable = false)
     private String correo;
 
-    @Column(nullable = false)
+    // @JsonIgnore
+    @Column(name = "contraseña", nullable = false)
     private String contraseña;
 
-    @Column(nullable = false)
-    private String tipo;  // "persona" o "empresa"
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+
+    @Column(name = "primer_Apellido")
+    private String primer_Apellido;
+
+    @Column(name = "segundo_Apellido")
+    private String segundo_Apellido;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private Date fechaNacimiento;
+
+    @Column(name = "tipo", nullable = false)
+    private String tipo; // "persona" o "empresa"
 
     @Column(name = "CIF")
-    private String cif;  // Solo si es tipo 'empresa'
+    private String cif; // Solo si es tipo 'empresa'
 
+    // @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
+    // private List<Evento> eventosOrganizados;
+    @JsonIgnore
     @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
     private List<Evento> eventosOrganizados;
 
@@ -55,12 +64,18 @@ public class Usuario {
     public Usuario() {
     }
 
+    @JsonCreator
+    public Usuario(@JsonProperty("id") int id) {
+        this.id = id;
+    }
+
     // Constructor con parámetros
-    public Usuario(String nombre, String apellido1, String apellido2, String nombreUsuario, Date fechaNacimiento,
+    public Usuario(String nombre, String primer_Apellido, String segundo_Apellido, String nombreUsuario,
+            Date fechaNacimiento,
             String correo, String contraseña) {
         this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
+        this.primer_Apellido = primer_Apellido;
+        this.segundo_Apellido = segundo_Apellido;
         this.nombreUsuario = nombreUsuario;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
@@ -84,20 +99,20 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellido1() {
-        return apellido1;
+    public String getPrimer_Apellido() {
+        return primer_Apellido;
     }
 
-    public void setApellido1(String apellido1) {
-        this.apellido1 = apellido1;
+    public void setPrimer_Apellido(String primer_Apellido) {
+        this.primer_Apellido = primer_Apellido;
     }
 
-    public String getApellido2() {
-        return apellido2;
+    public String getSegundo_Apellido() {
+        return segundo_Apellido;
     }
 
-    public void setApellido2(String apellido2) {
-        this.apellido2 = apellido2;
+    public void setSegundo_Apellido(String segundo_Apellido) {
+        this.segundo_Apellido = segundo_Apellido;
     }
 
     public String getNombreUsuario() {
@@ -130,5 +145,21 @@ public class Usuario {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getCif() {
+        return cif;
+    }
+
+    public void setCif(String cif) {
+        this.cif = cif;
     }
 }

@@ -11,29 +11,23 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/usuarios")
-public class UsuarioController {
-
+@RequestMapping("/api/auth")
+public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Obtener todos los usuarios
     @GetMapping
     public List<Usuario> getAllUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
-    // Obtener un usuario por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable int id) {
-        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
-        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
-    // Crear un nuevo usuario
-    @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.saveUsuario(usuario);
+    // login usuario
+    @PostMapping("/login")
+    public Usuario loginUsuario(@RequestBody Usuario usuario) {
+        String correo = usuario.getCorreo();
+        String contraseña = usuario.getContraseña();
+        return usuarioService.getUsuarioByMailPassword(correo, contraseña).orElse(null);
     }
 
     // Actualizar un usuario existente
@@ -71,9 +65,10 @@ public class UsuarioController {
     }
 
     // Obtener un usuario por su nombre de usuario
-    @GetMapping("/nombreUsuario/{username}")
+    @GetMapping("/nombreUsuario/{nombreUsuario}")
     public ResponseEntity<Usuario> getUsuarioByUsername(@PathVariable String nombreUsuario) {
         Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorUsername(nombreUsuario);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 }

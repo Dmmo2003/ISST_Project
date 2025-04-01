@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -30,6 +30,8 @@ import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, UserIcon, CogIcon, ArrowRig
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { UserContext } from "./context/UserContext"; // Importamos el contexto
+
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -47,21 +49,21 @@ const callsToAction = [
 const userNavigation = [
   { name: 'Mi Perfil', href: '/perfil', icon: UserIcon },
   { name: 'Ajustes', href: '#', icon: CogIcon },
-  { name: 'Cerrar Sesión', href: '#', icon: ArrowRightOnRectangleIcon },
+  { name: 'Cerrar Sesión', href: '/', icon: ArrowRightOnRectangleIcon },
 ];
 
-export default function Header({ navigate, user }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function Header({ navigate }) {
+  const { user, logout } = useContext(UserContext);  // Usamos el contexto
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    window.location.reload(); // Recarga la página después de logout
+    logout();
+    navigate("/");
   };
 
   return (
     <header className="bg-gray-900 text-white shadow-md sticky top-0 z-50">
       <nav className="mx-auto px-4 py-4 flex items-center justify-between w-full">
-        
+
         {/* Sección izquierda: Logo + Menú Products + Barra de búsqueda */}
         <div className="flex items-center gap-6">
           {/* Logo */}
@@ -98,10 +100,10 @@ export default function Header({ navigate, user }) {
           {/* Barra de búsqueda */}
           <div className="hidden md:flex flex-1 max-w-md relative">
             <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <Input 
-              type="text" 
-              placeholder="Buscar eventos..." 
-              className="w-full bg-gray-800 text-white border-gray-600 pl-10" 
+            <Input
+              type="text"
+              placeholder="Buscar eventos..."
+              className="w-full bg-gray-800 text-white border-gray-600 pl-10"
             />
           </div>
         </div>
@@ -122,7 +124,7 @@ export default function Header({ navigate, user }) {
                     <MenuItem key={item.name}>
                       {({ active }) => (
                         <a href={item.href} onClick={item.name === 'Cerrar Sesión' ? handleLogout : null}
-                           className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700`}>
+                          className={`${active ? 'bg-gray-100' : ''} flex items-center px-4 py-2 text-sm text-gray-700`}>
                           <item.icon className="mr-2 h-4 w-4" aria-hidden="true" />
                           {item.name}
                         </a>

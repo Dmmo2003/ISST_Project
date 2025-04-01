@@ -26,22 +26,19 @@ public class Evento {
     @JoinColumn(name = "organizador_id", nullable = false)
     private Usuario organizador;
 
-   // @Column(nullable = false)
+    // @Column(nullable = false)
     private String descripcion;
 
-    //@Column(nullable = false)
+    // @Column(nullable = false)
     private String categoria;
 
     @ManyToMany
-    @JoinTable(
-        name = "usuario_evento",
-        joinColumns = @JoinColumn(name = "evento_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
+    @JoinTable(name = "usuario_evento", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> seguidores;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
     private List<Grupo> grupos;
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -78,6 +75,7 @@ public class Evento {
     public int getOrganizadorId() {
         return organizador.getId();
     }
+
     public void setOrganizadorId(int organizadorId) {
         if (this.organizador == null) {
             this.organizador = new Usuario(); // Aseguramos que no sea null
@@ -99,5 +97,13 @@ public class Evento {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public Usuario getOrganizador() {
+        return organizador;
+    }
+
+    public void setOrganizador(Usuario organizador) {
+        this.organizador = organizador;
     }
 }
