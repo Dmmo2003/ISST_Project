@@ -97,21 +97,25 @@ public class EventoServiceImpl implements EventoService {
         eventoRepository.deleteById(id);
     }
 
+    // @Override
+    // public boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento) {
+    //     // Obtener el usuario por su id
+    //     Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+    //     if (usuario == null) {
+    //         return false; // Usuario no encontrado
+    //     }
+
+    //     // Obtener el evento por su id
+    //     Evento evento = eventoRepository.findById(idEvento).orElse(null);
+    //     if (evento == null) {
+    //         return false; // Evento no encontrado
+    //     }
+
+    //     // Verificar si el usuario está en la lista de seguidores del evento
+    //     return evento.getSeguidores().contains(usuario);
+    // }
     @Override
-    public boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento) {
-        // Obtener el usuario por su id
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-        if (usuario == null) {
-            return false; // Usuario no encontrado
-        }
-
-        // Obtener el evento por su id
-        Evento evento = eventoRepository.findById(idEvento).orElse(null);
-        if (evento == null) {
-            return false; // Evento no encontrado
-        }
-
-        // Verificar si el usuario está en la lista de seguidores del evento
-        return evento.getSeguidores().contains(usuario);
+    public boolean verificarSiUsuarioSigueEvento(int usuarioId, int eventoId) {
+        return eventoRepository.verificarSiUsuarioSigueEvento(eventoId, usuarioId);
     }
 }

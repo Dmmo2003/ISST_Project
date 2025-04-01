@@ -71,8 +71,8 @@ public class GrupoController {
     }
 
     @GetMapping("/{grupoId}/usuario/{usuarioId}")
-    public boolean isUserInGroup(@PathVariable int grupoId, @PathVariable int usuarioId) {
-        return grupoService.isUserInGroup(grupoId, usuarioId);
+    public boolean EstaUsuarioEnGrupo(@PathVariable int grupoId, @PathVariable int usuarioId) {
+        return grupoService.EstaUsuarioEnGrupo(grupoId, usuarioId);
     }
     
 }

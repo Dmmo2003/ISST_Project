@@ -12,5 +12,5 @@ public interface GrupoService {
     void borrarGrupo(int id);
     List<Grupo>encontrarGruposPorAdminId(int adminId);
     List<GrupoProjectionDTO>encontrarGruposPorEventoId(int eventoId);
-    boolean isUserInGroup(int grupoId, int usuarioId);
+    boolean EstaUsuarioEnGrupo(int grupoId, int usuarioId);
 }

@@ -99,8 +99,9 @@ const EventDetails = () => {
       //Obtener relacion Grupo - Usuario
       const gruposDelUsuario = [];
 
-      grupos.forEach(async (grupo) => {
+      gruposEventoData.forEach(async (grupo) => {
         const relacionGrupoUsuarioBackend = await usuarioEstaEnGrupo(grupo.id, user.id);
+        console.log("Relacion Grupo Usuario:", relacionGrupoUsuarioBackend);
         if (relacionGrupoUsuarioBackend) {
           gruposDelUsuario.push(grupo);
         }

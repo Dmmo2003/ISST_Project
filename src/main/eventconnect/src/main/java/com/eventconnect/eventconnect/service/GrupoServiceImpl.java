@@ -68,21 +68,24 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.encontrarGruposPorEventoId(eventoId);
     }
 
-    @Override
-    public boolean isUserInGroup(int grupoId, int usuarioId) {
-        Optional<Grupo> grupoOpt = grupoRepository.findById(grupoId);
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
+    // @Override
+    // public boolean EstaUsuarioEnGrupo(int grupoId, int usuarioId) {
+    //     Optional<Grupo> grupoOpt = grupoRepository.findById(grupoId);
+    //     Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
 
-        // Verificar si el grupo y el usuario existen
-        if (grupoOpt.isPresent() && usuarioOpt.isPresent()) {
-            Grupo grupo = grupoOpt.get();
-            Usuario usuario = usuarioOpt.get();
+    //     // Verificar si el grupo y el usuario existen
+    //     if (grupoOpt.isPresent() && usuarioOpt.isPresent()) {
+    //         Grupo grupo = grupoOpt.get();
+    //         Usuario usuario = usuarioOpt.get();
 
-            // Verificar si el usuario es miembro del grupo
-            return grupo.getMiembros().stream().anyMatch(u -> u.getId() == usuario.getId());
-        }
+    //         // Verificar si el usuario es miembro del grupo
+    //         return grupo.getMiembros().stream().anyMatch(u -> u.getId() == usuario.getId());
+    //     }
 
-        return false;
+    //     return false;
+    // }
+    public boolean EstaUsuarioEnGrupo(int grupoId, int usuarioId) {
+        return grupoRepository.EstaUsuarioEnGrupo(grupoId, usuarioId);
     }
 
 }
