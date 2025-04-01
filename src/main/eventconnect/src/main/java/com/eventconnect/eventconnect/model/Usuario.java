@@ -57,6 +57,7 @@ public class Usuario {
     @ManyToMany(mappedBy = "miembros")
     private List<Grupo> grupos;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesEnviados;
 

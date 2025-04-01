@@ -2,6 +2,7 @@ package com.eventconnect.eventconnect.service;
 import java.util.List;
 
 import com.eventconnect.eventconnect.model.Grupo;
+import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 
 public interface GrupoService {
     List<Grupo> obtenerTodosGrupos();
@@ -10,5 +11,5 @@ public interface GrupoService {
     Grupo actualizarGrupo(int id, Grupo grupo);
     void borrarGrupo(int id);
     List<Grupo>encontrarGruposPorAdminId(int adminId);
-    List<Grupo>encontrarGruposPorEventoId(int eventoId);
+    List<GrupoProjectionDTO>encontrarGruposPorEventoId(int eventoId);
 }

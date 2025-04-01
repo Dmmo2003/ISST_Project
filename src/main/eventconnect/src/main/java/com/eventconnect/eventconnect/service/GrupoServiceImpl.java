@@ -1,10 +1,12 @@
 package com.eventconnect.eventconnect.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.eventconnect.eventconnect.model.Grupo;
+import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 import com.eventconnect.eventconnect.repository.GrupoRepository;
 
 @Service
@@ -35,7 +37,7 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Grupo actualizarGrupo(int  id, Grupo grupo) {
+    public Grupo actualizarGrupo(int id, Grupo grupo) {
         return grupoRepository.findById(id).map(grupoExistente -> {
             grupoExistente.setNombre(grupo.getNombre());
             grupoExistente.setDescripcion(grupo.getDescripcion());
@@ -56,8 +58,9 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public List<Grupo> encontrarGruposPorEventoId(int eventoId) {
-        return grupoRepository.findByEventoId(eventoId);
+    public List<GrupoProjectionDTO> encontrarGruposPorEventoId(int eventoId) {
+        // Usamos el método en el repositorio que devuelve los DTOs
+        return grupoRepository.encontrarGruposPorEventoId(eventoId);
     }
 
 }

@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import com.eventconnect.eventconnect.model.Usuario;
 
+import io.micrometer.observation.Observation;
+
 public interface EventoService {
     List<Evento> obtenerEventos();
     Optional<Evento> obtenerEventoPorId(int id);
@@ -16,4 +18,6 @@ public interface EventoService {
     void eliminarEvento(int id);
     Usuario obtenerOrganizadorPorId(int id);
     List<EventoConOrganizadorDTO> obtenerTodosLosEventosConOrganizadores();
+    EventoConOrganizadorDTO obtenerEventoConOrganizador(int id);
+    boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento);
 }

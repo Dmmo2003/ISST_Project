@@ -1,6 +1,7 @@
 package com.eventconnect.eventconnect.controller;
 
 import com.eventconnect.eventconnect.model.Grupo;
+import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 import com.eventconnect.eventconnect.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,8 @@ public class GrupoController {
 
     // Obtener grupos por eventoId
     @GetMapping("/evento/{eventoId}")
-    public ResponseEntity<List<Grupo>> obtenerPorEventoId(@PathVariable int eventoId) {
-        return ResponseEntity.ok(grupoService.encontrarGruposPorEventoId(eventoId));
+    public List<GrupoProjectionDTO> obtenerGruposPorEvento(@PathVariable int eventoId) {
+        // Llamamos al servicio para obtener los grupos por eventoId
+        return grupoService.encontrarGruposPorEventoId(eventoId);
     }
 }

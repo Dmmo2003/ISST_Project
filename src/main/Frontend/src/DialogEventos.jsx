@@ -36,6 +36,10 @@ export default function DialogEventos() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // const onClose = () => {
+  //   setIsOpen(false);
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvento((prev) => ({
@@ -59,7 +63,6 @@ export default function DialogEventos() {
       setError("Todos los campos son obligatorios.");
       return;
     }
-    console.log(evento);
 
     setError(null); // Limpiar errores previos
     setLoading(true);
@@ -75,7 +78,8 @@ export default function DialogEventos() {
         organizador: user.id,
       });
       setLoading(false);
-      // Puedes cerrar el diálogo aquí si es necesario
+      // onClose();
+
     } catch (err) {
       console.error("Error al crear el evento:", err);
       setLoading(false);

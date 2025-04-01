@@ -36,7 +36,9 @@ public class Evento {
     @JoinTable(name = "usuario_evento", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> seguidores;
 
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+    // @OneToMany(mappedBy = "evento_id", cascade = CascadeType.ALL)
+    // private List<Grupo> grupos;
+    @OneToMany(mappedBy = "evento")
     private List<Grupo> grupos;
 
     // Getters and Setters
@@ -105,5 +107,13 @@ public class Evento {
 
     public void setOrganizador(Usuario organizador) {
         this.organizador = organizador;
+    }
+
+    public List<Usuario> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<Usuario> seguidores) {
+        this.seguidores = seguidores;
     }
 }

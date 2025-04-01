@@ -44,3 +44,34 @@ export const obtenerTodosEventosConOrganizador = async () => {
         throw error;
     }
 }
+
+export const obtenerEventoConOrganizador = async (id) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/organizadores/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener el evento:", error);
+        throw error;
+    }
+}
+
+export const obtenerEvento = async (id) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${id}`);
+        return response.data; // Devuelve el evento con el ID proporcionado
+    } catch (error) {
+        console.error("Error al obtener el evento:", error);
+        throw error;
+    }
+};
+
+export const obtenerRelacionUsuarioEvento = async (idEvento, idUsuario) => {
+    console.log(idEvento, idUsuario);
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${idEvento}/seguido/${idUsuario}`);
+        return response.data; // Devuelve el evento con el ID proporcionado
+    } catch (error) {
+        console.error("Error al obtener el evento:", error);
+        throw error;
+    }
+}

@@ -45,6 +45,16 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
+    public EventoConOrganizadorDTO obtenerEventoConOrganizador(int id) {
+        Evento evento = eventoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+        Usuario organizador = evento.getOrganizador();
+        EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(evento, organizador);
+
+        return dto;
+    }
+
+    @Override
     public List<EventoConOrganizadorDTO> obtenerTodosLosEventosConOrganizadores() {
         List<Evento> eventos = eventoRepository.findAll(); // Obtener todos los eventos
         List<EventoConOrganizadorDTO> eventosConOrganizadores = new ArrayList<>();
@@ -68,7 +78,6 @@ public class EventoServiceImpl implements EventoService {
         // Aquí puedes agregar lógica adicional si es necesario (validación, etc.)
         return eventoRepository.save(evento); // Guardar el evento en la base de datos
     }
-    
 
     @Override
     public Evento actualizarEvento(Evento evento) {
@@ -86,5 +95,22 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void eliminarEvento(int id) {
         eventoRepository.deleteById(id);
+    }
+
+    public boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento) {
+        // Obtener el usuario por su id
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) {
+            return false; // Usuario no encontrado
+        }
+
+        // Obtener el evento por su id
+        Evento evento = eventoRepository.findById(idEvento).orElse(null);
+        if (evento == null) {
+            return false; // Evento no encontrado
+        }
+
+        // Verificar si el usuario está en la lista de seguidores del evento
+        return evento.getSeguidores().contains(usuario);
     }
 }

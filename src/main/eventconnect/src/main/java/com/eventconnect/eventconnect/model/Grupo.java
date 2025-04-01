@@ -3,8 +3,10 @@ package com.eventconnect.eventconnect.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "grupos")
+@Table(name = "Grupo")
 public class Grupo {
 
     @Id
@@ -20,8 +22,13 @@ public class Grupo {
 
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
+    // @JsonProperty("adminId")
     private Usuario admin;
 
+    // @ManyToOne
+    // @JoinColumn(name = "evento_id", nullable = false)
+    // // @JsonProperty("eventoId")
+    // private Evento evento;
     @ManyToOne
     @JoinColumn(name = "evento_id", nullable = false)
     private Evento evento;

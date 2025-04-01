@@ -38,6 +38,12 @@ public class EventoController {
         return ResponseEntity.ok(eventosConOrganizadores);
     }
 
+    @GetMapping("/organizadores/{id}")
+    public ResponseEntity<EventoConOrganizadorDTO> obtenerEventoConOrganizador(@PathVariable int id) {
+        EventoConOrganizadorDTO eventoConOrganizador = eventoService.obtenerEventoConOrganizador(id);
+        return ResponseEntity.ok(eventoConOrganizador);
+    }
+
     @PostMapping("/nuevo")
     @ResponseStatus(HttpStatus.CREATED)
     public Evento crearEvento(@RequestBody Evento evento) {
@@ -54,4 +60,10 @@ public class EventoController {
     public void eliminarEvento(@PathVariable int id) {
         eventoService.eliminarEvento(id);
     }
+
+    @GetMapping("/{idEvento}/seguido/{idUsuario}")
+    public boolean verificarSiUsuarioSigueEvento(@PathVariable int idEvento, @PathVariable int idUsuario) {
+        return eventoService.verificarSiUsuarioSigueEvento(idUsuario, idEvento);
+    }
+
 }
