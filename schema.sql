@@ -9,7 +9,7 @@ CREATE TABLE Usuario (
     nombre VARCHAR(255) NOT NULL,
     primer_Apellido VARCHAR(255),
     segundo_Apellido VARCHAR(255),
-    fecha_nacimiento TIMESTAMP NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
     tipo ENUM('persona', 'empresa') NOT NULL,
     CIF VARCHAR(20) NULL,
     CHECK (tipo = 'empresa' AND CIF IS NOT NULL OR tipo = 'persona' AND CIF IS NULL)
