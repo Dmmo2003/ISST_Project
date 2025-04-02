@@ -2,6 +2,7 @@ package com.eventconnect.eventconnect.service;
 
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
+import com.eventconnect.eventconnect.model.EventoDTO;
 import com.eventconnect.eventconnect.repository.EventoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.eventconnect.eventconnect.model.Usuario;
 import com.eventconnect.eventconnect.repository.UsuarioRepository;
@@ -23,18 +25,18 @@ public class EventoServiceImpl implements EventoService {
     private final EventoRepository eventoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    @Autowired
+    
     public EventoServiceImpl(EventoRepository eventoRepository, UsuarioRepository usuarioRepository) {
         this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
     @Override
-    public List<Evento> obtenerEventos() {
-        List<Evento> eventos = eventoRepository.findAll();
-        System.out.println("Eventos encontrados: " + eventos.size());
-        eventos.forEach(evento -> System.out.println(evento.getNombre()));
-        return eventos;
+    public List<EventoDTO> obtenerEventos() {
+        return eventoRepository.findAll()
+                .stream()
+                .map(EventoDTO::new) // Convertimos cada Evento en un EventoDTO
+                .collect(Collectors.toList());
     }
 
     @Override

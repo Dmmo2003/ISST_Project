@@ -2,6 +2,7 @@ package com.eventconnect.eventconnect.controller;
 
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
+import com.eventconnect.eventconnect.model.EventoDTO;
 import com.eventconnect.eventconnect.service.EventoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class EventoController {
     private EventoService eventoService;
 
     @GetMapping
-    public List<Evento> obtenerEventos() {
+    public List<EventoDTO> obtenerEventos() {
         return eventoService.obtenerEventos();
     }
 

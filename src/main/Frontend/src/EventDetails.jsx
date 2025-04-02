@@ -9,54 +9,20 @@ import { obtenerGruposEvento } from "./api/grupos";
 import { obtenerEventoConOrganizador } from "./api/eventos";
 import { obtenerRelacionUsuarioEvento } from "./api/eventos";
 import { usuarioEstaEnGrupo } from "./api/grupos";
+import { seguirEvento, dejarSeguirEvento } from "./api/usuario";
 
 const EventDetails = () => {
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [grupos, setGrupos] = useState([]);
+  const [estaSiguiendo, setEstaSiguiendo] = useState(false);
   const [evento, setEvento] = useState({});
   const [organizador, setOrganizador] = useState({});
+
+  const [grupos, setGrupos] = useState([]);
   const [gruposSeguidos, setGruposSeguidos] = useState([]);
-  const event = datos_probar.event;
+  // const event = datos_probar.event;
   const { id } = useParams();
   const { user, logout } = useContext(UserContext);
 
   const [error, setError] = useState(null);
-
-  console.log("ID del evento:", id);
-  // console.log("id del usuairio:", user.id);
-
-  // const load = async (id) => {
-  //   try {
-
-  //     if (!user || !user.id) {
-  //       setError("Usuario no válido");
-  //       console.error("Error cargando el evento o los grupos:");
-  //       return;
-  //     }
-
-  //     // Obtener el evento con el organizador
-  //     const data = await obtenerEventoConOrganizador(id);
-  //     const eventosBackend = data.evento;
-  //     const organizadorBackend = data.organizador;
-  //     setEvento(eventosBackend);
-  //     setOrganizador(organizadorBackend);
-  //     console.log("Evento:", eventosBackend);
-  //     console.log("Organizador:", organizadorBackend);
-
-  //     // const relacionesUsuarioGrupoBackend = await obtenerRelacionUsuarioGrupo(id)
-  //     const relacionUsuarioEventoBackend = await obtenerRelacionUsuarioEvento(id, user.id) // Backend
-
-  //     console.log("Relacion Usuario Evento:", relacionUsuarioEventoBackend);
-
-  //     // Obtener los grupos del evento
-  //     const gruposEventoData = await obtenerGruposEvento(id);
-  //     setGrupos(gruposEventoData);
-  //     console.log("Grupos del Evento:", gruposEventoData);
-  //   } catch (error) {
-  //     setError("Error al cargar los datos");
-  //     console.error("Error cargando el evento o los grupos:", error);
-  //   }
-  // };
 
   const load = async (id) => {
     try {
@@ -76,16 +42,14 @@ const EventDetails = () => {
       const organizadorBackend = data.organizador;
       setEvento(eventosBackend);
       setOrganizador(organizadorBackend);
-      console.log("Evento:", eventosBackend);
-      console.log("Organizador:", organizadorBackend);
 
 
       // Obtener la relación usuario-evento
       const relacionUsuarioEventoBackend = await obtenerRelacionUsuarioEvento(id, user.id);
       if (relacionUsuarioEventoBackend) {
-        setIsFollowing(relacionUsuarioEventoBackend);
+        setEstaSiguiendo(relacionUsuarioEventoBackend);
       }
-      console.log("Relacion Usuario Evento:", relacionUsuarioEventoBackend);
+      // console.log("Relacion Usuario Evento:", relacionUsuarioEventoBackend);
 
 
       // Obtener los grupos del evento
@@ -94,21 +58,20 @@ const EventDetails = () => {
         throw new Error("No se encontraron grupos para el evento");
       }
       setGrupos(gruposEventoData);
-      console.log("Grupos del Evento:", gruposEventoData);
 
       //Obtener relacion Grupo - Usuario
-      const gruposDelUsuario = [];
+      // const gruposDelUsuario = [];
 
       gruposEventoData.forEach(async (grupo) => {
         const relacionGrupoUsuarioBackend = await usuarioEstaEnGrupo(grupo.id, user.id);
-        console.log("Relacion Grupo Usuario:", relacionGrupoUsuarioBackend);
+        // console.log("Relacion Grupo Usuario:", relacionGrupoUsuarioBackend);
         if (relacionGrupoUsuarioBackend) {
-          gruposDelUsuario.push(grupo);
+          // gruposDelUsuario.push(grupo);
+          setGruposSeguidos((prevGrupos) => [...prevGrupos, grupo]);
         }
       });
 
-      setGruposSeguidos(gruposDelUsuario);
-      console.log("Grupos del Usuario:", gruposDelUsuario);
+      // setGruposSeguidos(gruposDelUsuario);
 
     } catch (error) {
       setError(`Error al cargar los datos: ${error.message}`);
@@ -121,8 +84,17 @@ const EventDetails = () => {
     load(id);
   }, [user, id]);
 
-  const handleFollow = () => {
-    setIsFollowing(!isFollowing);
+  const handleFollow = async () => {
+
+    if (estaSiguiendo) {
+      console.log("dejar de seguir el evento");
+      dejarSeguirEvento(user.id, id);
+    } else {
+      console.log("Dejar de seguir el evento");
+      seguirEvento(user.id, id);
+
+    }
+    setEstaSiguiendo(!estaSiguiendo);
   };
 
   return (
@@ -145,9 +117,9 @@ const EventDetails = () => {
           <Button
             onClick={handleFollow}
             className="mt-6 w-full md:w-auto bg-white text-[#023047] hover:bg-gray-300 transition-colors duration-200 rounded-lg shadow-lg"
-            variant={isFollowing ? "destructive" : "default"}
+            variant={estaSiguiendo ? "destructive" : "default"}
           >
-            {isFollowing ? "Siguiendo ✅" : "Seguir evento"}
+            {estaSiguiendo ? "Siguiendo ✅" : "Seguir evento"}
           </Button>
         </CardContent>
       </Card>

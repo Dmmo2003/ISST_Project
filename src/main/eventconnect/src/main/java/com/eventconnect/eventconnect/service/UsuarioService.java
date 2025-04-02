@@ -18,4 +18,14 @@ public interface UsuarioService {
     Optional<Usuario> obtenerUsuarioPorUsername(String nombreUsuario);
 
     Optional<Usuario> getUsuarioByMailPassword(String correo, String contraseña);
+
+    void seguirEvento(int usuarioId, int eventoId);
+
+    void dejarDeSeguirEvento(int usuarioId, int eventoId); 
+
+    Usuario registrarUsuario(Usuario usuario);
+
+    boolean existeByCorreo(String correo);
+
+    boolean existsByUsername(String username);
 }

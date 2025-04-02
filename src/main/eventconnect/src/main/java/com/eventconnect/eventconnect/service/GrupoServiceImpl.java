@@ -3,6 +3,7 @@ package com.eventconnect.eventconnect.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -68,24 +69,49 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.encontrarGruposPorEventoId(eventoId);
     }
 
-    // @Override
-    // public boolean EstaUsuarioEnGrupo(int grupoId, int usuarioId) {
-    //     Optional<Grupo> grupoOpt = grupoRepository.findById(grupoId);
-    //     Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
-
-    //     // Verificar si el grupo y el usuario existen
-    //     if (grupoOpt.isPresent() && usuarioOpt.isPresent()) {
-    //         Grupo grupo = grupoOpt.get();
-    //         Usuario usuario = usuarioOpt.get();
-
-    //         // Verificar si el usuario es miembro del grupo
-    //         return grupo.getMiembros().stream().anyMatch(u -> u.getId() == usuario.getId());
-    //     }
-
-    //     return false;
-    // }
+    @Override
     public boolean EstaUsuarioEnGrupo(int grupoId, int usuarioId) {
         return grupoRepository.EstaUsuarioEnGrupo(grupoId, usuarioId);
+    }
+
+    @Override
+    @Transactional
+    public void unirseAGrupo(int usuarioId, int grupoId) {
+        Grupo grupo = grupoRepository.findById(grupoId)
+            .orElseThrow(() -> new RuntimeException("Grupo no encontrado"));
+
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Verificar si el usuario ya es miembro del grupo
+        if (!grupo.getMiembros().contains(usuario)) {
+            grupo.getMiembros().add(usuario);
+            grupoRepository.save(grupo);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean salirDeGrupo(int grupoId, int usuarioId) {
+        // Obtener el grupo y el usuario
+        Optional<Grupo> grupoOpt = grupoRepository.findById(grupoId);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
+
+        if (grupoOpt.isPresent() && usuarioOpt.isPresent()) {
+            Grupo grupo = grupoOpt.get();
+            Usuario usuario = usuarioOpt.get();
+
+            // Eliminar la relación en la tabla Usuario_Grupo
+            grupo.getMiembros().remove(usuario);
+            usuario.getGrupos().remove(grupo);
+
+            grupoRepository.save(grupo);
+            usuarioRepository.save(usuario);
+
+            return true;
+        }
+
+        return false;
     }
 
 }

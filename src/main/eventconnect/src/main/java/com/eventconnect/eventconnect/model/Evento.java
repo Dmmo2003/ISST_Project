@@ -3,6 +3,9 @@ package com.eventconnect.eventconnect.model;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.ArrayList;
 
 @Entity
@@ -23,6 +26,7 @@ public class Evento {
     private String ubicacion;
 
     @ManyToOne
+    // @JsonBackReference
     @JoinColumn(name = "organizador_id", nullable = false)
     private Usuario organizador;
 

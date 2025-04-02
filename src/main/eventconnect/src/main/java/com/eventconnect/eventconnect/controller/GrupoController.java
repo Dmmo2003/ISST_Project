@@ -4,6 +4,7 @@ import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 import com.eventconnect.eventconnect.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,5 +75,23 @@ public class GrupoController {
     public boolean EstaUsuarioEnGrupo(@PathVariable int grupoId, @PathVariable int usuarioId) {
         return grupoService.EstaUsuarioEnGrupo(grupoId, usuarioId);
     }
-    
+
+    // Unirse a un grupo
+    @PostMapping("/{grupoId}/entrar/{usuarioId}")
+    public ResponseEntity<String> unirseAGrupo(@PathVariable int grupoId, @PathVariable int usuarioId) {
+        grupoService.unirseAGrupo(usuarioId, grupoId);
+        return ResponseEntity.ok("Usuario " + usuarioId + " se unió al grupo " + grupoId);
+    }
+
+    // Salir de un grupo
+    @DeleteMapping("/{grupoId}/salir/{usuarioId}")
+    public ResponseEntity<String> salirDeGrupo(@PathVariable int grupoId, @PathVariable int usuarioId) {
+        boolean eliminado = grupoService.salirDeGrupo(grupoId, usuarioId);
+        if (eliminado) {
+            return ResponseEntity.ok("Usuario " + usuarioId + " ha salido del grupo " + grupoId);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo salir del grupo.");
+        }
+    }
+
 }

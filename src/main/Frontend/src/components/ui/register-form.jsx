@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,23 +14,26 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { registrarUsuario } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 export function RegisterForm({ className, ...props }) {
   const [formData, setFormData] = useState({
-    nombre: "",
-    primer_apellido: "",
-    segundo_apellido: "",
-    correo: "",
-    nombreUsuario: "",
-    fechaNacimiento: "",
-    password: "",
-    confirmPassword: "",
+    nombre: '',
+    primer_apellido: '',
+    segundo_apellido: '',
+    correo: '',
+    nombreUsuario: '',
+    fechaNacimiento: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  const {login} = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -50,23 +53,34 @@ export function RegisterForm({ className, ...props }) {
     setLoading(true);
 
     try {
-      await registrarUsuario({
+
+
+      const usuario = {
         nombre: formData.nombre,
-        primer_apellido: formData.primer_apellido,
-        segundo_apellido: formData.segundo_apellido,
+        primer_Apellido: formData.primer_apellido,
+        segundo_Apellido: formData.segundo_apellido,
         correo: formData.correo,
         nombreUsuario: formData.nombreUsuario,
         fechaNacimiento: formData.fechaNacimiento,
-        password: formData.password,
-      });
+        contraseña: formData.password,
+        tipo: 'persona',
+        CIF: null,
+      };
 
-      setSuccessMessage("Registro exitoso, redirigiendo...");
-      setError("");
+      const data = await registrarUsuario(usuario);
 
-      setTimeout(() => navigate("/login"), 2000);
+      if (data) {
+        localStorage.setItem('usuario', JSON.stringify(data));
+        login(data);
+        setSuccessMessage("Registro exitoso, redirigiendo...");
+        setError("");
+        setTimeout(() => navigate("/eventos"), 2000);
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Error en el registro");
-      setSuccessMessage("");
+      const errorMessage = err.response?.data?.message ||
+        err.message ||
+        "Error en el registro. Por favor verifica tus datos.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -226,7 +240,7 @@ export function RegisterForm({ className, ...props }) {
                   Registrando...
                 </Button>
               ) : (
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full bg-[#FB8500] text-black hover:bg-[#FFB703]">
                   Registrarse
                 </Button>
               )}

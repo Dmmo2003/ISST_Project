@@ -163,4 +163,21 @@ public class Usuario {
     public void setCif(String cif) {
         this.cif = cif;
     }
+
+    public List<Evento> getEventosSeguidos () {
+        return eventosSeguidos;
+    }
+
+    public void setEventosSeguidos (List<Evento> eventosSeguidos) {
+        this.eventosSeguidos = eventosSeguidos;
+    }
+
+    public List<Grupo> getGrupos () {
+        return grupos;
+    }
+
+    public void setGrupos (List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+    
 }

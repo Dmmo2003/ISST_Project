@@ -26,8 +26,11 @@ export const eliminarGrupo = async (id) => {
 };
 
 export const obtenerGruposEvento = async (id) => {
+
+
     try {
         const response = await axios.get(`${API_BASE_URL}/evento/${id}`);
+
         return response.data; // Devuelve los grupos del evento id
     } catch (error) {
         console.error("Error al obtener los grupos:", error);
@@ -47,13 +50,33 @@ export const obtenerTodosGruposConCreador = async () => {
 
 export const usuarioEstaEnGrupo = async (grupoId, usuarioId) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/${grupoId}/usuario/${usuarioId}`);
-      const isInGroup = await response.json();
-      console.log(isInGroup ? "El usuario está en el grupo" : "El usuario no está en el grupo");
-      return isInGroup;
+        const response = await fetch(`${API_BASE_URL}/${grupoId}/usuario/${usuarioId}`);
+        const isInGroup = await response.json();
+        //   console.log(isInGroup ? "El usuario está en el grupo" : "El usuario no está en el grupo");
+        return isInGroup;
     } catch (error) {
-      console.error("Error al comprobar si el usuario está en el grupo", error);
-      return false;
+        console.error("Error al comprobar si el usuario está en el grupo", error);
+        return false;
     }
-  };
-  
+};
+
+
+export const entrarAGrupo = async (grupoId, usuarioId) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/${grupoId}/entrar/${usuarioId}`);
+        return response
+    } catch (error) {
+        console.error("Error al comprobar si el usuario está en el grupo", error);
+        return false;
+    }
+};
+
+export const salirDeGrupo = async (grupoId, usuarioId) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/${grupoId}/salir/${usuarioId}`);
+        return response
+    } catch (error) {
+        console.error("Error al comprobar si el usuario está en el grupo", error);
+        return false;
+    }
+};

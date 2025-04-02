@@ -18,4 +18,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query("SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contraseña = :contraseña")
     Optional<Usuario> findByCorreoAndContrasena(@Param("correo") String correo, @Param("contraseña") String contraseña);
 
+    boolean existsByCorreo(String correo);
+    boolean existsByNombreUsuario(String nombreUsuario);
+
 }

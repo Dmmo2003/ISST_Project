@@ -4,6 +4,7 @@ import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.Grupo;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.eventconnect.eventconnect.model.Usuario;
 
+@Repository
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
     // @Query("SELECT e FROM Usuario e WHERE e.organizador.id = :id")

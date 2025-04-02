@@ -29,7 +29,7 @@ const TermsAndConditions = () => {
         <h2 className="text-xl font-semibold mt-6 mb-2 text-[#FFF]">2. Privacidad</h2>
         <p className="mb-4">
           Respetamos tu privacidad. Consulta nuestra{" "}
-          <a href="/privacy-policy" className="text-[#FFD700] underline">Política de Privacidad</a> para conocer cómo manejamos tu información.
+          <a href="/privacy" className="text-[#FFD700] underline">Política de Privacidad</a> para conocer cómo manejamos tu información.
         </p>
 
         <h2 className="text-xl font-semibold mt-6 mb-2 text-[#FFF]">3. Responsabilidad</h2>

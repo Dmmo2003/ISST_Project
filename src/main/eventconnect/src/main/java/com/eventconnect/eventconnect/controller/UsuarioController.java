@@ -71,9 +71,22 @@ public class UsuarioController {
     }
 
     // Obtener un usuario por su nombre de usuario
-    @GetMapping("/nombreUsuario/{username}")
+    @GetMapping("/nombreUsuario/{nombreUsuario}")
     public ResponseEntity<Usuario> getUsuarioByUsername(@PathVariable String nombreUsuario) {
         Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorUsername(nombreUsuario);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Seguir un evento
+    @PostMapping("/{usuarioId}/eventos/{eventoId}/seguir")
+    public ResponseEntity<String> seguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
+        usuarioService.seguirEvento(usuarioId, eventoId);
+        return ResponseEntity.ok("Usuario " + usuarioId + " ahora sigue el evento " + eventoId);
+    }
+
+    // Dejar de seguir un evento
+    @PostMapping("/{usuarioId}/eventos/{eventoId}/dejar")
+    public void dejarDeSeguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
+        usuarioService.dejarDeSeguirEvento(usuarioId, eventoId);
     }
 }

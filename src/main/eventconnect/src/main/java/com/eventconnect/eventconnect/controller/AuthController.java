@@ -1,8 +1,10 @@
 package com.eventconnect.eventconnect.controller;
 
 import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
 import com.eventconnect.eventconnect.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +23,30 @@ public class AuthController {
         return usuarioService.getAllUsuarios();
     }
 
-
     // login usuario
     @PostMapping("/login")
-    public Usuario loginUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioDTO> loginUsuario(@RequestBody Usuario usuario) {
         String correo = usuario.getCorreo();
         String contraseña = usuario.getContraseña();
-        return usuarioService.getUsuarioByMailPassword(correo, contraseña).orElse(null);
+
+        Optional<Usuario> usuarioOptional = usuarioService.getUsuarioByMailPassword(correo, contraseña);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario u = usuarioOptional.get();
+
+            UsuarioDTO usuarioDTO = new UsuarioDTO(
+                    u.getId(),
+                    u.getNombreUsuario(),
+                    u.getCorreo(),
+                    u.getNombre(),
+                    u.getPrimer_Apellido(),
+                    u.getSegundo_Apellido(),
+                    u.getTipo());
+
+            return ResponseEntity.ok(usuarioDTO);
+        } else {
+            return ResponseEntity.status(401).build(); // Código 401 si no se encuentra el usuario
+        }
     }
 
     // Actualizar un usuario existente
@@ -69,6 +88,36 @@ public class AuthController {
     public ResponseEntity<Usuario> getUsuarioByUsername(@PathVariable String nombreUsuario) {
         Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorUsername(nombreUsuario);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // @PostMapping("/registro")
+    // public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario usuario)
+    // {
+    // try {
+    // Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
+    // return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+    // } catch (Exception e) {
+    // return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    // }
+    // }
+
+    @PostMapping("/registro")
+    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
+        // Verificar si el correo ya está registrado
+        if (usuarioService.existeByCorreo(usuario.getCorreo())) {
+            return ResponseEntity.badRequest().body("El correo ya está registrado.");
+        }
+
+        // Verificar si el nombre de usuario ya está registrado
+        if (usuarioService.existsByUsername(usuario.getNombreUsuario())) {
+            return ResponseEntity.badRequest().body("El nombre de usuario ya está registrado.");
+        }
+
+        // Guardar el usuario en la base de datos
+        Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
+
+        // Retornar una respuesta exitosa
+        return ResponseEntity.ok(nuevoUsuario);
     }
 
 }
