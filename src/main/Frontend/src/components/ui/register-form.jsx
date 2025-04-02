@@ -257,11 +257,11 @@ export function RegisterForm({ className, ...props }) {
       </Card>
       <div className="text-center text-xs text-muted-foreground">
         Al registrarte, aceptas nuestros{" "}
-        <a href="#" className="underline underline-offset-4 hover:text-primary">
+        <a href="/terms" className="underline underline-offset-4 hover:text-primary">
           Términos de Servicio
         </a>{" "}
         y{" "}
-        <a href="#" className="underline underline-offset-4 hover:text-primary">
+        <a href="/privacy" className="underline underline-offset-4 hover:text-primary">
           Política de Privacidad
         </a>.
       </div>

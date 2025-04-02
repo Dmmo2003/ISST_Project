@@ -153,8 +153,8 @@ export function LoginForm({ className, ...props }) {
                 </CardContent>
             </Card>
 
-            <div className="text-balance text-center text-xs text-white text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-                Al continuar, aceptas los <a href="#">Términos y condiciones</a>{" "} y <a href="#">Políticas de privacidad</a>.
+            <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
+                Al continuar, aceptas los <a href="/terms">Términos y condiciones</a>{" "} y <a href="/privacy">Políticas de privacidad</a>.
             </div>
         </div>
     );
