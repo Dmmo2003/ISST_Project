@@ -17,7 +17,24 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                         <div>
                             <h3 className="text-lg font-semibold group-hover:underline">{evento.nombre}</h3>
                             <p className="text-sm text-muted-foreground">
-                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {evento.fecha}
+                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {
+                                    (() => {
+                                        try {
+                                            const fechaHora = new Date(evento.fecha); // Asumiendo que evento.fecha ya incluye la fecha y hora
+                                            return fechaHora.toLocaleString('es-ES', {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            });
+                                        } catch (error) {
+                                            return "Fecha inválida";
+                                        }
+                                    })()
+                                }
+
                             </p>
                         </div>
                     </AccordionTrigger>
