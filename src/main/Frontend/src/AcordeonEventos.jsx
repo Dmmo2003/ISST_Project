@@ -48,7 +48,19 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                     🎟️ <strong>Entradas:</strong> {evento.entradas || "No especificado"}
                                 </p>
                                 <p className="text-sm">
-                                    ⏰ <strong>Horario:</strong> {evento.hora || "No especificado"}
+                                ⏰ <strong>Horario:</strong> {
+        (() => {
+            try {
+                const fechaHora = new Date(evento.fecha);
+                return fechaHora.toLocaleString('es-ES', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (error) {
+                return "Hora inválida";
+            }
+        })()
+    }
                                 </p>
                                 <div className="pt-2">
                                     <Button className="w-full" onClick={() => navigate(`/eventos/${evento.id}`)}>
