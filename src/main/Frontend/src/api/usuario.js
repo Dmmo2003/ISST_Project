@@ -24,3 +24,25 @@ export const dejarSeguirEvento = async (usuarioId, eventoId) => {
         throw error;
     }
 };
+
+export const obtenerEventosSeguidos = async (idUsuario) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${idUsuario}/eventos/seguidos`);
+        return response.data;
+        
+    } catch (error) {
+        console.error("Error al obtener los eventos:", error);
+        throw error;
+    }
+}
+
+export const obtenerGruposSeguidos = async (idUsuario) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${idUsuario}/grupos/seguidos`);
+        return response.data;
+        
+    } catch (error) {
+        console.error("Error al obtener los eventos:", error);
+        throw error;
+    }
+}

@@ -1,9 +1,11 @@
 package com.eventconnect.eventconnect.service;
 
-import com.eventconnect.eventconnect.model.Usuario;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.eventconnect.eventconnect.model.EventoDTO;
+import com.eventconnect.eventconnect.model.GrupoDTO;
+import com.eventconnect.eventconnect.model.Usuario;
 
 public interface UsuarioService {
 
@@ -28,4 +30,11 @@ public interface UsuarioService {
     boolean existeByCorreo(String correo);
 
     boolean existsByUsername(String username);
+
+    List<EventoDTO> obtenerEventosSeguidos( int idUsuario);
+
+    // List<GrupoDTO> obtenerGruposSeguidos(int idUsuario);
+    // List<GrupoConUsuariosDTO> obtenerGruposPorUsuario(int usuarioId);
+
+    List<GrupoDTO> obtenerGruposPorUsuario(int usuarioId);
 }

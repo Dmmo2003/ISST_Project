@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import EventDetails from "./EventDetails";
 import datos_probar from "./constants/datos_probar.json";
+import ChatButton from './ChatButton';
 
 
 import Header from './Header';
@@ -43,6 +44,8 @@ function App() {
             <Route path="*" element={<NoMatch />} />
 
           </Routes>
+
+          <ChatButton />
         </UserProvider>
       </ThemeProvider>
     </>
