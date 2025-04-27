@@ -26,8 +26,6 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
                                             });
                                         } catch (error) {
                                             return "Fecha inválida";
@@ -48,19 +46,19 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                     🎟️ <strong>Entradas:</strong> {evento.entradas || "No especificado"}
                                 </p>
                                 <p className="text-sm">
-                                ⏰ <strong>Horario:</strong> {
-        (() => {
-            try {
-                const fechaHora = new Date(evento.fecha);
-                return fechaHora.toLocaleString('es-ES', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch (error) {
-                return "Hora inválida";
-            }
-        })()
-    }
+                                    ⏰ <strong>Horario:</strong> {
+                                        (() => {
+                                            try {
+                                                const fechaHora = new Date(evento.fecha);
+                                                return fechaHora.toLocaleString('es-ES', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                });
+                                            } catch (error) {
+                                                return "Hora inválida";
+                                            }
+                                        })()
+                                    }
                                 </p>
                                 <div className="pt-2">
                                     <Button className="w-full" onClick={() => navigate(`/eventos/${evento.id}`)}>
