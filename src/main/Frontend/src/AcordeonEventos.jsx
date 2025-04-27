@@ -17,7 +17,7 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                         <div>
                             <h3 className="text-lg font-semibold group-hover:underline">{evento.nombre}</h3>
                             <p className="text-sm text-muted-foreground">
-                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {evento.fecha}
+                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {new Date(evento.fecha).toLocaleString()}
                             </p>
                         </div>
                     </AccordionTrigger>

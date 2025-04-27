@@ -2,13 +2,15 @@ package com.eventconnect.eventconnect.service;
 
 
 
-import com.eventconnect.eventconnect.model.Mensaje;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import com.eventconnect.eventconnect.repository.MensajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.eventconnect.eventconnect.model.Mensaje;
+import com.eventconnect.eventconnect.model.MensajeDTO;
+import com.eventconnect.eventconnect.repository.MensajeRepository;
 
 @Service
 public class MensajeServiceImpl implements MensajeService {
@@ -46,6 +48,14 @@ public class MensajeServiceImpl implements MensajeService {
     public void eliminarMensaje(int id) {
         Mensaje mensaje = obtenerPorId(id);
         mensajeRepository.delete(mensaje);
+    }
+
+    @Override
+    public List<MensajeDTO> obtenerMensajesGrupo(int grupoId) {
+        List<Mensaje> mensajes = mensajeRepository.findByGrupoIdOrderByFechaAsc(grupoId);
+        return mensajes.stream()
+                       .map(MensajeDTO::new)
+                       .collect(Collectors.toList());
     }
 
 }
