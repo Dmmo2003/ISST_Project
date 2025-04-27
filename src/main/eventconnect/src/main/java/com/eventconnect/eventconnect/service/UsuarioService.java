@@ -27,5 +27,7 @@ public interface UsuarioService {
 
     boolean existeByCorreo(String correo);
 
+    Usuario findByCorreo(String correo);
+
     boolean existsByUsername(String username);
 }
