@@ -28,7 +28,7 @@ export default function DialogEventos() {
     nombre: "",
     fecha: "", // Asegúrate de formatear la fecha correctamente
     ubicacion: "",
-    organizadorId: null, // El ID del organizador (usuario) que está creando el evento
+    organizadorId: "", // El ID del organizador (usuario) que está creando el evento
     descripcion: "",
     categoria: "",
     precio: ""
