@@ -90,6 +90,7 @@ public class EventoServiceImpl implements EventoService {
             eventoExistente.setOrganizadorId(evento.getOrganizadorId());
             eventoExistente.setDescripcion(evento.getDescripcion());
             eventoExistente.setCategoria(evento.getCategoria());
+            eventoExistente.setPrecio(evento.getPrecio());
             return eventoRepository.save(eventoExistente);
         }).orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + evento.getId()));
     }

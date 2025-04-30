@@ -43,7 +43,7 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                     🌟 <strong>Descripción:</strong> {evento.descripcion || "Sin descripción disponible"}
                                 </p>
                                 <p className="text-sm">
-                                    🎟️ <strong>Entradas:</strong> {evento.entradas || "No especificado"}
+                                    🎟️ <strong>Entradas:</strong> {evento.precio ? `${evento.precio} €` : "No especificado"}
                                 </p>
                                 <p className="text-sm">
                                     ⏰ <strong>Horario:</strong> {

@@ -30,7 +30,8 @@ export default function DialogEventos() {
     ubicacion: "",
     organizadorId: null, // El ID del organizador (usuario) que está creando el evento
     descripcion: "",
-    categoria: ""
+    categoria: "",
+    precio: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -59,7 +60,7 @@ export default function DialogEventos() {
   };
 
   const handleCrearEvento = async () => {
-    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria) {
+    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria || !evento.precio) {
       setError("Todos los campos son obligatorios.");
       return;
     }
@@ -75,6 +76,7 @@ export default function DialogEventos() {
         ubicacion: "",
         descripcion: "",
         categoria: "",
+        precio: "",
         organizador: user.id,
       });
       setLoading(false);
@@ -158,6 +160,18 @@ export default function DialogEventos() {
                 <SelectItem value="Arte">Arte</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="precio" className="text-right">Precio</Label>
+            <Input
+              id="precio"
+              name="precio"
+              type="number" // Para aceptar solo números
+              value={evento.precio}
+              onChange={handleChange}
+              className="col-span-3"
+              placeholder="Precio del evento"
+            />
           </div>
         </div>
 

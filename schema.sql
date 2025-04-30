@@ -42,11 +42,12 @@ CREATE TABLE Evento (
     FOREIGN KEY (organizador_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
-INSERT INTO Evento (nombre, fecha, ubicacion, organizador_Id, descripcion, categoria) VALUES
-('Conferencia de Tecnología', '2025-05-10 10:00:00', 'Madrid, España', 1, 'Evento sobre las últimas tendencias en tecnología.', 'Tecnología'),
-('Concierto de Rock', '2025-06-15 20:00:00', 'Barcelona, España', 2, 'Banda en vivo con los mejores éxitos del rock.', 'Música'),
-('Torneo de Ajedrez', '2025-04-20 15:00:00', 'Valencia, España', 3, 'Competencia abierta para jugadores de todos los niveles.', 'Deportes'),
-('Feria del Libro', '2025-07-05 11:00:00', 'Sevilla, España', 4, 'Encuentro con autores y presentaciones de libros.', 'Cultura');
+INSERT INTO Evento (nombre, fecha, ubicacion, organizador_Id, descripcion, categoria, precio) VALUES
+('Conferencia de Tecnología', '2025-05-10 10:00:00', 'Madrid, España', 1, 'Evento sobre las últimas tendencias en tecnología.', 'Tecnología', 25.00),
+('Concierto de Rock', '2025-06-15 20:00:00', 'Barcelona, España', 2, 'Banda en vivo con los mejores éxitos del rock.', 'Música', 50.00),
+('Torneo de Ajedrez', '2025-04-20 15:00:00', 'Valencia, España', 3, 'Competencia abierta para jugadores de todos los niveles.', 'Deportes', 10.00),
+('Feria del Libro', '2025-07-05 11:00:00', 'Sevilla, España', 4, 'Encuentro con autores y presentaciones de libros.', 'Cultura', NULL);
+
 
 CREATE TABLE Grupo (
     id INT AUTO_INCREMENT PRIMARY KEY,
