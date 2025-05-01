@@ -3,6 +3,7 @@ package com.eventconnect.eventconnect.service;
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
 import com.eventconnect.eventconnect.model.EventoDTO;
+import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.repository.EventoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,12 @@ public class EventoServiceImpl implements EventoService {
     private final EventoRepository eventoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    
     public EventoServiceImpl(EventoRepository eventoRepository, UsuarioRepository usuarioRepository) {
         this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
     }
+    @Autowired
+    private GrupoService grupoService;
 
     @Override
     public List<EventoDTO> obtenerEventos() {
@@ -75,10 +77,36 @@ public class EventoServiceImpl implements EventoService {
         return eventoRepository.findById(id);
     }
 
+
     @Override
     public Evento crearEvento(Evento evento) {
-        // Aquí puedes agregar lógica adicional si es necesario (validación, etc.)
-        return eventoRepository.save(evento); // Guardar el evento en la base de datos
+        // Añadir al organizador como seguidor del evento
+        List<Usuario> seguidores = evento.getSeguidores();
+        if (seguidores == null) {
+            seguidores = new ArrayList<>();
+            evento.setSeguidores(seguidores);
+        }
+    
+        if (!seguidores.contains(evento.getOrganizador())) {
+            seguidores.add(evento.getOrganizador());
+        }
+    
+        // 1. Guardar el evento con el organizador ya añadido como seguidor
+        Evento eventoCreado = eventoRepository.save(evento);
+    
+        // 2. Crear un grupo automáticamente para este evento
+        Grupo nuevoGrupo = new Grupo();
+        nuevoGrupo.setNombre("Grupo de " + evento.getNombre());
+        nuevoGrupo.setAdmin(evento.getOrganizador()); // Establecemos el organizador como admin del grupo
+        nuevoGrupo.setEvento(eventoCreado); // Asociación entre grupo y evento
+        nuevoGrupo.setDescripcion("Grupo creado automáticamente para el evento " + evento.getNombre()); // Descripción por defecto
+    
+        Grupo grupoCreado = grupoService.crearGrupo(nuevoGrupo);
+    
+        // 3. Hacer que el organizador se una al grupo
+        grupoService.unirseAGrupo(evento.getOrganizador().getId(), grupoCreado.getId());
+    
+        return eventoCreado;
     }
 
     @Override
@@ -102,20 +130,20 @@ public class EventoServiceImpl implements EventoService {
 
     // @Override
     // public boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento) {
-    //     // Obtener el usuario por su id
-    //     Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-    //     if (usuario == null) {
-    //         return false; // Usuario no encontrado
-    //     }
+    // // Obtener el usuario por su id
+    // Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+    // if (usuario == null) {
+    // return false; // Usuario no encontrado
+    // }
 
-    //     // Obtener el evento por su id
-    //     Evento evento = eventoRepository.findById(idEvento).orElse(null);
-    //     if (evento == null) {
-    //         return false; // Evento no encontrado
-    //     }
+    // // Obtener el evento por su id
+    // Evento evento = eventoRepository.findById(idEvento).orElse(null);
+    // if (evento == null) {
+    // return false; // Evento no encontrado
+    // }
 
-    //     // Verificar si el usuario está en la lista de seguidores del evento
-    //     return evento.getSeguidores().contains(usuario);
+    // // Verificar si el usuario está en la lista de seguidores del evento
+    // return evento.getSeguidores().contains(usuario);
     // }
     @Override
     public boolean verificarSiUsuarioSigueEvento(int usuarioId, int eventoId) {

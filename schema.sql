@@ -39,6 +39,7 @@ CREATE TABLE Evento (
     organizador_Id INT NOT NULL,
     descripcion TEXT,
     categoria VARCHAR(255),
+    precio DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (organizador_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
