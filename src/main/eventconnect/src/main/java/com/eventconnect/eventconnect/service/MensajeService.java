@@ -17,4 +17,6 @@ public interface MensajeService {
     void eliminarMensaje(int id);
 
     List<MensajeDTO> obtenerMensajesGrupo(int grupoId);
+
+    MensajeDTO enviarMensajeGrupo(int grupoId, String mensaje, int usuarioId);
 }

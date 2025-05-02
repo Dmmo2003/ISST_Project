@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eventconnect.eventconnect.model.EnvioMensajeDTO;
 import com.eventconnect.eventconnect.model.Mensaje;
 import com.eventconnect.eventconnect.model.MensajeDTO;
 import com.eventconnect.eventconnect.service.MensajeService;
@@ -56,5 +57,13 @@ public class MensajeController {
     public List<MensajeDTO> obtenerMensajesGrupo(@PathVariable int grupoId) {
         return mensajeService.obtenerMensajesGrupo(grupoId);
     }
+
+    @PostMapping("/enviar/grupo/{grupoId}")
+    public MensajeDTO enviarMensajeGrupo( @PathVariable int grupoId, @RequestBody EnvioMensajeDTO body) {
+        String mensaje = body.getMensaje();
+        int usuarioId = body.getUsuarioId();
+        return mensajeService.enviarMensajeGrupo(grupoId, mensaje, usuarioId);
+    }
+    
 
 }

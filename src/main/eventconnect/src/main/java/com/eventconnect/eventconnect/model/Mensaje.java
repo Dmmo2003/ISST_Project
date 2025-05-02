@@ -1,10 +1,20 @@
 package com.eventconnect.eventconnect.model;
 
-import jakarta.persistence.*;
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 @Entity
-@Table(name = "Mensaje")  // Vincula con la tabla en la base de datos
+@Table(name = "Mensaje") // Vincula con la tabla en la base de datos
 public class Mensaje {
 
     @Id
@@ -27,7 +37,8 @@ public class Mensaje {
     private Grupo grupo;
 
     // Constructor vacío (JPA lo necesita)
-    public Mensaje() {}
+    public Mensaje() {
+    }
 
     // Constructor con parámetros
     public Mensaje(String contenido, Date fecha, Usuario remitente, Grupo grupo) {
@@ -38,18 +49,43 @@ public class Mensaje {
     }
 
     // Getters y Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getContenido() { return contenido; }
-    public void setContenido(String contenido) { this.contenido = contenido; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public Date getFecha() { return fecha; }
-    public void setFecha(Date fecha) { this.fecha = fecha; }
+    public String getContenido() {
+        return contenido;
+    }
 
-    public Usuario getRemitente() { return remitente; }
-    public void setRemitente(Usuario remitente) { this.remitente = remitente; }
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
 
-    public Grupo getGrupo() { return grupo; }
-    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Usuario getRemitente() {
+        return remitente;
+    }
+
+    public void setRemitente(Usuario remitente) {
+        this.remitente = remitente;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
 }

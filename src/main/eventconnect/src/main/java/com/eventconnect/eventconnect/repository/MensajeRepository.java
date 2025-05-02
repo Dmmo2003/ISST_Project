@@ -12,4 +12,5 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Integer> {
     List<Mensaje> findByGrupoId(int grupoId);
     List<Mensaje> findByRemitenteId(int remitenteId);
     List<Mensaje> findByGrupoIdOrderByFechaAsc(int grupoId);
+
 }

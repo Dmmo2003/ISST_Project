@@ -13,3 +13,17 @@ export const obtenerMensajesGrupo = async (id) => {
         throw error;
     }
 };
+
+export const enviarMensajeGrupo = async (grupoId, mensaje, usuarioId) => {
+    console.log(mensaje, grupoId, usuarioId);
+    const body = {mensaje, usuarioId};
+    try {
+        const response = await axios.post(`${API_BASE_URL}/enviar/grupo/${grupoId}`, body);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error al enviar el mensaje:', error);
+        throw error;
+    }
+};
+
