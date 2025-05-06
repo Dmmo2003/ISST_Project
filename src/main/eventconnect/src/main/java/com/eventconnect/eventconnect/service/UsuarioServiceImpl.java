@@ -115,4 +115,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByNombreUsuario(nombreUsuario);
     }
 
+    @Override
+public Usuario findByCorreo(String correo) {
+    return usuarioRepository.findByCorreo(correo);
+}
+
+
 }
