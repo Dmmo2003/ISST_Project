@@ -1,8 +1,6 @@
 package com.eventconnect.eventconnect.model;
 
-
 import java.sql.Timestamp;
-
 import com.eventconnect.eventconnect.model.Evento;
 
 public class EventoDTO {

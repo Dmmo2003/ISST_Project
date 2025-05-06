@@ -1,31 +1,27 @@
 package com.eventconnect.eventconnect.service;
 
 import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
+import com.eventconnect.eventconnect.model.EventoDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioService {
-
     List<Usuario> getAllUsuarios();
-
-    Usuario saveUsuario(Usuario usuario);
-
+    Optional<Usuario> getUsuarioByMailPassword(String correo, String contrasena);
     Optional<Usuario> getUsuarioById(int id);
-
+    Usuario saveUsuario(Usuario usuario);
     void deleteUsuario(int id);
-
-    Optional<Usuario> obtenerUsuarioPorUsername(String nombreUsuario);
-
-    Optional<Usuario> getUsuarioByMailPassword(String correo, String contraseña);
-
-    void seguirEvento(int usuarioId, int eventoId);
-
-    void dejarDeSeguirEvento(int usuarioId, int eventoId); 
-
+    Optional<Usuario> obtenerUsuarioPorUsername(String username);
+    boolean existeByCorreo(String correo);
+    boolean existsByUsername(String username);
     Usuario registrarUsuario(Usuario usuario);
 
-    boolean existeByCorreo(String correo);
+    List<EventoDTO> getEventosCreadosPorUsuario(int usuarioId);
+    List<EventoDTO> getEventosSeguidosPorUsuario(int usuarioId);
 
-    boolean existsByUsername(String username);
+    void seguirEvento(int usuarioId, int eventoId);
+    void dejarDeSeguirEvento(int usuarioId, int eventoId);
+    void eliminarEventoCreadoPorUsuario(int usuarioId, int eventoId);
 }

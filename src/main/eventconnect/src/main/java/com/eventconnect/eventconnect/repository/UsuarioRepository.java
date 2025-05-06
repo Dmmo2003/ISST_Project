@@ -11,14 +11,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
     Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 
     Optional<Usuario> findByCorreo(String correo);
 
     @Query("SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contraseña = :contraseña")
-    Optional<Usuario> findByCorreoAndContrasena(@Param("correo") String correo, @Param("contraseña") String contraseña);
+    Optional<Usuario> findByCorreoAndContraseña(@Param("correo") String correo, @Param("contraseña") String contraseña);
 
     boolean existsByCorreo(String correo);
-    boolean existsByNombreUsuario(String nombreUsuario);
 
+    boolean existsByNombreUsuario(String nombreUsuario);
 }

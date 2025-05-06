@@ -1,37 +1,41 @@
-// src/api/perfil.js
-import axios from 'axios';
+// perfil.js
 
-const API_BASE_URL = '/api/usuarios';
-
-// Obtener datos del usuario
-export const getUsuario = async (userId) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/${userId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener usuario:', error);
-    throw error;
+export async function getUsuario(userId) {
+  const response = await fetch(`/api/usuarios/${userId}`);
+  if (!response.ok) {
+    throw new Error('Error al obtener los datos del usuario');
   }
-};
+  return response.json();
+}
 
-// Obtener eventos seguidos por el usuario
-export const getEventosSeguidos = async (userId) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/${userId}/eventos`);
-    return Array.isArray(response.data) ? response.data : [];
-  } catch (error) {
-    console.error('Error al obtener eventos seguidos:', error);
-    return [];
+export async function getEventosSeguidos(userId) {
+  const response = await fetch(`/api/usuarios/${userId}/eventos-seguidos`);
+  if (!response.ok) {
+    throw new Error('Error al obtener los eventos seguidos');
   }
-};
+  return response.json();
+}
 
-// Editar perfil del usuario
-export const updateUsuario = async (userId, datos) => {
-  try {
-    const response = await axios.put(`${API_BASE_URL}/${userId}`, datos);
-    return response.data;
-  } catch (error) {
-    console.error('Error al actualizar perfil:', error);
-    throw error;
+export async function getEventosCreados(userId) {
+  const response = await fetch(`/api/usuarios/${userId}/eventos-creados`);
+  if (!response.ok) {
+    throw new Error('Error al obtener los eventos creados');
   }
-};
+  return response.json();
+}
+
+export async function updateUsuario(userId, data) {
+  const response = await fetch(`/api/usuarios/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al actualizar el usuario');
+  }
+
+  return response.json();
+}
