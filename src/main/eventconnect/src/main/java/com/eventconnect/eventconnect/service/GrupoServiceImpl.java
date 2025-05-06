@@ -1,5 +1,6 @@
 package com.eventconnect.eventconnect.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
@@ -77,16 +78,59 @@ public class GrupoServiceImpl implements GrupoService {
     @Override
     @Transactional
     public void unirseAGrupo(int usuarioId, int grupoId) {
+        // Buscar el grupo
         Grupo grupo = grupoRepository.findById(grupoId)
-            .orElseThrow(() -> new RuntimeException("Grupo no encontrado"));
+                .orElseThrow(() -> new GrupoNoEncontradoException("Grupo no encontrado"));
 
+        // Buscar el usuario
         Usuario usuario = usuarioRepository.findById(usuarioId)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsuarioNoEncontradoException("Usuario no encontrado"));
 
-        // Verificar si el usuario ya es miembro del grupo
-        if (!grupo.getMiembros().contains(usuario)) {
-            grupo.getMiembros().add(usuario);
+        // Obtener y verificar la lista de miembros del grupo
+        List<Usuario> miembros = grupo.getMiembros();
+        if (miembros == null) {
+            miembros = new ArrayList<>();
+            grupo.setMiembros(miembros); // Importante si luego se guarda el grupo
+        }
+
+        // Verificar si el usuario ya es miembro
+        if (!miembros.contains(usuario)) {
+            // Añadir el usuario a la lista de miembros del grupo
+            miembros.add(usuario);
+
+            // Asegurarse de que el grupo también está en la lista de grupos del usuario
+            List<Grupo> gruposDelUsuario = usuario.getGrupos();
+            if (gruposDelUsuario == null) {
+                gruposDelUsuario = new ArrayList<>();
+                usuario.setGrupos(gruposDelUsuario);
+            }
+            if (!gruposDelUsuario.contains(grupo)) {
+                gruposDelUsuario.add(grupo);
+            }
+
+            // Guardar ambos cambios
             grupoRepository.save(grupo);
+            usuarioRepository.save(usuario);
+        } else {
+            throw new UsuarioYaMiembroDelGrupoException("El usuario ya está en el grupo");
+        }
+    }
+
+    public class GrupoNoEncontradoException extends RuntimeException {
+        public GrupoNoEncontradoException(String message) {
+            super(message);
+        }
+    }
+
+    public class UsuarioNoEncontradoException extends RuntimeException {
+        public UsuarioNoEncontradoException(String message) {
+            super(message);
+        }
+    }
+
+    public class UsuarioYaMiembroDelGrupoException extends RuntimeException {
+        public UsuarioYaMiembroDelGrupoException(String message) {
+            super(message);
         }
     }
 
