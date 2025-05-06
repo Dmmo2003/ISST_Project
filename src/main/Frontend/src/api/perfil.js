@@ -36,6 +36,8 @@ export async function updateUsuario(userId, data) {
   if (!response.ok) {
     throw new Error('Error al actualizar el usuario');
   }
-};
+
   return response.json();
-}
+};
+
+

@@ -46,6 +46,8 @@ const EventDetails = () => {
     }
   };
 
+  console.log("USuario", user);
+
   useEffect(() => {
     load(id);
   }, [user, id]);

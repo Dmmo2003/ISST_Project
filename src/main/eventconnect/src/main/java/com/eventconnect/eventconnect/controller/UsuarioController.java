@@ -1,12 +1,5 @@
 package com.eventconnect.eventconnect.controller;
 
-
-import com.eventconnect.eventconnect.model.EventoDTO;
-import com.eventconnect.eventconnect.model.UsuarioDTO;
-import com.eventconnect.eventconnect.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eventconnect.eventconnect.model.EventoDTO;
 import com.eventconnect.eventconnect.model.GrupoDTO;
-import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
 import com.eventconnect.eventconnect.service.UsuarioService;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -52,17 +43,32 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.getEventosSeguidosPorUsuario(id));
     }
 
-    @PostMapping("/{usuarioId}/seguir/{eventoId}")
-    public ResponseEntity<Void> seguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
+    // @PostMapping("/{usuarioId}/seguir/{eventoId}")
+    // public ResponseEntity<Void> seguirEvento(@PathVariable int usuarioId,
+    // @PathVariable int eventoId) {
+    // usuarioService.seguirEvento(usuarioId, eventoId);
+    // return ResponseEntity.ok().build();
+    // }
+
+    // // RUTA CORREGIDA: ahora coincide con lo que espera el frontend
+    // @DeleteMapping("/{usuarioId}/seguir/{eventoId}")
+    // public ResponseEntity<Void> dejarDeSeguirEvento(@PathVariable int usuarioId,
+    // @PathVariable int eventoId) {
+    // usuarioService.dejarDeSeguirEvento(usuarioId, eventoId);
+    // return ResponseEntity.ok().build();
+    // }
+    
+    // Seguir un evento
+    @PostMapping("/{usuarioId}/eventos/{eventoId}/seguir")
+    public ResponseEntity<String> seguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
         usuarioService.seguirEvento(usuarioId, eventoId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Usuario " + usuarioId + " ahora sigue el evento " + eventoId);
     }
 
-    // RUTA CORREGIDA: ahora coincide con lo que espera el frontend
-    @DeleteMapping("/{usuarioId}/seguir/{eventoId}")
-    public ResponseEntity<Void> dejarDeSeguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
+    // Dejar de seguir un evento
+    @PostMapping("/{usuarioId}/eventos/{eventoId}/dejar")
+    public void dejarDeSeguirEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
         usuarioService.dejarDeSeguirEvento(usuarioId, eventoId);
-        return ResponseEntity.ok().build();
     }
 
     // Este es opcional si estás eliminando eventos desde el frontend

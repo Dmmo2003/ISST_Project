@@ -17,6 +17,7 @@ const AuthCallbackGoogle = () => {
 
           // Guardar el usuario en el localStorage
           localStorage.setItem('user', JSON.stringify(response.data));
+          console.log('Usuario guardado en el localStorage por google', localStorage.getItem('user'));
 
           // Redirigir a la página principal
           navigate('/');

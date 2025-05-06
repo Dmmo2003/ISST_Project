@@ -32,7 +32,6 @@ export default function ListaEventos(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 
-
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(

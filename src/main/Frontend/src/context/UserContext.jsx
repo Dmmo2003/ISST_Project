@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('usuario', JSON.stringify(userData));
     setUser(userData);  // Actualizamos el estado de usuario
     setIsAuthenticated(true);
+    console.log('Usuario autenticado:', userData);
   };
 
   const logout = () => {

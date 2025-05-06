@@ -9,6 +9,7 @@ const API_BASE_URL = 'http://localhost:8080/api/usuarios';
 export const seguirEvento = async (usuarioId, eventoId) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/${usuarioId}/eventos/${eventoId}/seguir`);
+        console.log("Respuesta de seguir evento:",response);
         return response.data;
     } catch (error) {
         console.error("Error siguiendo evento:", error);

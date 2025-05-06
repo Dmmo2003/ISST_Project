@@ -30,6 +30,7 @@ export function LoginForm({ className, ...props }) {
         .then(response => {
           if (response.data) {
             login(response.data);
+            console.log('Usuario autenticado:', response.data);
             window.location.href = "/eventos";
           } else {
             navigate('/login');
@@ -60,6 +61,7 @@ export function LoginForm({ className, ...props }) {
         return;
       }
 
+      console.log("Iniciando sesión loginForm:",data);
       login(data);
       window.location.href = "/eventos";
 
@@ -71,7 +73,7 @@ export function LoginForm({ className, ...props }) {
   };
 
   const handleGoogleLogin = () => {
-    const clientId = "CLIENT_ID_AQUI";
+    const clientId = "61992162442-9680okntj5vga0himfvvvhlst2cnqn00.apps.googleusercontent.com";
     const redirectUri = "http://localhost:5173/login";
     const scope = "openid email profile";
     const responseType = "code";
