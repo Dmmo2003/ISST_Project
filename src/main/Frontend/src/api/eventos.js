@@ -47,7 +47,7 @@ export const obtenerTodosEventosConOrganizador = async () => {
 }
 
 export const obtenerEventoConOrganizador = async (id) => {
-    
+
     try {
         const response = await axios.get(`${API_BASE_URL}/organizadores/${id}`);
         return response.data;
@@ -77,3 +77,4 @@ export const obtenerRelacionUsuarioEvento = async (idEvento, idUsuario) => {
         throw error;
     }
 }
+

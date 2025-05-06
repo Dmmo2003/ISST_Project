@@ -1,5 +1,25 @@
 package com.eventconnect.eventconnect.controller;
 
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
+import com.eventconnect.eventconnect.service.UsuarioService;
+
 import com.eventconnect.eventconnect.model.Usuario;
 import com.eventconnect.eventconnect.service.UsuarioService;
 
@@ -21,7 +41,6 @@ import org.springframework.http.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +48,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Collections;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -160,7 +180,6 @@ public ResponseEntity<?> googleLogin(@RequestBody TokenRequest tokenRequest) {
 
 
 // Al final de tu AuthController.java, dentro de la misma clase:
-
 public static class TokenRequest {
     private String code;  // <<-- ahora pedimos code
 

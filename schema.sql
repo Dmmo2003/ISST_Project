@@ -14,6 +14,7 @@ CREATE TABLE Usuario (
     tipo ENUM('persona', 'empresa') NOT NULL,
     CIF VARCHAR(20) NULL,
     CHECK (tipo = 'empresa' AND CIF IS NOT NULL OR tipo = 'persona' AND CIF IS NULL)
+    
 );
 
 -- Insertar usuarios de tipo persona

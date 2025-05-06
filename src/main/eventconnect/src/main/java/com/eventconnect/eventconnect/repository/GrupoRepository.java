@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
+import com.eventconnect.eventconnect.model.Usuario;
 
 @Repository
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
@@ -23,4 +24,17 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 
     // Buscar grupos por adminId
     List<Grupo> findByAdminId(int adminId);
+
+    // Buscar grupos seguidos por usuarioId
+        // Buscar todos los grupos donde un usuario es miembro
+    List<Grupo> findAllByMiembros(Usuario usuario);
+
+    List<Grupo> findByMiembrosId(int usuarioId);
+    // @Query("SELECT new com.eventconnect.eventconnect.dto.GrupoDTO(g.id, g.nombre, g.descripcion, " +
+    //         "g.admin.nombre, g.evento.nombre, " +
+    //         "CONCAT(u.nombre, ' ', u.primer_Apellido)) " +
+    //         "FROM Grupo g JOIN g.miembros u WHERE u.id = :idUsuario")
+    // List<GrupoDTO> obtenerGruposSeguidosPorUsuario(@Param("idUsuario") int idUsuario);
+    
+
 }
