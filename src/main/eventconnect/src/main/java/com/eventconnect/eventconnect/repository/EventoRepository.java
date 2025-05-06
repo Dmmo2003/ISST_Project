@@ -15,6 +15,7 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
     // @Query("SELECT e FROM Usuario e WHERE e.organizador.id = :id")
     // List<Usuario> findByOrganizadorId(@Param("findByOrganizadorId") int organizadorId);
+
     @Query("SELECT COUNT(e) > 0 FROM Evento e JOIN e.seguidores u WHERE e.id = :eventoId AND u.id = :usuarioId")
     boolean verificarSiUsuarioSigueEvento(@Param("eventoId") int eventoId, @Param("usuarioId") int usuarioId);
 
@@ -22,4 +23,6 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
     List<EventoDTO> obtenerEventosSeguidos(int idUsuario);
 
 
+    @Query("SELECT e FROM Evento e WHERE e.organizador.id = :organizadorId")
+    List<Evento> findByOrganizadorId(@Param("organizadorId") int organizadorId);
 }

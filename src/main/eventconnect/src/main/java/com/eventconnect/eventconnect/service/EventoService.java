@@ -3,6 +3,7 @@ package com.eventconnect.eventconnect.service;
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
 import com.eventconnect.eventconnect.model.EventoDTO;
+import com.eventconnect.eventconnect.service.GrupoService;
 
 import java.util.List;
 import java.util.Optional;

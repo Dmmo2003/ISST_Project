@@ -17,7 +17,23 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                         <div>
                             <h3 className="text-lg font-semibold group-hover:underline">{evento.nombre}</h3>
                             <p className="text-sm text-muted-foreground">
-                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {new Date(evento.fecha).toLocaleString()}
+
+                                📍 {evento.ubicacion}, {evento.direccion} | 📅 {
+                                    (() => {
+                                        try {
+                                            const fechaHora = new Date(evento.fecha); // Asumiendo que evento.fecha ya incluye la fecha y hora
+                                            return fechaHora.toLocaleString('es-ES', {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            });
+                                        } catch (error) {
+                                            return "Fecha inválida";
+                                        }
+                                    })()
+                                }
+
                             </p>
                         </div>
                     </AccordionTrigger>
@@ -28,10 +44,22 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                     🌟 <strong>Descripción:</strong> {evento.descripcion || "Sin descripción disponible"}
                                 </p>
                                 <p className="text-sm">
-                                    🎟️ <strong>Entradas:</strong> {evento.entradas || "No especificado"}
+                                    🎟️ <strong>Entradas:</strong> {evento.precio ? `${evento.precio} €` : "No especificado"}
                                 </p>
                                 <p className="text-sm">
-                                    ⏰ <strong>Horario:</strong> {evento.hora || "No especificado"}
+                                    ⏰ <strong>Horario:</strong> {
+                                        (() => {
+                                            try {
+                                                const fechaHora = new Date(evento.fecha);
+                                                return fechaHora.toLocaleString('es-ES', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                });
+                                            } catch (error) {
+                                                return "Hora inválida";
+                                            }
+                                        })()
+                                    }
                                 </p>
                                 <div className="pt-2">
                                     <Button className="w-full" onClick={() => navigate(`/eventos/${evento.id}`)}>

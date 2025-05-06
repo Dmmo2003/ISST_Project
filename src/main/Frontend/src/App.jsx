@@ -16,6 +16,7 @@ import ListaEventos from './ListaEventos';
 import { ThemeProvider } from "@/components/ui/theme-provider"
 import PerfilPage from './PerfilPage'
 import TerminosYCondicionesPage from './TerminosYCondicionesPage';
+import AuthCallbackGoogle from './AuthCallbackGoogle';
 import PoliticaPrivacidad from './PoliticaPrivacidad';
 import { UserProvider } from './context/UserContext';
 
@@ -41,6 +42,7 @@ function App() {
             <Route path="/eventos" element={<ListaEventos navigate={navigate} />} />
             <Route path="/terms" element={<TerminosYCondicionesPage navigate={navigate} />} />
             <Route path="/privacy" element={<PoliticaPrivacidad navigate={navigate} />} />
+            <Route path="/auth/callback/google" element={<AuthCallbackGoogle />} />
             <Route path="*" element={<NoMatch />} />
 
           </Routes>
