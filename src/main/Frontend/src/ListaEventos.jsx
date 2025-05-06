@@ -29,6 +29,8 @@ export default function ListaEventos(props) {
     const [ubicacion, setUbicacion] = useState({ lat: 40.4168, lng: -3.7038 });
     const [currentDate] = useState(new Date());
     const navigate = props.navigate
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
 
 
     useEffect(() => {

@@ -1,15 +1,23 @@
 package com.eventconnect.eventconnect.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.eventconnect.eventconnect.model.Usuario;
 import com.eventconnect.eventconnect.model.UsuarioDTO;
 import com.eventconnect.eventconnect.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -89,17 +97,6 @@ public class AuthController {
         Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorUsername(nombreUsuario);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    // @PostMapping("/registro")
-    // public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario usuario)
-    // {
-    // try {
-    // Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
-    // return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
-    // } catch (Exception e) {
-    // return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-    // }
-    // }
 
     @PostMapping("/registro")
     public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
