@@ -9,8 +9,11 @@ public class UsuarioDTO {
     private String segundoApellido;
     private String tipo;
 
+    public UsuarioDTO() {
+    }
+
     public UsuarioDTO(int id, String nombreUsuario, String correo, String nombre, String primerApellido,
-            String segundoApellido, String tipo) {
+                      String segundoApellido, String tipo) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
@@ -20,32 +23,71 @@ public class UsuarioDTO {
         this.tipo = tipo;
     }
 
+    // Constructor que toma directamente un objeto Usuario
+    public UsuarioDTO(Usuario usuario) {
+        this.id = usuario.getId();
+        this.nombreUsuario = usuario.getNombreUsuario();
+        this.correo = usuario.getCorreo();
+        this.nombre = usuario.getNombre();
+        this.primerApellido = usuario.getPrimer_Apellido();     // <- adaptado
+        this.segundoApellido = usuario.getSegundo_Apellido();   // <- adaptado
+        this.tipo = usuario.getTipo();
+    }
+
     // Getters y setters
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
     public String getCorreo() {
         return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getPrimerApellido() {
         return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
     }
 
     public String getSegundoApellido() {
         return segundoApellido;
     }
 
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
     public String getTipo() {
         return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
