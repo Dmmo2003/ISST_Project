@@ -1,5 +1,6 @@
 package com.eventconnect.eventconnect.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import com.eventconnect.eventconnect.model.Evento;
 
@@ -10,6 +11,7 @@ public class EventoDTO {
     private String ubicacion;
     private String descripcion;
     private String categoria;
+    private BigDecimal precio; 
     private int organizadorId; // Solo el ID del organizador
 
     public EventoDTO(Evento evento) {
@@ -19,6 +21,7 @@ public class EventoDTO {
         this.ubicacion = evento.getUbicacion();
         this.descripcion = evento.getDescripcion();
         this.categoria = evento.getCategoria();
+        this.precio = evento.getPrecio();
         this.organizadorId = evento.getOrganizador().getId(); // Solo devolvemos el ID
     }
 
@@ -69,6 +72,14 @@ public class EventoDTO {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public BigDecimal getPrecio() { 
+        return precio; 
+    }
+
+    public void setPrecio(BigDecimal precio) { 
+        this.precio = precio; 
     }
 
     public int getOrganizadorId() {

@@ -1,6 +1,8 @@
 package com.eventconnect.eventconnect.model;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class Evento {
 
     // @Column(nullable = false)
     private String categoria;
+
+    private BigDecimal precio; 
 
     @ManyToMany
     @JoinTable(name = "usuario_evento", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
@@ -103,6 +107,13 @@ public class Evento {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+    
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public Usuario getOrganizador() {

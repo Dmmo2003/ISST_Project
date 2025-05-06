@@ -11,6 +11,7 @@ export const crearEvento = async (evento) => {
         return response.data;
     } catch (error) {
         console.error("Error creando evento:", error);
+        console.error("Error creando evento:", error.response?.data || error.message);
         throw error;
     }
 };

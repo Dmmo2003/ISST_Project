@@ -24,4 +24,9 @@ public interface UsuarioService {
     void seguirEvento(int usuarioId, int eventoId);
     void dejarDeSeguirEvento(int usuarioId, int eventoId);
     void eliminarEventoCreadoPorUsuario(int usuarioId, int eventoId);
+
+    Usuario findByCorreo(String correo);
+
+    boolean existsByUsername(String username);
+
 }

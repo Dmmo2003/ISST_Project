@@ -102,4 +102,9 @@ public class UsuarioServiceImpl implements UsuarioService {
             eventoRepository.deleteById(eventoId);
         }
     }
+  
+public Usuario findByCorreo(String correo) {
+    return usuarioRepository.findByCorreo(correo);
+}
+
 }
