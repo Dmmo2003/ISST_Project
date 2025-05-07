@@ -26,6 +26,7 @@ export function RegisterEmpresaForm({ className, ...props }) {
     fechaNacimiento: '',
     password: '',
     confirmPassword: '',
+    CIF: '',
   });
 
   const [error, setError] = useState("");
@@ -103,15 +104,15 @@ export function RegisterEmpresaForm({ className, ...props }) {
           <form onSubmit={handleSubmit} className="grid gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="nombre">Nombre de la empresa</Label>
-                <Input id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} required placeholder="Tu nombre" />
+                <Input id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} required placeholder="Nombre de tu empresa" />
               </div>
             <div className="grid gap-2">
               <Label htmlFor="correo">Correo electrónico</Label>
               <Input id="correo" name="correo" type="email" value={formData.correo} onChange={handleChange} required placeholder="correo@ejemplo.com" />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="cif">CIF de la empresa</Label>
-              <Input id="cif" name="cif" value={formData.cif} onChange={handleChange} required placeholder="ej: A123456768" />
+              <Label htmlFor="CIF">CIF de la empresa</Label>
+              <Input id="CIF" name="CIF" value={formData.CIF} onChange={handleChange} required placeholder="ej: A123456768" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="nombreUsuario">Nombre de usuario de la empresa</Label>
