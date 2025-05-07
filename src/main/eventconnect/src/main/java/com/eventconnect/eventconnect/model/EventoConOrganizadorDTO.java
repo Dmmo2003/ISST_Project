@@ -2,29 +2,29 @@ package com.eventconnect.eventconnect.model;
 
 public class EventoConOrganizadorDTO {
 
-    private Evento evento;
-    private Usuario organizador;
+    private EventoDTO evento;
+    private UsuarioDTO organizador;
 
     // Constructor
-    public EventoConOrganizadorDTO(Evento evento, Usuario organizador) {
+    public EventoConOrganizadorDTO(EventoDTO evento, UsuarioDTO organizador) {
         this.evento = evento;
         this.organizador = organizador;
     }
 
     // Getters y Setters
-    public Evento getEvento() {
+    public EventoDTO getEvento() {
         return evento;
     }
 
-    public void setEvento(Evento evento) {
+    public void setEvento(EventoDTO evento) {
         this.evento = evento;
     }
 
-    public Usuario getOrganizador() {
+    public UsuarioDTO getOrganizador() {
         return organizador;
     }
 
-    public void setOrganizador(Usuario organizador) {
+    public void setOrganizador(UsuarioDTO organizador) {
         this.organizador = organizador;
     }
 }

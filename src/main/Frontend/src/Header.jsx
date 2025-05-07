@@ -236,6 +236,8 @@ export default function Header({ navigate }) {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.2 }}
                       className="absolute left-0 top-full z-10 mt-3 w-64 bg-white shadow-lg ring-1 ring-gray-900/5 rounded-lg"
+                      // className="absolute left-0 top-full z-40 mt-3 w-72 bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4"
+
                     >
                       <div className="p-4 space-y-2">
                         {products.map((item) => (
@@ -307,7 +309,9 @@ export default function Header({ navigate }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-48 bg-white shadow-lg ring-1 ring-black ring-opacity-5 rounded-md"
+                        // className="absolute right-0 mt-2 w-48 bg-white shadow-lg ring-1 ring-black ring-opacity-5 rounded-md"
+                        className="absolute right-0 mt-2 w-60 rounded-2xl bg-white p-2 shadow-xl ring-1 ring-gray-200 z-40"
+
                       >
                         {userNavigation.map((item) => (
                           <MenuItem key={item.name}>
@@ -319,8 +323,12 @@ export default function Header({ navigate }) {
                                     ? handleLogout
                                     : undefined
                                 }
-                                className={`${active ? "bg-gray-100" : ""
-                                  } flex items-center px-4 py-2 text-sm text-gray-700`}
+                                // className={`${active ? "bg-gray-100" : ""
+                                //   } flex items-center px-4 py-2 text-sm text-gray-700`}
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100`}
+                                
                                 whileHover={{ scale: 1.02 }}
                               >
                                 <item.icon className="mr-2 h-4 w-4" />

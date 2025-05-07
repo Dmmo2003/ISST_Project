@@ -94,7 +94,7 @@ export default function DialogEventos() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full mt-4">Crear Evento</Button>
+        <Button className="w-full mt-4 bg-[#FB8500] text-[#023047] hover:bg-[#023047] hover:text-[#FB8500]">Crear Evento</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

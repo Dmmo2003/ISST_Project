@@ -1,23 +1,20 @@
 package com.eventconnect.eventconnect.service;
 
-import com.eventconnect.eventconnect.model.Evento;
-import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
-import com.eventconnect.eventconnect.model.EventoDTO;
-import com.eventconnect.eventconnect.model.Grupo;
-import com.eventconnect.eventconnect.repository.EventoRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.eventconnect.eventconnect.model.Evento;
+import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
+import com.eventconnect.eventconnect.model.EventoDTO;
+import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
+import com.eventconnect.eventconnect.repository.EventoRepository;
 import com.eventconnect.eventconnect.repository.UsuarioRepository;
 
 @Service
@@ -30,6 +27,7 @@ public class EventoServiceImpl implements EventoService {
         this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
     }
+
     @Autowired
     private GrupoService grupoService;
 
@@ -52,31 +50,47 @@ public class EventoServiceImpl implements EventoService {
     public EventoConOrganizadorDTO obtenerEventoConOrganizador(int id) {
         Evento evento = eventoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+
+        EventoDTO eventoDTO = new EventoDTO(evento);
+
         Usuario organizador = evento.getOrganizador();
-        EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(evento, organizador);
+        UsuarioDTO organizadorDTO = new UsuarioDTO(
+                organizador.getId(),
+                organizador.getNombreUsuario(),
+                organizador.getCorreo(),
+                organizador.getNombre(),
+                organizador.getPrimer_Apellido(),
+                organizador.getSegundo_Apellido(),
+                organizador.getTipo()
+        );
+        EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(eventoDTO, organizadorDTO);
 
         return dto;
     }
 
     @Override
     public List<EventoConOrganizadorDTO> obtenerTodosLosEventosConOrganizadores() {
-        List<Evento> eventos = eventoRepository.findAll(); // Obtener todos los eventos
-        List<EventoConOrganizadorDTO> eventosConOrganizadores = new ArrayList<>();
+        // List<Evento> eventos = eventoRepository.findAll(); // Obtener todos los eventos
 
-        for (Evento evento : eventos) {
-            Usuario organizador = evento.getOrganizador(); // Obtener el organizador del evento
-            EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(evento, organizador);
-            eventosConOrganizadores.add(dto);
-        }
+        // List<EventoDTO> eventosDTO = eventos.stream().map(EventoDTO::new).collect(Collectors.toList());
 
-        return eventosConOrganizadores; // Retornar la lista con eventos y organizadores
+        // List<EventoConOrganizadorDTO> eventosConOrganizadores = new ArrayList<>();
+
+        // for (EventoDTO evento : eventosDTO) {
+        //     Usuario organizador = evento.getOrganizadorId();
+        //     UsuarioDTO organizadorDTO = new UsuarioDTO(organizador);
+        //     EventoConOrganizadorDTO dto = new EventoConOrganizadorDTO(evento, organizadorDTO);
+        //     eventosConOrganizadores.add(dto);
+        // }
+
+        // return eventosConOrganizadores; // Retornar la lista con eventos y organizadores
+        return null;
     }
 
     @Override
     public Optional<Evento> obtenerEventoPorId(int id) {
         return eventoRepository.findById(id);
     }
-
 
     @Override
     public Evento crearEvento(Evento evento) {
@@ -86,26 +100,27 @@ public class EventoServiceImpl implements EventoService {
             seguidores = new ArrayList<>();
             evento.setSeguidores(seguidores);
         }
-    
+
         if (!seguidores.contains(evento.getOrganizador())) {
             seguidores.add(evento.getOrganizador());
         }
-    
+
         // 1. Guardar el evento con el organizador ya añadido como seguidor
         Evento eventoCreado = eventoRepository.save(evento);
-    
+
         // 2. Crear un grupo automáticamente para este evento
         Grupo nuevoGrupo = new Grupo();
         nuevoGrupo.setNombre("Grupo de " + evento.getNombre());
         nuevoGrupo.setAdmin(evento.getOrganizador()); // Establecemos el organizador como admin del grupo
         nuevoGrupo.setEvento(eventoCreado); // Asociación entre grupo y evento
-        nuevoGrupo.setDescripcion("Grupo creado automáticamente para el evento " + evento.getNombre()); // Descripción por defecto
-    
+        nuevoGrupo.setDescripcion("Grupo creado automáticamente para el evento " + evento.getNombre()); // Descripción
+                                                                                                        // por defecto
+
         Grupo grupoCreado = grupoService.crearGrupo(nuevoGrupo);
-    
+
         // 3. Hacer que el organizador se una al grupo
         grupoService.unirseAGrupo(evento.getOrganizador().getId(), grupoCreado.getId());
-    
+
         return eventoCreado;
     }
 
