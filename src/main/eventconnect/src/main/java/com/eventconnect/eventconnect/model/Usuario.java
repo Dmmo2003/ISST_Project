@@ -43,7 +43,7 @@ public class Usuario {
     private String tipo; // "persona" o "empresa"
 
     @Column(name = "CIF")
-    private String cif; // Solo si es tipo 'empresa'
+    private String CIF; // Solo si es tipo 'empresa'
 
     // @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
     // private List<Evento> eventosOrganizados;
@@ -157,11 +157,11 @@ public class Usuario {
     }
 
     public String getCif() {
-        return cif;
+        return CIF;
     }
 
-    public void setCif(String cif) {
-        this.cif = cif;
+    public void setCif(String CIF) {
+        this.CIF = CIF;
     }
 
     public List<Evento> getEventosSeguidos () {

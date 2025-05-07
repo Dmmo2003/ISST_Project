@@ -13,9 +13,10 @@ CREATE TABLE Usuario (
     fecha_nacimiento DATE NOT NULL,
     tipo ENUM('persona', 'empresa') NOT NULL,
     CIF VARCHAR(20) NULL,
-    CHECK ((tipo = 'empresa' AND CIF IS NOT NULL) OR (tipo = 'persona' AND CIF IS NULL))
-    
+    CHECK ((tipo = 'empresa' AND CIF IS NOT NULL AND CIF <> '') OR 
+           (tipo = 'persona' AND (CIF IS NULL OR CIF = '')))
 );
+
 
 -- Insertar usuarios de tipo persona
 INSERT INTO Usuario (nombreUsuario, correo, contraseña, nombre, primer_Apellido, segundo_Apellido, fecha_nacimiento, tipo) 
