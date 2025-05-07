@@ -5,18 +5,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Base64;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Evento")
@@ -46,7 +36,11 @@ public class Evento {
     // @Column(nullable = false)
     private String categoria;
 
-    private BigDecimal precio; 
+    private BigDecimal precio;
+
+    @Lob
+    @Column(name = "imagen", columnDefinition = "LONGBLOB")
+    private byte[] imagen;
 
     @ManyToMany
     @JoinTable(name = "usuario_evento", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
@@ -116,13 +110,29 @@ public class Evento {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+
     public BigDecimal getPrecio() {
         return precio;
     }
-    
+
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+        public String getImagenBase64() {
+        if (imagen != null) {
+            return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imagen);
+        }
+        return null;
+    }
+
 
     public Usuario getOrganizador() {
         return organizador;

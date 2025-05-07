@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +47,29 @@ public class EventoController {
         return ResponseEntity.ok(eventoConOrganizador);
     }
 
-    @PostMapping("/nuevo")
+    @PostMapping(value = "/nuevo", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public Evento crearEvento(@RequestBody Evento evento) {
+    public Evento crearEvento(
+            @RequestPart("evento") Evento evento,
+            @RequestPart("imagen") MultipartFile imagenFile) throws IOException {
+        if (imagenFile != null && !imagenFile.isEmpty()) {
+            evento.setImagen(imagenFile.getBytes());
+        }
         return eventoService.crearEvento(evento);
+    }
+
+    @GetMapping("/{id}/imagen")
+    public ResponseEntity<byte[]> obtenerImagenEvento(@PathVariable int id) {
+        Optional<Evento> evento = eventoService.obtenerEventoPorId(id);
+
+        if (evento.isPresent() && evento.get().getImagen() != null) {
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Type", "image/jpeg") // o image/png si es el caso
+                    .body(evento.get().getImagen());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")

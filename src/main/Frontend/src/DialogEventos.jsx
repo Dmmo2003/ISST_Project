@@ -20,6 +20,7 @@ import { UserContext } from "./context/UserContext";
 
 const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
+
 export default function DialogEventos() {
   const { user } = useContext(UserContext);
 
@@ -32,7 +33,7 @@ export default function DialogEventos() {
     categoria: "",
     precio: ""
   });
-
+  const [imagenFile, setImagenFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -70,7 +71,7 @@ export default function DialogEventos() {
     setLoading(true);
 
     try {
-      await crearEvento(evento);
+      await crearEvento(evento, imagenFile);
       setEvento({
         nombre: "",
         fecha: "",
@@ -78,8 +79,9 @@ export default function DialogEventos() {
         descripcion: "",
         categoria: "",
         precio: "",
-        organizador: user.id,
+        organizadorId: user.id,
       });
+      setImagenFile(null);
       setLoading(false);
 
       window.location.reload();
@@ -89,6 +91,7 @@ export default function DialogEventos() {
       setError("Hubo un problema al crear el evento. Intenta nuevamente.");
     }
   };
+
 
   return (
     <Dialog>
@@ -173,6 +176,16 @@ export default function DialogEventos() {
               onChange={handleChange}
               className="col-span-3"
               placeholder="Precio del evento"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="imagen" className="text-right">Imagen</Label>
+            <Input
+              id="imagen"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImagenFile(e.target.files[0])}
+              className="col-span-3"
             />
           </div>
         </div>

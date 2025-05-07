@@ -44,6 +44,7 @@ CREATE TABLE Evento (
     descripcion TEXT,
     categoria VARCHAR(255),
     precio DECIMAL(10, 2) NOT NULL,
+    imagen LONGBLOB,
     FOREIGN KEY (organizador_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 

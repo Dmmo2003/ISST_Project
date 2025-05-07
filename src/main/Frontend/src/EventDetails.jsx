@@ -7,6 +7,8 @@ import { obtenerGruposEvento, usuarioEstaEnGrupo } from "./api/grupos";
 import { obtenerEventoConOrganizador, obtenerRelacionUsuarioEvento } from "./api/eventos";
 import { seguirEvento, dejarSeguirEvento } from "./api/usuario";
 import GroupList from "./GroupList";
+import ImagenEvento from "./ImagenEvento";
+
 
 const EventDetails = () => {
   const [estaSiguiendo, setEstaSiguiendo] = useState(false);
@@ -46,7 +48,7 @@ const EventDetails = () => {
     }
   };
 
-  console.log("USuario", user);
+  console.log("Usuario", user);
 
   useEffect(() => {
     load(id);
@@ -66,6 +68,8 @@ const EventDetails = () => {
     }
   };
 
+
+
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 sm:px-6 lg:px-8 py-6"
@@ -77,6 +81,12 @@ const EventDetails = () => {
           <p className="text-white text-sm md:text-base mt-2">{evento.fecha}</p>
         </CardHeader>
         <CardContent>
+          {evento.id && (
+            <div className="w-full rounded-md bg-black/5 flex justify-center items-center">              
+            <ImagenEvento idEvento={evento.id} />
+            </div>
+          )}
+
           <p className="text-justify text-white text-sm md:text-base">{evento.descripcion}</p>
           <p className="mt-4 text-sm md:text-base">
             Ubicación: <span className="font-medium">{evento.ubicacion}</span>

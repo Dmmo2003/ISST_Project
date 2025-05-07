@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import ImagenEvento from "./ImagenEvento"; // Ajusta la ruta si es necesario
+
 
 export default function AcordeonEventos({ eventosFiltrados, navigate }) {
     return (
@@ -40,6 +42,12 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                     <AccordionContent className="data-[state=open]:animate-accordion-down">
                         <Card className="border-none shadow-sm rounded-md">
                             <CardContent className="p-4 space-y-2">
+                                {evento.id && (
+                                    <div className="w-full rounded-md bg-black/5 flex justify-center items-center">
+                                    <ImagenEvento idEvento={evento.id} />
+                                    </div>
+                                )}
+
                                 <p className="text-sm">
                                     🌟 <strong>Descripción:</strong> {evento.descripcion || "Sin descripción disponible"}
                                 </p>
