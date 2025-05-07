@@ -10,6 +10,7 @@ import Header from './Header';
 import MainPage from './MainPage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
+import RegisterEmpresaPage from './RegisterEmpresaPage';
 import NoMatch from './NoMatch';
 import './App.css';
 import ListaEventos from './ListaEventos';
@@ -37,6 +38,7 @@ function App() {
             {/* Otras rutas */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/registro-empresa" element={<RegisterEmpresaPage />} />
             <Route path="/perfil" element={<PerfilPage navigate={navigate} />} />
             <Route path="/eventos/:id" element={<EventDetails />} />
             <Route path="/eventos" element={<ListaEventos navigate={navigate} />} />
