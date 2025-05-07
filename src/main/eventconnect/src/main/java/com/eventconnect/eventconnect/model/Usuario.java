@@ -43,6 +43,7 @@ public class Usuario {
     private String tipo; // "persona" o "empresa"
 
     @Column(name = "CIF")
+    @JsonProperty("CIF")
     private String CIF; // Solo si es tipo 'empresa'
 
     // @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
@@ -179,5 +180,22 @@ public class Usuario {
     public void setGrupos (List<Grupo> grupos) {
         this.grupos = grupos;
     }
+
+    @Override
+public String toString() {
+    return "Usuario{" +
+            "id=" + id +
+            ", nombreUsuario='" + nombreUsuario + '\'' +
+            ", correo='" + correo + '\'' +
+            ", contraseña='" + contraseña + '\'' +
+            ", nombre='" + nombre + '\'' +
+            ", primer_Apellido='" + primer_Apellido + '\'' +
+            ", segundo_Apellido='" + segundo_Apellido + '\'' +
+            ", fechaNacimiento=" + fechaNacimiento +
+            ", tipo='" + tipo + '\'' +
+            ", CIF='" + CIF + '\'' +
+            '}';
+}
+
     
 }

@@ -46,6 +46,9 @@ export function RegisterEmpresaForm({ className, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("CIF en handleSubmit:", formData.CIF);
+
   
     // Validación de contraseñas
     if (formData.password !== formData.confirmPassword) {
