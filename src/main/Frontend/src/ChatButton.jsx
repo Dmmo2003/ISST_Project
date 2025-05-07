@@ -44,14 +44,14 @@ export default function ChatButton() {
                         <Button
                             variant="default"
                             size="lg"
-                            className="rounded-full w-13 h-13 md:w-15 md:h-15 shadow-lg bg-[#023047] hover:text-[#023047] hover:bg-[#FB8500]  p-0"
+                            className="rounded-full w-13 h-13 md:w-15 md:h-15 shadow-lg bg-[#023047] hover:bg-[#219EBC] p-0"
                             onClick={handleClick}
                         >
                             {/* <MessageCircle className="w-8 h-8 md:w-10 md:h-10 text-[#FB8500]" /> */}
                             <MessageCircle
-                                className="w-12 h-12 text-[#FB8500]"
+                                className="w-12 h-12 text-[#FFB703] "
                                 strokeWidth={3}
-                                style={{ stroke: '#FB8500' }}
+                                style={{ stroke: '#FFB703' }}
                             />
 
 

@@ -97,7 +97,7 @@ export default function ChatView({ handleClick }) {
         console.log("oooooola");
         if (chat.length > 0) {
             console.log("oooooola");
-            setTimeout(scrollToBottom, 294); // Pequeño retraso para asegurar renderizado
+            setTimeout(scrollToBottom, 300); // Pequeño retraso para asegurar renderizado
         }
     }, [chat]);
 
@@ -144,15 +144,6 @@ export default function ChatView({ handleClick }) {
             chatEndRef.current.scrollIntoView();
         }
     };
-
-
-
-
-
-
-
-
-
 
 
     return (

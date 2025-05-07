@@ -61,9 +61,12 @@ export function LoginForm({ className, ...props }) {
         return;
       }
 
-      console.log("Iniciando sesión loginForm:",data);
+      console.log("Iniciando sesión loginForm:", data);
       login(data);
       window.location.href = "/eventos";
+      // Después de un login exitoso en handleLogin:
+      // navigate('/eventos'); // Rediriges a la página de eventos usando React Router
+
 
     } catch (error) {
       setError("Credenciales incorrectas. Inténtalo de nuevo.");

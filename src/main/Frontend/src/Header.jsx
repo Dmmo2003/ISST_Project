@@ -153,7 +153,7 @@
 //   );
 // }
 
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -207,6 +207,9 @@ export default function Header({ navigate }) {
     logout();
     navigate("/");
   };
+
+  console.log(user); // Verifica si el objeto `user` está presente cuando deberías estar logueado.
+
 
   return (
     <header className="bg-gray-900 text-white sticky top-0 z-50 shadow">
