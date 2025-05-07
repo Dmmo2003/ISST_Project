@@ -22,13 +22,12 @@ const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
 export default function DialogEventos() {
   const { user } = useContext(UserContext);
-  const usuario = user;
 
   const [evento, setEvento] = useState({
     nombre: "",
-    fecha: "", // Asegúrate de formatear la fecha correctamente
+    fecha: "",
     ubicacion: "",
-    organizadorId: "", // El ID del organizador (usuario) que está creando el evento
+    organizadorId: "",
     descripcion: "",
     categoria: "",
     precio: ""
@@ -37,16 +36,12 @@ export default function DialogEventos() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // const onClose = () => {
-  //   setIsOpen(false);
-  // };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvento((prev) => ({
       ...prev,
       [name]: value,
-      organizadorId: user.id, // Aseguramos que el organizador siempre sea el usuario actual
+      organizadorId: user.id,
     }));
   };
 
@@ -60,12 +55,18 @@ export default function DialogEventos() {
   };
 
   const handleCrearEvento = async () => {
-    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria || !evento.precio) {
+    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria || evento.precio === "") {
       setError("Todos los campos son obligatorios.");
       return;
     }
 
-    setError(null); // Limpiar errores previos
+    const precioNumero = parseFloat(evento.precio);
+    if (isNaN(precioNumero) || precioNumero < 0) {
+      setError("El precio debe ser un número positivo.");
+      return;
+    }
+
+    setError(null);
     setLoading(true);
 
     try {
@@ -80,8 +81,8 @@ export default function DialogEventos() {
         organizador: user.id,
       });
       setLoading(false);
-      // onClose();
 
+      window.location.reload();
     } catch (err) {
       console.error("Error al crear el evento:", err);
       setLoading(false);
@@ -166,7 +167,8 @@ export default function DialogEventos() {
             <Input
               id="precio"
               name="precio"
-              type="number" // Para aceptar solo números
+              type="number"
+              min="0"
               value={evento.precio}
               onChange={handleChange}
               className="col-span-3"
