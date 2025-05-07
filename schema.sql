@@ -13,7 +13,7 @@ CREATE TABLE Usuario (
     fecha_nacimiento DATE NOT NULL,
     tipo ENUM('persona', 'empresa') NOT NULL,
     CIF VARCHAR(20) NULL,
-    CHECK (tipo = 'empresa' AND CIF IS NOT NULL OR tipo = 'persona' AND CIF IS NULL)
+    CHECK ((tipo = 'empresa' AND CIF IS NOT NULL) OR (tipo = 'persona' AND CIF IS NULL))
     
 );
 
