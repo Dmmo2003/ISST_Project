@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef, useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { X } from "lucide-react";
+import { X, MoveLeft, RefreshCcw } from "lucide-react";
 import { UserContext } from "./context/UserContext";
 import { obtenerEventosSeguidos, obtenerGruposSeguidos } from "./api/usuario";
 import { AnimatePresence, motion } from "framer-motion";
@@ -91,22 +91,22 @@ export default function ChatView({ handleClick }) {
         const chat = await obtenerMensajesGrupo(grupoSeleccionado.id);
         const chatSorted = chat.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
         setChat(chatSorted);
-      };
+    };
 
-    // useEffect(() => {
-    //     console.log("oooooola");
-    //     if (chat.length > 0) {
-    //         console.log("oooooola");
-    //       setTimeout(scrollToBottom, 294); // Pequeño retraso para asegurar renderizado
-    //     }
-    //   }, [chat]);
-    
-    useLayoutEffect(() => {
-        if (chat.length > 0 && scrollContainerRef.current) {
-          const container = scrollContainerRef.current;
-          container.scrollTop = container.scrollHeight;
+    useEffect(() => {
+        console.log("oooooola");
+        if (chat.length > 0) {
+            console.log("oooooola");
+            setTimeout(scrollToBottom, 294); // Pequeño retraso para asegurar renderizado
         }
-      }, [chat]);
+    }, [chat]);
+
+    // useLayoutEffect(() => {
+    //     if (chat.length > 0 && scrollContainerRef.current) {
+    //         const container = scrollContainerRef.current;
+    //         container.scrollTop = container.scrollHeight;
+    //     }
+    // }, [chat]);
 
     function agruparMensajesPorFecha(mensajes) {
         return mensajes.reduce((acc, mensaje) => {
@@ -144,7 +144,7 @@ export default function ChatView({ handleClick }) {
             chatEndRef.current.scrollIntoView();
         }
     };
-    
+
 
 
 
@@ -160,21 +160,32 @@ export default function ChatView({ handleClick }) {
                             size="icon"
                             onClick={() => setGrupoSeleccionado(null)}
                         >
-                            <span className="text-xl">←</span>
+                            <span className="text-xl"><MoveLeft className="w-5 h-5" /></span>
                         </Button>
                     )}
                     <h2 className="text-lg font-semibold text-muted-foreground">
                         {grupoSeleccionado ? grupoSeleccionado.nombre : "Tus grupos"}
                     </h2>
                 </div>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground"
-                    onClick={handleClick}
-                >
-                    <X className="w-5 h-5" />
-                </Button>
+                <div>
+                    {grupoSeleccionado ? < Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground"
+                        onClick={handleGrupoClick}
+                    >
+                        <RefreshCcw className="w-5 h-5" />
+                    </Button> : null
+                }
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground"
+                        onClick={handleClick}
+                    >
+                        <X className="w-5 h-5" />
+                    </Button>
+                </div>
             </div>
 
             {/* Contenido */}
@@ -308,6 +319,6 @@ export default function ChatView({ handleClick }) {
                     )}
                 </AnimatePresence>
             </div>
-        </div>
+        </div >
     );
 }
