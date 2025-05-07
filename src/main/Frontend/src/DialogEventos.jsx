@@ -22,7 +22,7 @@ const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
 export default function DialogEventos() {
   const { user } = useContext(UserContext);
-  const usuario = user;
+  const [open, setOpen] = useState(false);
 
   const [evento, setEvento] = useState({
     nombre: "",
@@ -80,6 +80,8 @@ export default function DialogEventos() {
         organizador: user.id,
       });
       setLoading(false);
+      setOpen(false); // Cierra el diálogo
+      window.location.reload(); // Recarga la página
       // onClose();
 
     } catch (err) {
@@ -90,7 +92,7 @@ export default function DialogEventos() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="w-full mt-4">Crear Evento</Button>
       </DialogTrigger>
@@ -162,15 +164,17 @@ export default function DialogEventos() {
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="precio" className="text-right">Precio</Label>
+            <Label htmlFor="precio" className="text-right">Precio (€)</Label>
             <Input
               id="precio"
               name="precio"
-              type="number" // Para aceptar solo números
+              type="number"
+              min="0"
+              step="0.01"
               value={evento.precio}
               onChange={handleChange}
               className="col-span-3"
-              placeholder="Precio del evento"
+              placeholder="0.00"
             />
           </div>
         </div>

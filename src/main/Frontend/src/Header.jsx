@@ -216,6 +216,10 @@ export default function Header({ navigate }) {
           <a href="/" className="flex items-center gap-2">
             <img src="/images/logo.png" alt="Logo" className="h-8 w-8" />
           </a>
+          <span href="/" className="block text-base sm:text-xl font-bold relative lg:hidden">
+            EventConnect
+          </span>
+
           {/* Popover escritorio */}
           <PopoverGroup className="hidden lg:flex relative">
             <Popover>
@@ -354,7 +358,7 @@ export default function Header({ navigate }) {
           >
             {/* Overlay: al hacer click aquí cierra el menú */}
             <div
-              className="fixed inset-0 bg-black/30"
+              className="fixed inset-0 bg-black/30 "
               aria-hidden="true"
               onClick={() => setMobileMenuOpen(false)}
             />
