@@ -4,15 +4,36 @@ import axios from "axios";
 const API_BASE_URL = 'http://localhost:8080/api/eventos';
 
 // Crear un nuevo evento
-export const crearEvento = async (evento) => {
-    console.log(evento);
+export const crearEvento = async (evento, imagenFile) => {
+    const formData = new FormData();
+    formData.append("evento", new Blob([JSON.stringify(evento)], { type: "application/json" }));
+    if (imagenFile) {
+        formData.append("imagen", imagenFile);
+    }
+
+    const response = await fetch("http://localhost:8080/api/eventos/nuevo", {
+        method: "POST",
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al crear el evento");
+    }
+
+    return await response.json();
+};
+
+
+export const obtenerImagenEvento = async (id) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/nuevo`, evento);
-        return response.data;
+        const response = await fetch(`http://localhost:8080/api/eventos/${id}/imagen`);
+        if (!response.ok) throw new Error("Imagen no encontrada");
+
+        const blob = await response.blob();
+        return URL.createObjectURL(blob); // genera una URL temporal para usar en un <img>
     } catch (error) {
-        console.error("Error creando evento:", error);
-        console.error("Error creando evento:", error.response?.data || error.message);
-        throw error;
+        console.error("Error al obtener imagen del evento:", error);
+        return null;
     }
 };
 

@@ -20,33 +20,29 @@ import { UserContext } from "./context/UserContext";
 
 const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 
+
 export default function DialogEventos() {
   const { user } = useContext(UserContext);
-  const usuario = user;
 
   const [evento, setEvento] = useState({
     nombre: "",
-    fecha: "", // Asegúrate de formatear la fecha correctamente
+    fecha: "",
     ubicacion: "",
-    organizadorId: "", // El ID del organizador (usuario) que está creando el evento
+    organizadorId: "",
     descripcion: "",
     categoria: "",
     precio: ""
   });
-
+  const [imagenFile, setImagenFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // const onClose = () => {
-  //   setIsOpen(false);
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEvento((prev) => ({
       ...prev,
       [name]: value,
-      organizadorId: user.id, // Aseguramos que el organizador siempre sea el usuario actual
+      organizadorId: user.id,
     }));
   };
 
@@ -60,16 +56,22 @@ export default function DialogEventos() {
   };
 
   const handleCrearEvento = async () => {
-    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria || !evento.precio) {
+    if (!evento.nombre || !evento.fecha || !evento.ubicacion || !evento.descripcion || !evento.categoria || evento.precio === "") {
       setError("Todos los campos son obligatorios.");
       return;
     }
 
-    setError(null); // Limpiar errores previos
+    const precioNumero = parseFloat(evento.precio);
+    if (isNaN(precioNumero) || precioNumero < 0) {
+      setError("El precio debe ser un número positivo.");
+      return;
+    }
+
+    setError(null);
     setLoading(true);
 
     try {
-      await crearEvento(evento);
+      await crearEvento(evento, imagenFile);
       setEvento({
         nombre: "",
         fecha: "",
@@ -77,17 +79,19 @@ export default function DialogEventos() {
         descripcion: "",
         categoria: "",
         precio: "",
-        organizador: user.id,
+        organizadorId: user.id,
       });
+      setImagenFile(null);
       setLoading(false);
-      // onClose();
 
+      window.location.reload();
     } catch (err) {
       console.error("Error al crear el evento:", err);
       setLoading(false);
       setError("Hubo un problema al crear el evento. Intenta nuevamente.");
     }
   };
+
 
   return (
     <Dialog>
@@ -166,11 +170,22 @@ export default function DialogEventos() {
             <Input
               id="precio"
               name="precio"
-              type="number" // Para aceptar solo números
+              type="number"
+              min="0"
               value={evento.precio}
               onChange={handleChange}
               className="col-span-3"
               placeholder="Precio del evento"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="imagen" className="text-right">Imagen</Label>
+            <Input
+              id="imagen"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImagenFile(e.target.files[0])}
+              className="col-span-3"
             />
           </div>
         </div>
