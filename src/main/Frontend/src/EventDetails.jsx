@@ -127,6 +127,7 @@ import { entrarAGrupo, salirDeGrupo } from "./api/grupos";
 import { getUsuario } from "./api/perfil";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { Heart, X } from "lucide-react";
+import DialogEventos from "./DialogEventos";
 
 const containerStyle = {
   width: "100%",
@@ -170,41 +171,6 @@ const EventDetails = () => {
     }
   };
 
-
-
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     if (!user?.id) return;
-
-  //     try {
-  //       const data = await obtenerEventoConOrganizador(id);
-  //       console.log(data);
-  //       setEvento(data.evento);
-  //       setOrganizador(data.organizador);
-
-  //       const relacion = await obtenerRelacionUsuarioEvento(id, user.id);
-  //       setEstaSiguiendo(relacion);
-
-
-  //       const gruposData = await obtenerGruposEvento(id);
-  //       const gruposConSigue = await Promise.all(
-  //         gruposData.map(async (grupo) => {
-  //           const sigue = await usuarioEstaEnGrupo(grupo.id, user.id);
-  //           const admin = await getUsuario(grupo.adminId);
-  //           return { ...grupo, usuarioSigue: sigue, admin };
-  //         })
-  //       );
-
-  //       console.log(gruposConSigue);
-
-  //       setGrupos(gruposConSigue);
-  //     } catch (err) {
-  //       console.error("Error al cargar datos del evento:", err);
-  //     }
-  //   };
-
-  //   loadData();
-  // }, [user, id]);
 
   console.log("Usuario", user);
 
@@ -417,7 +383,6 @@ const EventDetails = () => {
       <div className="w-full max-w-3xl mt-10">
         <h2 className="text-2xl font-semibold text-[#023047] mb-4">Grupos Asociados</h2>
         <Separator className="mb-6 bg-[#023047]" />
-
         <div className="grid gap-6">
           {grupos.map((grupo) => (
             <Card key={grupo.id} className="rounded-2xl border border-[#023047] shadow-sm hover:shadow-md transition-shadow">
@@ -429,10 +394,9 @@ const EventDetails = () => {
                   Creado por: <strong>{grupo.admin.nombreUsuario}</strong>
                 </p>
               </CardHeader>
-
+              {/*Badge y boton de seguimiento*/}
               <CardContent className="space-y-4">
                 <p className="text-gray-700">{grupo.descripcion}</p>
-
                 <div className="flex items-center justify-between flex-wrap gap-2 min-h-[2.5rem]">
                   <div className="w-[160px]">
                     {grupo.usuarioSigue && (
@@ -441,7 +405,7 @@ const EventDetails = () => {
                       </Badge>
                     )}
                   </div>
-
+                  {/* Boton seguir o dejar de seguir eventos */}
                   <Button
                     onClick={() => toggleGrupoFollow(grupo)}
                     className={`mt-1 ${grupo.usuarioSigue

@@ -6,15 +6,17 @@ public class GrupoDTO {
     private int id;
     private String nombre;
     private String descripcion;
+    private byte[] imagen;
     private int adminId;
     private int eventoId;
     private List<String> miembrosNombres;
 
-    public GrupoDTO(int id, String nombre, String descripcion, int adminId, int eventoId,
+    public GrupoDTO(int id, String nombre, String descripcion, byte [] imagen, int adminId, int eventoId,
             List<String> miembrosNombres) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagen = imagen;
         this.adminId = adminId;
         this.eventoId = eventoId;
         this.miembrosNombres = miembrosNombres;
@@ -43,6 +45,14 @@ public class GrupoDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+    
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
     public int getAdminId() {
