@@ -471,9 +471,14 @@ export function RegisterForm({ className, ...props }) {
               )}
             </Button>
 
+            <p className="text-center text-sm mt-4">
+              ¿Eres una empresa?{' '}
+              <a href="/registro-empresa" className="underline underline-offset-4 text-blue-600 hover:text-blue-800">Pincha aquí</a>
+            </p>
+
             <p className="text-center text-sm">
               ¿Ya tienes una cuenta?{' '}
-              <a href="/login" className="underline underline-offset-4">Inicia sesión</a>
+              <a href="/login" className="underline underline-offset-4 text-blue-600 hover:text-blue-800">Inicia sesión</a>
             </p>
           </form>
         </CardContent>

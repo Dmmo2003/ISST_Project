@@ -85,6 +85,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario registrarUsuario(Usuario usuario) {
+        System.out.println("REGISTRANDO USUARIO" + usuario);
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         return usuarioRepository.save(usuario);
     }
 

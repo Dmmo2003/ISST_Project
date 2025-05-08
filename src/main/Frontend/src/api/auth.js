@@ -15,6 +15,8 @@ export const iniciarSesion = async (usuario) => {
 
 export const registrarUsuario = async (usuario) => {
   console.log("Registrando usuario:", usuario);
+  console.log("JSON enviado al backend:", JSON.stringify(usuario));
+
   try {
     const response = await axios.post(API_URL + "/registro", usuario);
     return response.data;

@@ -136,6 +136,9 @@ const containerStyle = {
 // const googleMapsApiKey = config.googleMapsApiKey;
 
 
+import GroupList from "./GroupList";
+import ImagenEvento from "./ImagenEvento";
+
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -182,6 +185,7 @@ const EventDetails = () => {
   //       const relacion = await obtenerRelacionUsuarioEvento(id, user.id);
   //       setEstaSiguiendo(relacion);
 
+
   //       const gruposData = await obtenerGruposEvento(id);
   //       const gruposConSigue = await Promise.all(
   //         gruposData.map(async (grupo) => {
@@ -201,6 +205,9 @@ const EventDetails = () => {
 
   //   loadData();
   // }, [user, id]);
+
+  console.log("Usuario", user);
+
 
   useEffect(() => {
     const loadData = async () => {
@@ -339,6 +346,27 @@ const EventDetails = () => {
           </CardTitle>
           <p className="text-sm text-muted-foreground">
             {new Date(evento.fecha).toLocaleDateString()} • {evento.ubicacion}
+
+//   return (
+//     <div
+//       className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 sm:px-6 lg:px-8 py-6"
+//       style={{ backgroundImage: "url('/images/fondoDetalle.jpg')" }}
+//     >
+//       <Card className="rounded-2xl shadow-xl bg-gradient-to-br from-[#023047] to-[#004e7c] text-white p-6 w-full max-w-2xl">
+//         <CardHeader className="text-center">
+//           <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">{evento.nombre}</h1>
+//           <p className="text-white text-sm md:text-base mt-2">{evento.fecha}</p>
+//         </CardHeader>
+//         <CardContent>
+//           {evento.id && (
+//             <div className="w-full rounded-md bg-black/5 flex justify-center items-center">              
+//             <ImagenEvento idEvento={evento.id} />
+//             </div>
+//           )}
+
+//           <p className="text-justify text-white text-sm md:text-base">{evento.descripcion}</p>
+//           <p className="mt-4 text-sm md:text-base">
+//             Ubicación: <span className="font-medium">{evento.ubicacion}</span>
           </p>
           <Badge variant="outline" className="text-sm mt-1 w-fit">
             {evento.categoria}

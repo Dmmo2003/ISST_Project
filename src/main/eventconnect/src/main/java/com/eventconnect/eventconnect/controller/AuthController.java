@@ -50,6 +50,9 @@ public class AuthController {
         if (usuarioService.existsByUsername(usuario.getNombreUsuario())) {
             return ResponseEntity.badRequest().body("El nombre de usuario ya está registrado.");
         }
+        System.out.println("Usuario recibido en controlador: " + usuario);
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+
 
         // Guardar el usuario en la base de datos
         Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);

@@ -1,6 +1,7 @@
+DROP DATABASE isst_database;
 create DATABASE isst_database;
 use isst_database;
-DROP DATABASE isst_database;
+
 
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -13,9 +14,10 @@ CREATE TABLE Usuario (
     fecha_nacimiento DATE NOT NULL,
     tipo ENUM('persona', 'empresa') NOT NULL,
     CIF VARCHAR(20) NULL,
-    CHECK (tipo = 'empresa' AND CIF IS NOT NULL OR tipo = 'persona' AND CIF IS NULL)
-    
+    CHECK ((tipo = 'empresa' AND CIF IS NOT NULL AND CIF <> '') OR 
+           (tipo = 'persona' AND (CIF IS NULL OR CIF = '')))
 );
+
 
 -- Insertar usuarios de tipo persona
 INSERT INTO Usuario (nombreUsuario, correo, contraseña, nombre, primer_Apellido, segundo_Apellido, fecha_nacimiento, tipo) 
@@ -28,9 +30,11 @@ VALUES
 ('empresa_tech', 'contacto@empresa.com', 'empresa123', 'Empresa Tech', NULL, NULL, '2005-04-15', 'empresa', 'A12345678'),
 ('servicios_srl', 'contacto@serviciossrl.com', 'servicios456', 'Servicios SRL', NULL, NULL, '2010-08-25', 'empresa', 'B98765432');
 
-CREATE USER 'admin' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON eventconnect_db.* TO 'admin';
+DROP USER IF EXISTS 'admin'@'%';
+CREATE USER 'admin'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON isst_database.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
+
 
 CREATE TABLE Evento (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,6 +45,7 @@ CREATE TABLE Evento (
     descripcion TEXT,
     categoria VARCHAR(255),
     precio DECIMAL(10, 2) NOT NULL,
+    imagen LONGBLOB,
     FOREIGN KEY (organizador_Id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
@@ -48,7 +53,7 @@ INSERT INTO Evento (nombre, fecha, ubicacion, organizador_Id, descripcion, categ
 ('Conferencia de Tecnología', '2025-05-10 10:00:00', 'Madrid, España', 1, 'Evento sobre las últimas tendencias en tecnología.', 'Tecnología', 25.00),
 ('Concierto de Rock', '2025-06-15 20:00:00', 'Barcelona, España', 2, 'Banda en vivo con los mejores éxitos del rock.', 'Música', 50.00),
 ('Torneo de Ajedrez', '2025-04-20 15:00:00', 'Valencia, España', 3, 'Competencia abierta para jugadores de todos los niveles.', 'Deportes', 10.00),
-('Feria del Libro', '2025-07-05 11:00:00', 'Sevilla, España', 4, 'Encuentro con autores y presentaciones de libros.', 'Cultura', NULL);
+('Feria del Libro', '2025-07-05 11:00:00', 'Sevilla, España', 4, 'Encuentro con autores y presentaciones de libros.', 'Cultura', 0.00);
 
 
 CREATE TABLE Grupo (
@@ -123,8 +128,8 @@ INSERT INTO Usuario_Evento (usuario_Id, evento_Id) VALUES
 (3, 1), (3, 4),
 -- Usuario 4 asiste a todos los eventos
 (4, 1), (4, 2), (4, 3), (4, 4);
-INSERT INTO Usuario_Evento (usuario_Id, evento_Id) VALUES
-(1, 5);
+-- INSERT INTO Usuario_Evento (usuario_Id, evento_Id) VALUES
+-- (1, 5);
 
 CREATE TABLE Usuario_Grupo (
     usuario_Id INT,
