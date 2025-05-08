@@ -2,11 +2,10 @@ package com.eventconnect.eventconnect.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
@@ -41,14 +40,16 @@ public class GrupoServiceImpl implements GrupoService {
     @Override
     public Grupo crearGrupo(Grupo grupo) {
         // Guardamos el grupo
-        Grupo grupoCreado = grupoRepository.save(grupo);
+        // Grupo grupoCreado = grupoRepository.save(grupo);
 
-        // ⚠️ Verificamos que admin existe y tiene ID válido
-        if (grupo.getAdmin() != null && grupo.getAdmin().getId() > 0) {
-            unirseAGrupo(grupo.getAdmin().getId(), grupoCreado.getId());
-        }
+        // // ⚠️ Verificamos que admin existe y tiene ID válido
+        // if (grupo.getAdmin() != null && grupo.getAdmin().getId() > 0) {
+        //     unirseAGrupo(grupo.getAdmin().getId(), grupoCreado.getId());
+        // }
 
-        return grupoCreado;
+        // return grupoCreado;
+        // unirseAGrupo(grupo.getAdmin().getId(), grupo.getId());
+        return grupoRepository.save(grupo);
     }
 
     @Override

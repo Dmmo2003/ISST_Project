@@ -68,9 +68,7 @@ public class EventoController {
     // }
     @PostMapping(value = "/nuevo", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public Evento crearEvento(
-            @Validated @RequestPart("evento") Evento evento,
-            @RequestPart(value = "imagen", required = false) MultipartFile imagenFile) throws IOException {
+    public Evento crearEvento( @Validated @RequestPart("evento") Evento evento, @RequestPart(value = "imagen", required = false) MultipartFile imagenFile) throws IOException {
         if (imagenFile != null && !imagenFile.isEmpty()) {
             evento.setImagen(imagenFile.getBytes());
         }

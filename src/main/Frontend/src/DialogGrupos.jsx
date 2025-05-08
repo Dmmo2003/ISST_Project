@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { UserContext } from "./context/UserContext";
-import { crearGrupo } from "./api/grupos";
+import { crearGrupo, entrarAGrupo } from "./api/grupos";
 
 export default function DialogGrupos({ evento, onGrupoCreado }) {
   const { user } = useContext(UserContext);
@@ -27,43 +27,6 @@ export default function DialogGrupos({ evento, onGrupoCreado }) {
     }));
   };
 
-/*   const handleCrearGrupo = async () => {
-    if (!grupo.nombre || !grupo.descripcion) {
-      setError("Todos los campos son obligatorios.");
-      return;
-    }
-
-    setError(null);
-    setLoading(true);
-
-    try {
-      const formData = new FormData();
-      const grupoConIds = {
-        ...grupo,
-        admin: { id: user.id },
-        evento: { id: evento.id }
-      };
-
-      formData.append("grupo", new Blob([JSON.stringify(grupoConIds)], { type: "application/json" }));
-      if (imagenFile) formData.append("imagen", imagenFile);
-
-      await crearGrupo(grupoConIds, imagenFile);
-
-
-
-      setGrupo({ nombre: "", descripcion: "" });
-      setImagenFile(null);
-      setOpen(false);
-      onGrupoCreado?.(); // callback opcional para recargar lista de grupos
-    } catch (err) {
-      console.error("Error al crear grupo:", err);
-      setError("Hubo un error al crear el grupo.");
-    } finally {
-      setLoading(false);
-    }
-  };
- */
-
   const handleCrearGrupo = async () => {
     if (!grupo.nombre || !grupo.descripcion) {
       setError("Todos los campos son obligatorios.");
@@ -81,7 +44,10 @@ export default function DialogGrupos({ evento, onGrupoCreado }) {
         evento: { id: evento.id },
       };
   
-      await crearGrupo(grupoConIds, imagenFile);
+      const grupoCreado = await crearGrupo(grupoConIds, imagenFile);
+      console.log("Grupo creado:", grupoCreado);
+      
+      await entrarAGrupo(grupoCreado.id, user.id);
   
       setGrupo({ nombre: "", descripcion: "", admin: "" });
       setImagenFile(null);

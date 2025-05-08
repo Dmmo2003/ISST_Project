@@ -18,13 +18,15 @@ export const crearGrupo = async (grupo, imagenFile) => {
                 "Content-Type": "multipart/form-data",
             },
         });
+        console.log("RESPONSE",response);
         return response.data;
     } catch (error) {
         console.error("Error creando grupo:", error);
         throw error;
     }
 };
-;
+
+
 
 export const obtenerImagenGrupo = async (id) => {
     try {
