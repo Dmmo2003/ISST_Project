@@ -180,6 +180,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                     grupo.getId(),
                     grupo.getNombre(),
                     grupo.getDescripcion(),
+                    grupo.getImagen(),  
                     grupo.getAdmin().getId(),
                     grupo.getEvento().getId(),
                     miembrosNombres);

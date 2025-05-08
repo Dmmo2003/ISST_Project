@@ -13,6 +13,8 @@ import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 import com.eventconnect.eventconnect.model.Usuario;
 import com.eventconnect.eventconnect.repository.GrupoRepository;
 import com.eventconnect.eventconnect.repository.UsuarioRepository;
+import com.eventconnect.eventconnect.service.GrupoServiceImpl.GrupoNoEncontradoException;
+import com.eventconnect.eventconnect.service.GrupoServiceImpl.UsuarioNoEncontradoException;
 
 @Service
 public class GrupoServiceImpl implements GrupoService {
@@ -32,15 +34,21 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Grupo obtenerGrupoId(int id) {
-        // return null;
-        return grupoRepository.findById(id).orElse(null);
+    public Optional<Grupo> obtenerGrupoPorId(int id) {
+        return grupoRepository.findById(id);
     }
 
     @Override
     public Grupo crearGrupo(Grupo grupo) {
-        // return null;
-        return grupoRepository.save(grupo);
+        // Guardamos el grupo
+        Grupo grupoCreado = grupoRepository.save(grupo);
+
+        // ⚠️ Verificamos que admin existe y tiene ID válido
+        if (grupo.getAdmin() != null && grupo.getAdmin().getId() > 0) {
+            unirseAGrupo(grupo.getAdmin().getId(), grupoCreado.getId());
+        }
+
+        return grupoCreado;
     }
 
     @Override

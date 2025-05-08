@@ -14,12 +14,20 @@ import io.micrometer.observation.Observation;
 
 public interface EventoService {
     List<EventoDTO> obtenerEventos();
+
     Optional<Evento> obtenerEventoPorId(int id);
+
     Evento crearEvento(Evento evento);
+
     Evento actualizarEvento(Evento evento);
+
     void eliminarEvento(int id);
+
     Usuario obtenerOrganizadorPorId(int id);
+
     List<EventoConOrganizadorDTO> obtenerTodosLosEventosConOrganizadores();
+
     EventoConOrganizadorDTO obtenerEventoConOrganizador(int id);
+
     boolean verificarSiUsuarioSigueEvento(int idUsuario, int idEvento);
 }

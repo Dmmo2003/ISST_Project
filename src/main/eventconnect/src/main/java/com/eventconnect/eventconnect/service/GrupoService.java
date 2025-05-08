@@ -1,6 +1,8 @@
 package com.eventconnect.eventconnect.service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
@@ -8,7 +10,7 @@ import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 public interface GrupoService {
     List<Grupo> obtenerTodosGrupos();
 
-    Grupo obtenerGrupoId(int id);
+    Optional<Grupo> obtenerGrupoPorId(int id);
 
     Grupo crearGrupo(Grupo grupo);
 

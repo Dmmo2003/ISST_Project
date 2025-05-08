@@ -4,14 +4,38 @@ import axios from "axios";
 const API_BASE_URL = 'http://localhost:8080/api/grupos';
 
 // Crear un nuevo evento
-export const crearGrupo = async (grupo) => {
-    console.log(evento);
+export const crearGrupo = async (grupo, imagenFile) => {
+    const formData = new FormData();
+    formData.append("grupo", new Blob([JSON.stringify(grupo)], { type: "application/json" }));
+
+    if (imagenFile) {
+        formData.append("imagen", imagenFile);
+    }
+
     try {
-        const response = await axios.post(`${API_BASE_URL}/nuevo`, grupo);
+        const response = await axios.post(`${API_BASE_URL}/nuevo`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
         return response.data;
     } catch (error) {
         console.error("Error creando grupo:", error);
         throw error;
+    }
+};
+;
+
+export const obtenerImagenGrupo = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${id}/imagen`);
+        if (!response.ok) throw new Error("Imagen no encontrada");
+
+        const blob = await response.blob();
+        return URL.createObjectURL(blob); // genera una URL temporal para usar en un <img>
+    } catch (error) {
+        console.error("Error al obtener imagen del grupo:", error);
+        return null;
     }
 };
 

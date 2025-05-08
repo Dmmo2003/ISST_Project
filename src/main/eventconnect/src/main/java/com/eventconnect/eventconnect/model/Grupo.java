@@ -20,6 +20,11 @@ public class Grupo {
     @Column(nullable = false)
     private String descripcion;
 
+    @Lob
+    @Column(name = "imagen")
+    private byte[] imagen;
+
+
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     // @JsonProperty("adminId")
@@ -47,10 +52,11 @@ public class Grupo {
     // Constructores
     public Grupo() {}
 
-    public Grupo(int id, String nombre, String descripcion, Usuario admin, Evento evento) {
+    public Grupo(int id, String nombre, String descripcion, byte[] imagen, Usuario admin, Evento evento) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagen = imagen;
         this.admin = admin;  // Ahora pasamos el objeto Usuario en vez de un id
         this.evento = evento;  // Ahora pasamos el objeto Evento
     }
@@ -78,6 +84,14 @@ public class Grupo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+    
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
     public Usuario getAdmin() {
