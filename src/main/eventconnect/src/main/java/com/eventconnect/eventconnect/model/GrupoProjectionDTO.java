@@ -10,13 +10,12 @@ public class GrupoProjectionDTO {
     private byte[] imagen;
 
     // Constructor
-    public GrupoProjectionDTO(int id, String nombre, int eventoId, int adminId, String descripcion, byte[] imagen) {
+    public GrupoProjectionDTO(int id, String nombre, int eventoId, int adminId, String descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.eventoId = eventoId;
         this.adminId = adminId;
         this.descripcion = descripcion;
-        this.imagen = imagen;
     }
 
     // Getters and setters
