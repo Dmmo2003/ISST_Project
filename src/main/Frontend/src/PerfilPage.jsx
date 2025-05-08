@@ -8,6 +8,9 @@ import { UserContext } from "./context/UserContext";
 import { obtenerEventosSeguidos } from './api/usuario';
 import { dejarSeguirEvento } from './api/usuario';
 import { eliminarEvento } from './api/usuario';
+import { dejarGrupoPorEvento } from './api/usuario';
+import AcordeonEventosPerfil from './AcordeonEventosPerfil';
+import { useNavigate } from 'react-router-dom';
 
 const colors = {
   primary: '#219EBC',
@@ -15,7 +18,7 @@ const colors = {
   danger: '#EF4444',
 };
 
-export default function PerfilPage({ navigate }) {
+export default function PerfilPage() {
   const [usuario, setUsuario] = useState(null);
   const [eventosSeguidos, setEventosSeguidos] = useState([]);
   const [eventosCreados, setEventosCreados] = useState([]);
@@ -27,10 +30,8 @@ export default function PerfilPage({ navigate }) {
   const [contraseña, setContraseña] = useState('');
   const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const [error, setError] = useState('');
-  const { user, logout } = useContext(UserContext);
-
+  const { user, login, logout } = useContext(UserContext);  const navigate = useNavigate();
   console.log("USER", user);
-
 
   useEffect(() => {
     if (!user) {
@@ -38,28 +39,18 @@ export default function PerfilPage({ navigate }) {
       return
     }
     load();
-
-
-
-
-
   }, [user]);
 
   const load = async () => {
     console.log("Hay user", user);
+    setUsuario(user);
     const eventosSeguidosData = await obtenerEventosSeguidos(user.id);
-
     setEventosSeguidos(eventosSeguidosData);
-    // console.log("Eventos seguidos", eventosSeguidos);
-
     const eventosCreadosData = await obtenerEventosCreados(user.id);
     setEventosCreados(eventosCreadosData);
     console.log("Eventos creados", eventosCreadosData);
     setLoading(false);
-
-
   }
-
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -107,27 +98,24 @@ export default function PerfilPage({ navigate }) {
   };
 
   const handleAbandonarEvento = async (eventoId) => {
-    const response = await dejarSeguirEvento(user.id, eventoId);
-    console.log(response);
+    try {
+      await dejarSeguirEvento(user.id, eventoId);
+      await dejarGrupoPorEvento(user.id, eventoId);
+      setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId)); // igual que handleEliminarEvento
+    } catch (err) {
+      console.error("Error al dejar de seguir el evento:", err);
+    }
   };
-
+  
   const handleEliminarEvento = async (eventoId) => {
-    // try {
-    //   await fetch(`/api/usuarios/${userId}/eliminar-evento/${eventoId}`, {
-    //     method: 'DELETE',
-    //   });
-    //   setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
-    // } catch (err) {
-    //   console.error("Error al eliminar el evento:", err);
-    // }
     try {
       const response = await eliminarEvento(eventoId, user.id);
       console.log(response);
       setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
+      setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
     } catch (err) {
       console.error("Error al eliminar el evento:", err);
     }
-
   };
 
   return (
@@ -138,30 +126,27 @@ export default function PerfilPage({ navigate }) {
         </div>
       </div>
     ) : (
-      <div
-        className="min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/fondoPerfil.jpg')" }}
-      >
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Tarjeta de perfil */}
-            <CardPerfil user={user} navigate={navigate} />
-
-            {/* Sección de eventos */}
-            <div className="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="min-h-screen bg-gradient-to-br from-sky-100 to-white py-12">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Perfil */}
+            <CardPerfil user={usuario} setUsuario={setUsuario} navigate={navigate} />
+  
+            {/* Eventos */}
+            <div className="lg:col-span-2 space-y-8">
               <CardEventosPerfil
-                title="Eventos que Sigues"
+                title="🎉 Eventos que Sigues"
                 eventos={eventosSeguidos}
                 navigate={navigate}
                 onAction={handleAbandonarEvento}
                 actionText="Dejar de Seguir"
               />
               <CardEventosPerfil
-                title="Eventos que Has Creado"
+                title="📌 Eventos que Has Creado"
                 eventos={eventosCreados}
                 navigate={navigate}
                 onAction={handleEliminarEvento}
-                actionText="Eliminar"
+                actionText="Eliminar evento"
               />
             </div>
           </div>
@@ -169,11 +154,10 @@ export default function PerfilPage({ navigate }) {
       </div>
     )
   );
+
+
+
 }
-
-
-
-
 
 
 

@@ -32,29 +32,24 @@
 
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import AcordeonEventosPerfil from "./AcordeonEventosPerfil";
 
 export default function CardEventosPerfil({ title, eventos, navigate, onAction, actionText }) {
   return (
-    <Card className="bg-dark text-white shadow-lg rounded-lg">
+    <Card className="bg-white shadow-lg rounded-2xl">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-lg font-semibold text-primary">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-2">
         {eventos.length === 0 ? (
           <p className="text-center text-gray-400 py-4">No hay eventos para mostrar</p>
         ) : (
-          eventos.map((evento) => (
-            <div key={evento.id} className="flex justify-between items-center mb-4">
-              <p>{evento.nombre}</p>
-              <Button
-                onClick={() => onAction(evento.id)}
-                className="bg-danger text-white hover:bg-danger/90"
-              >
-                {actionText}
-              </Button>
-            </div>
-          ))
+          <AcordeonEventosPerfil
+            eventos={eventos}
+            onAction={onAction}
+            actionText={actionText}
+            navigate={navigate}
+          />
         )}
       </CardContent>
     </Card>

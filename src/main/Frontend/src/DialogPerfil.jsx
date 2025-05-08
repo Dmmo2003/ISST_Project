@@ -157,9 +157,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"; // 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { updateUsuario } from "./api/perfil";
+import { useContext } from "react";
+import { UserContext } from "./context/UserContext";
 
-export default function DialogPerfil() {
+
+export default function DialogPerfil({ user, onUpdate }) {
     const [open, setOpen] = useState(false);
 
     // Estado para el formulario de edición
@@ -170,23 +174,54 @@ export default function DialogPerfil() {
     const [contraseña, setContraseña] = useState('');
     const [confirmarContraseña, setConfirmarContraseña] = useState('');
     const [error, setError] = useState('');
+    const { login } = useContext(UserContext);
 
-    const handleActualizarUsuario = async () => {
-        if (contraseña && contraseña !== confirmarContraseña) {
-            setError("Las contraseñas no coinciden");
-            return;
-        }
 
-        try {
-            setError('');
-            console.log('Guardando usuario:', { nombre, apellido, usuarioName, correo });
+  // ✅ Cargar datos del usuario cuando abre el modal
+  useEffect(() => {
+    if (user) {
+      setNombre(user.nombre || '');
+      setApellido(user.apellido || '');
+      setUsuarioName(user.nombreUsuario || '');
+      setCorreo(user.correo || '');
+    }
+  }, [user]);
 
-            // Simulación de actualización exitosa
-            setOpen(false);
-        } catch (error) {
-            setError('Error al actualizar el perfil. Inténtalo de nuevo.');
-        }
-    };
+
+
+  const handleActualizarUsuario = async () => {
+    if (contraseña && contraseña !== confirmarContraseña) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
+  // ✅ Validación de contraseña: mínimo 8 caracteres, al menos una mayúscula
+  const contraseñaValida = /^(?=.*[A-Z]).{8,}$/;
+
+  if (contraseña && !contraseñaValida.test(contraseña)) {
+    setError("La contraseña debe tener al menos 8 caracteres y una mayúscula.");
+    return;
+  }
+
+    try {
+      setError('');
+      console.log('Guardando usuario:', { nombre, apellido, usuarioName, correo });
+  
+      const usuarioActualizado = await updateUsuario(user.id, {
+        nombre,
+        primerApellido: apellido,
+        correo,
+        ...(contraseña && { password: contraseña })
+      });
+  
+      onUpdate(usuarioActualizado); // 🔁 actualiza el estado en PerfilPage
+      login(usuarioActualizado); // 🔐 actualiza el contexto y localStorage
+      setOpen(false);
+    } catch (error) {
+      setError('Error al actualizar el perfil. Inténtalo de nuevo.');
+    }
+  };
+  
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

@@ -8,6 +8,8 @@ public class UsuarioDTO {
     private String primerApellido;
     private String segundoApellido;
     private String tipo;
+    private String password;
+    private byte[] fotoPerfil;
 
     public UsuarioDTO() {
     }
@@ -32,6 +34,7 @@ public class UsuarioDTO {
         this.primerApellido = usuario.getPrimer_Apellido();     // <- adaptado
         this.segundoApellido = usuario.getSegundo_Apellido();   // <- adaptado
         this.tipo = usuario.getTipo();
+        this.fotoPerfil = usuario.getFotoPerfil();
     }
 
     // Getters y setters
@@ -89,5 +92,21 @@ public class UsuarioDTO {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }

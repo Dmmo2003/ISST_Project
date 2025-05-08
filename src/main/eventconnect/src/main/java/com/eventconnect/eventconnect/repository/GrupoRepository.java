@@ -36,5 +36,6 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
     //         "FROM Grupo g JOIN g.miembros u WHERE u.id = :idUsuario")
     // List<GrupoDTO> obtenerGruposSeguidosPorUsuario(@Param("idUsuario") int idUsuario);
     
+    List<Grupo> findByEventoId(int eventoId);
 
 }
