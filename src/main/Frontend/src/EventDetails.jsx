@@ -128,6 +128,7 @@ import { getUsuario } from "./api/perfil";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { Heart, X } from "lucide-react";
 import DialogEventos from "./DialogEventos";
+import DialogGrupos from "./DialogGrupos";
 
 const containerStyle = {
   width: "100%",
@@ -381,43 +382,60 @@ const EventDetails = () => {
 
       {/* Sección de grupos */}
       <div className="w-full max-w-3xl mt-10">
-        <h2 className="text-2xl font-semibold text-[#023047] mb-4">Grupos Asociados</h2>
-        <Separator className="mb-6 bg-[#023047]" />
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-semibold text-[#023047]">Grupos Asociados</h2>
+          <DialogGrupos evento={evento} onGrupoCreado={() => window.location.reload()} />
+        </div><Separator className="mb-6 bg-[#023047]" />
         <div className="grid gap-6">
           {grupos.map((grupo) => (
             <Card key={grupo.id} className="rounded-2xl border border-[#023047] shadow-sm hover:shadow-md transition-shadow">
-              <CardHeader className="space-y-1">
-                <CardTitle className="text-xl font-medium text-[#023047]">
-                  {grupo.nombre}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Creado por: <strong>{grupo.admin.nombreUsuario}</strong>
-                </p>
-              </CardHeader>
-              {/*Badge y boton de seguimiento*/}
-              <CardContent className="space-y-4">
-                <p className="text-gray-700">{grupo.descripcion}</p>
-                <div className="flex items-center justify-between flex-wrap gap-2 min-h-[2.5rem]">
-                  <div className="w-[160px]">
-                    {grupo.usuarioSigue && (
-                      <Badge className="bg-green-500 hover:bg-green-600 text-white">
-                        Sigues este grupo
-                      </Badge>
-                    )}
-                  </div>
-                  {/* Boton seguir o dejar de seguir eventos */}
-                  <Button
-                    onClick={() => toggleGrupoFollow(grupo)}
-                    className={`mt-1 ${grupo.usuarioSigue
-                      ? "bg-[#FB8500] hover:bg-[#FFB703]"
-                      : "bg-[#023047] hover:bg-[#014572]"} text-white transition-colors`}
-                  >
-                    {grupo.usuarioSigue ? "Dejar de seguir grupo" : "Seguir grupo"}
-                  </Button>
+              <div className="grid grid-cols-[100px_1fr] gap-4 p-4 items-start">
+
+                {/* Imagen del grupo */}
+                <div className="w-[100px] h-[100px] bg-gray-100 rounded-md overflow-hidden border border-gray-300">
+                  {grupo.imagen ? (
+                    <img
+                      src={`data:image/jpeg;base64,${grupo.imagen}`}
+                      alt="Imagen del grupo"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">Sin imagen</div>
+                  )}
                 </div>
-              </CardContent>
+
+                {/* Info y botón */}
+                <div className="flex flex-col justify-between space-y-2">
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#023047]">{grupo.nombre}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Creado por: <strong>{grupo.admin.nombreUsuario}</strong>
+                    </p>
+                    <p className="text-sm mt-1 text-gray-700">{grupo.descripcion}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between flex-wrap gap-2 min-h-[2.5rem] mt-2">
+                    <div className="w-[160px]">
+                      {grupo.usuarioSigue && (
+                        <Badge className="bg-green-500 hover:bg-green-600 text-white">
+                          Sigues este grupo
+                        </Badge>
+                      )}
+                    </div>
+                    <Button
+                      onClick={() => toggleGrupoFollow(grupo)}
+                      className={`mt-1 ${grupo.usuarioSigue
+                        ? "bg-[#FB8500] hover:bg-[#FFB703]"
+                        : "bg-[#023047] hover:bg-[#014572]"} text-white transition-colors`}
+                    >
+                      {grupo.usuarioSigue ? "Dejar de seguir grupo" : "Seguir grupo"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </Card>
           ))}
+
         </div>
       </div>
     </div>

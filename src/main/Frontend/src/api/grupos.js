@@ -4,16 +4,27 @@ import axios from "axios";
 const API_BASE_URL = 'http://localhost:8080/api/grupos';
 
 // Crear un nuevo evento
-export const crearGrupo = async (grupo) => {
-    console.log(evento);
+export const crearGrupo = async (grupo, imagenFile) => {
+    const formData = new FormData();
+    formData.append("grupo", new Blob([JSON.stringify(grupo)], { type: "application/json" }));
+
+    if (imagenFile) {
+        formData.append("imagen", imagenFile);
+    }
+
     try {
-        const response = await axios.post(`${API_BASE_URL}/nuevo`, grupo);
+        const response = await axios.post(`${API_BASE_URL}/nuevo`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
         return response.data;
     } catch (error) {
         console.error("Error creando grupo:", error);
         throw error;
     }
 };
+;
 
 // Eliminar un evento por ID
 export const eliminarGrupo = async (id) => {

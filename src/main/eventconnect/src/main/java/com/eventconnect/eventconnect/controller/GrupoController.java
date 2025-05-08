@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,10 +36,20 @@ public class GrupoController {
         return grupo != null ? ResponseEntity.ok(grupo) : ResponseEntity.notFound().build();
     }
 
-    // Crear un nuevo grupo
-    @PostMapping
-    public ResponseEntity<Grupo> crearGrupo(@RequestBody Grupo grupo) {
-        return ResponseEntity.ok(grupoService.crearGrupo(grupo));
+    @PostMapping("/nuevo")
+    public ResponseEntity<Grupo> crearGrupo(
+            @RequestPart("grupo") Grupo grupo,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagenFile) {
+        try {
+            if (imagenFile != null && !imagenFile.isEmpty()) {
+                grupo.setImagen(imagenFile.getBytes());
+            }
+            Grupo grupoCreado = grupoService.crearGrupo(grupo);
+            return ResponseEntity.ok(grupoCreado);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // Actualizar un grupo existente
