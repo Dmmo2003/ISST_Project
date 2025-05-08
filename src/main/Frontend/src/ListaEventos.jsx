@@ -165,7 +165,7 @@ export default function ListaEventos(props) {
                             />
                         </div>
 
-                        <Button className="w-full bg-[#FB8500] text-[#023047] hover:bg-[#023047] hover:text-[#FB8500]" onClick={() => { setSelectedEtiqueta("todas"); setDiasFiltro(30); }}>
+                        <Button className="w-full bg-[#FB8500] text-white hover:bg-[#FFB703]" onClick={() => { setSelectedEtiqueta("todas"); setDiasFiltro(30); }}>
                             Restablecer filtros
                         </Button>
                     </Card>

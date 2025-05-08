@@ -358,13 +358,13 @@ const EventDetails = () => {
               </div>
               <Button
                 onClick={handleFollow}
-                className={`mt-4 w-full sm:w-auto px-4 py-4 text-lg font-bold rounded-2xl shadow-xl transition transform duration-200 ease-in-out active:scale-90 self-start flex items-center gap-2
+                className={`mt-4 w-full sm:w-auto px-4 py-4 text-lg font-bold shadow-xl transition transform duration-200 ease-in-out active:scale-90 self-start flex items-center gap-2
                     ${estaSiguiendo
-                    ? "bg-red-600 hover:bg-red-700"
+                    ? "bg-[#FB8500] hover:bg-[#FFB703]"
                     : "bg-[#FB8500] hover:bg-[#FFB703]"} text-white`}
               > 
                 {estaSiguiendo ? "Dejar de seguir evento" : "Seguir evento"}
-                {estaSiguiendo ? <X size={20} /> : <Heart size={20} fill="white" />}
+                {estaSiguiendo ? <X size={20} style={{ stroke: 'white' }} /> : <Heart size={20} fill="white" />}
               </Button>
 
             </div>
@@ -428,7 +428,7 @@ const EventDetails = () => {
                   <Button
                     onClick={() => toggleGrupoFollow(grupo)}
                     className={`mt-1 ${grupo.usuarioSigue
-                      ? "bg-red-500 hover:bg-red-600"
+                      ? "bg-[#FB8500] hover:bg-[#FFB703]"
                       : "bg-[#023047] hover:bg-[#014572]"} text-white transition-colors`}
                   >
                     {grupo.usuarioSigue ? "Dejar de seguir grupo" : "Seguir grupo"}
