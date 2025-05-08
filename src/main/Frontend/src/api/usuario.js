@@ -47,3 +47,12 @@ export const obtenerGruposSeguidos = async (idUsuario) => {
         throw error;
     }
 }
+
+export const eliminarEvento = async (eventoId, userId) => {
+    try {
+        await axios.delete(`${API_BASE_URL}/${userId}/evento/${eventoId}`);
+    } catch (error) {
+        console.error("Error eliminando evento:", error);
+        throw error;
+    }
+};

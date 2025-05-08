@@ -38,14 +38,14 @@ export const obtenerImagenEvento = async (id) => {
 };
 
 // Eliminar un evento por ID
-export const eliminarEvento = async (id) => {
-    try {
-        await axios.delete(`${API_BASE_URL}/${id}`);
-    } catch (error) {
-        console.error("Error eliminando evento:", error);
-        throw error;
-    }
-};
+// export const eliminarEvento = async (eventoId, userId) => {
+//     try {
+//         await axios.delete(`${API_BASE_URL}/${userId}/evento/${eventoId}`);
+//     } catch (error) {
+//         console.error("Error eliminando evento:", error);
+//         throw error;
+//     }
+// };
 
 export const obtenerEventos = async () => {
     try {
@@ -98,4 +98,5 @@ export const obtenerRelacionUsuarioEvento = async (idEvento, idUsuario) => {
         throw error;
     }
 }
+
 

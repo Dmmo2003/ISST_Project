@@ -8,9 +8,9 @@ export default function CardEventos(props) {
     const { eventosFiltrados, navigate } = props;
     return (
         <>
-            <Card className="flex-1 h-full flex flex-col">
-                <CardHeader>
-                    <CardTitle>Proximos Eventos</CardTitle>
+            <Card className="flex-1 h-full flex flex-col border border-[#023047] pt-0">
+                <CardHeader className="text-center bg-[#023047] rounded-t-xl py-4 text-white">
+                    <CardTitle className="text-2xl font-bold">Próximos Eventos</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col overflow-hidden">
                     <ScrollArea className="flex-1 overflow-y-auto">
@@ -19,9 +19,9 @@ export default function CardEventos(props) {
 
                     {/* Dialog para crear eventos */}
                     <DialogEventos />
-
                 </CardContent>
             </Card>
+
         </>
     )
 }

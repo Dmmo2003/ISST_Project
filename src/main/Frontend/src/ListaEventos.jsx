@@ -57,6 +57,7 @@ export default function ListaEventos(props) {
 
                 const eventosBackend = await obtenerEventos();
                 setEventos(eventosBackend);
+                console.log(eventosBackend);
 
 
             } catch (error) {
@@ -67,28 +68,39 @@ export default function ListaEventos(props) {
         cargarEventos();
     }, []);
 
-    //cambiar eventosMock por eventos
     const eventosFiltrados = eventos.filter((evento) => {
         const cumpleBusqueda = evento.nombre.toLowerCase().includes(searchTerm.toLowerCase());
-        const cumpleEtiqueta = selectedEtiqueta === "todas" || evento.etiquetas.includes(selectedEtiqueta);
+        const cumpleEtiqueta = selectedEtiqueta === "todas" || evento.categoria === selectedEtiqueta;
+
+
         const eventoFecha = new Date(evento.fecha);
-        var cumpleFecha = false;
-        var diasDiferencia = 0;
+        const eventoDia = eventoFecha.setHours(0, 0, 0, 0);
+        const hoy = new Date(currentDate);
+        hoy.setHours(0, 0, 0, 0);
+
+        const diferenciaTiempo = eventoDia - hoy.getTime();
+        const diasDiferencia = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24));
+
+        let cumpleFecha = false;
 
         if (diasFiltro >= 91) {
-            cumpleFecha = true;
+            cumpleFecha = true; // mostrar todos
+        } else if (diasFiltro === 0) {
+            cumpleFecha = diasDiferencia === 0; // solo hoy
         } else {
-            diasDiferencia = Math.floor((eventoFecha - currentDate) / (1000 * 60 * 60 * 24));
-            cumpleFecha = diasDiferencia <= diasFiltro;
+            cumpleFecha = diasDiferencia >= 0 && diasDiferencia <= diasFiltro;
         }
+
         return cumpleBusqueda && cumpleEtiqueta && cumpleFecha;
     });
+
+
 
     return (
         <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 md:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 w-full max-w-9xl">
                 {/* Mapa de Google con react-google-maps */}
-                <div className="w-full lg:col-span-7 h-[400px] lg:h-[800px] rounded-lg overflow-hidden shadow-lg">
+                <div className="w-full lg:col-span-7 h-[400px] lg:h-[800px] rounded-lg overflow-hidden shadow-lg shadow-gray-400 ">
                     {/* <LoadScript googleMapsApiKey={googleMapsApiKey}> */}
                     <GoogleMap
                         mapContainerStyle={containerStyle}
@@ -101,9 +113,10 @@ export default function ListaEventos(props) {
                             clickableIcons: false,
                             zoomControl: true
                         }}
+                        className="w-full h-full"
                     >
                         {eventosFiltrados.map((evento) => (
-                            <HoverEvento key={evento.id} {...evento}/>
+                            <HoverEvento key={evento.id} {...evento} />
                         ))}
                     </GoogleMap>
                     {/* </LoadScript> */}
@@ -117,7 +130,7 @@ export default function ListaEventos(props) {
                 {/* Filtros */}
                 <div className="w-full lg:col-span-2 gap-y-4">
 
-                    <Card className="p-4 md:p-6 space-y-4">
+                    <Card className="p-4 md:p-6 space-y-4 border-[#023047]">
                         <Input
                             type="text"
                             placeholder="Buscar eventos..."
@@ -141,17 +154,18 @@ export default function ListaEventos(props) {
                         </Select>
 
                         <div className="flex flex-col space-y-2">
-                            <label className="text-sm font-medium">{diasFiltro >= 91 ? 'Todos los eventos' : `Eventos en los próximos ${diasFiltro} días`}</label>
+                            <label className="text-sm font-medium">{diasFiltro >= 91 ? 'Todos los eventos' : diasFiltro === 0 ? 'Eventos hoy' : `Eventos en los próximos ${diasFiltro} días`}</label>
                             <Slider
-                                min={1}
+                                min={0}
                                 max={91}
                                 step={1}
                                 value={[diasFiltro]}
                                 onValueChange={(value) => setDiasFiltro(value[0])}
+                                className="[&_.bg-primary]:bg-[#FFB703] [&_[role=slider]]:border-[#023047] [&_[role=slider]]:bg-[#023047]"
                             />
                         </div>
 
-                        <Button className="w-full" onClick={() => { setSelectedEtiqueta("todas"); setDiasFiltro(30); }}>
+                        <Button className="w-full bg-[#FB8500] text-white hover:bg-[#FFB703]" onClick={() => { setSelectedEtiqueta("todas"); setDiasFiltro(30); }}>
                             Restablecer filtros
                         </Button>
                     </Card>

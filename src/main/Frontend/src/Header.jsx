@@ -153,7 +153,7 @@
 //   );
 // }
 
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -208,6 +208,9 @@ export default function Header({ navigate }) {
     navigate("/");
   };
 
+  console.log(user); // Verifica si el objeto `user` está presente cuando deberías estar logueado.
+
+
   return (
     <header className="bg-gray-900 text-white sticky top-0 z-50 shadow">
       <nav className="mx-auto flex items-center justify-between px-4 py-4 lg:px-8">
@@ -216,6 +219,10 @@ export default function Header({ navigate }) {
           <a href="/" className="flex items-center gap-2">
             <img src="/images/logo.png" alt="Logo" className="h-8 w-8" />
           </a>
+          <span href="/" className="block text-base sm:text-xl font-bold relative lg:hidden">
+            EventConnect
+          </span>
+
           {/* Popover escritorio */}
           <PopoverGroup className="hidden lg:flex relative">
             <Popover>
@@ -232,6 +239,8 @@ export default function Header({ navigate }) {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.2 }}
                       className="absolute left-0 top-full z-10 mt-3 w-64 bg-white shadow-lg ring-1 ring-gray-900/5 rounded-lg"
+                      // className="absolute left-0 top-full z-40 mt-3 w-72 bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4"
+
                     >
                       <div className="p-4 space-y-2">
                         {products.map((item) => (
@@ -303,7 +312,9 @@ export default function Header({ navigate }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-48 bg-white shadow-lg ring-1 ring-black ring-opacity-5 rounded-md"
+                        // className="absolute right-0 mt-2 w-48 bg-white shadow-lg ring-1 ring-black ring-opacity-5 rounded-md"
+                        className="absolute right-0 mt-2 w-60 rounded-2xl bg-white p-2 shadow-xl ring-1 ring-gray-200 z-40"
+
                       >
                         {userNavigation.map((item) => (
                           <MenuItem key={item.name}>
@@ -315,8 +326,12 @@ export default function Header({ navigate }) {
                                     ? handleLogout
                                     : undefined
                                 }
-                                className={`${active ? "bg-gray-100" : ""
-                                  } flex items-center px-4 py-2 text-sm text-gray-700`}
+                                // className={`${active ? "bg-gray-100" : ""
+                                //   } flex items-center px-4 py-2 text-sm text-gray-700`}
+                                className={`${
+                                  active ? "bg-gray-100" : ""
+                                } flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100`}
+                                
                                 whileHover={{ scale: 1.02 }}
                               >
                                 <item.icon className="mr-2 h-4 w-4" />
@@ -354,7 +369,7 @@ export default function Header({ navigate }) {
           >
             {/* Overlay: al hacer click aquí cierra el menú */}
             <div
-              className="fixed inset-0 bg-black/30"
+              className="fixed inset-0 bg-black/30 "
               aria-hidden="true"
               onClick={() => setMobileMenuOpen(false)}
             />

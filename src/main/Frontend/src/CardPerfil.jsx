@@ -90,7 +90,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import DialogPerfil from "./DialogPerfil";
 
-export default function CardPerfil({ usuario, navigate }) {
+export default function CardPerfil({ user, navigate }) {
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [error, setError] = useState('');
 
@@ -107,9 +107,9 @@ export default function CardPerfil({ usuario, navigate }) {
         <div className="relative group mb-4">
           <label htmlFor="avatar-upload" className="cursor-pointer">
             <Avatar className="w-32 h-32 border-2 border-white mx-auto">
-              <AvatarImage src={avatarPreview || "/default-avatar.jpg"} alt={`Avatar de ${usuario.nombre}`} />
+              <AvatarImage src={avatarPreview || "/default-avatar.jpg"} alt={`Avatar de ${user.nombre}`} />
               <AvatarFallback className="text-3xl font-medium bg-white text-primary">
-                {(usuario.nombre?.charAt(0) || '')}{(usuario.apellido?.charAt(0) || '')}
+                {(user.nombre?.charAt(0) || '')}{(user.apellido?.charAt(0) || '')}
               </AvatarFallback>
             </Avatar>
             <input
@@ -121,16 +121,16 @@ export default function CardPerfil({ usuario, navigate }) {
             />
           </label>
         </div>
-        <CardTitle className="text-white text-2xl">{usuario.nombre || 'Nombre no disponible'}</CardTitle>
-        <p className="text-white text-sm">@{usuario.nombreUsuario || 'usuario'}</p>
+        <CardTitle className="text-white text-2xl">{user.nombre || 'Nombre no disponible'}</CardTitle>
+        <p className="text-white text-sm">@{user.nombreUsuario || 'usuario'}</p>
       </CardHeader>
 
       <CardContent className="text-center text-white">
-        <p>{usuario.correo || 'Correo no disponible'}</p>
+        <p>{user.correo || 'Correo no disponible'}</p>
       </CardContent>
 
       <CardFooter className="flex justify-center mt-4">
-        <DialogPerfil usuario={usuario} navigate={navigate} />
+        <DialogPerfil user={user} navigate={navigate} />
       </CardFooter>
     </Card>
   );

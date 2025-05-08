@@ -24,6 +24,9 @@ const API_GOOGLE_MAPS_KEY = config.googleMapsApiKey;
 export default function DialogEventos() {
   const { user } = useContext(UserContext);
 
+  const [open, setOpen] = useState(false);
+
+
   const [evento, setEvento] = useState({
     nombre: "",
     fecha: "",
@@ -83,6 +86,10 @@ export default function DialogEventos() {
       });
       setImagenFile(null);
       setLoading(false);
+      setOpen(false); // Cierra el diálogo
+      window.location.reload(); // Recarga la página
+      // onClose();
+
 
       window.location.reload();
     } catch (err) {
@@ -94,11 +101,11 @@ export default function DialogEventos() {
 
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full mt-4">Crear Evento</Button>
+        <Button className="w-full mt-4 bg-[#FB8500] text-white hover:bg-[#FFB703] hover:text-white">Crear Evento</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] text-[#023047]">
         <DialogHeader>
           <DialogTitle>Nuevo Evento</DialogTitle>
           <DialogDescription>
@@ -152,30 +159,34 @@ export default function DialogEventos() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Categoría</Label>
-            <Select onValueChange={(value) => setEvento({ ...evento, categoria: value })}>
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Selecciona una categoría" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Música">Música</SelectItem>
-                <SelectItem value="Tecnología">Tecnología</SelectItem>
-                <SelectItem value="Festival">Festival</SelectItem>
-                <SelectItem value="Programación">Programación</SelectItem>
-                <SelectItem value="Arte">Arte</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="col-span-3 w-full">
+              <Select onValueChange={(value) => setEvento({ ...evento, categoria: value })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Música">Música</SelectItem>
+                  <SelectItem value="Tecnología">Tecnología</SelectItem>
+                  <SelectItem value="Festival">Festival</SelectItem>
+                  <SelectItem value="Programación">Programación</SelectItem>
+                  <SelectItem value="Arte">Arte</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="precio" className="text-right">Precio</Label>
+            <Label htmlFor="precio" className="text-right">Precio (€)</Label>
             <Input
               id="precio"
               name="precio"
               type="number"
               min="0"
+              step="0.01"
+
               value={evento.precio}
               onChange={handleChange}
               className="col-span-3"
-              placeholder="Precio del evento"
+              placeholder="0.00"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -193,7 +204,7 @@ export default function DialogEventos() {
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
         <DialogFooter>
-          <Button onClick={handleCrearEvento} disabled={loading}>
+          <Button onClick={handleCrearEvento} disabled={loading} className="bg-[#FB8500] hover:bg-[#FFB703]">
             {loading ? "Creando..." : "Crear Evento"}
           </Button>
         </DialogFooter>

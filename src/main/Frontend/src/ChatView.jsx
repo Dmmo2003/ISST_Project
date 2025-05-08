@@ -97,7 +97,7 @@ export default function ChatView({ handleClick }) {
         console.log("oooooola");
         if (chat.length > 0) {
             console.log("oooooola");
-            setTimeout(scrollToBottom, 294); // Pequeño retraso para asegurar renderizado
+            setTimeout(scrollToBottom, 300); // Pequeño retraso para asegurar renderizado
         }
     }, [chat]);
 
@@ -146,24 +146,22 @@ export default function ChatView({ handleClick }) {
     };
 
 
-
-
-
     return (
         <div className="relative w-full h-full">
             {/* Encabezado */}
-            <div className="flex justify-between items-center border-b px-4 py-3 bg-white shadow-md">
+            <div className="flex justify-between items-center border-b px-6 py-3 shadow-md bg-[#023047] rounded-t-lg">
                 <div className="flex items-center gap-2">
                     {grupoSeleccionado && (
                         <Button
                             variant="ghost"
                             size="icon"
+                            className=" text-white hover:bg-[#219EBC]/30 hover:text-[#FB8500]"
                             onClick={() => setGrupoSeleccionado(null)}
                         >
                             <span className="text-xl"><MoveLeft className="w-5 h-5" /></span>
                         </Button>
                     )}
-                    <h2 className="text-lg font-semibold text-muted-foreground">
+                    <h2 className="text-lg font-semibold text-white ">
                         {grupoSeleccionado ? grupoSeleccionado.nombre : "Tus grupos"}
                     </h2>
                 </div>
@@ -171,25 +169,26 @@ export default function ChatView({ handleClick }) {
                     {grupoSeleccionado ? < Button
                         variant="ghost"
                         size="icon"
-                        className="text-muted-foreground"
+                        className="text-white hover:bg-[#219EBC]/30 hover:text-[#FB8500]"
                         onClick={handleGrupoClick}
                     >
                         <RefreshCcw className="w-5 h-5" />
                     </Button> : null
-                }
+                    }
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="text-muted-foreground"
+                        className="text-white hover:bg-[#219EBC]/30 hover:text-[#FB8500]"
                         onClick={handleClick}
                     >
                         <X className="w-5 h-5" />
                     </Button>
+
                 </div>
             </div>
 
             {/* Contenido */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6 h-[calc(100%-56px)] relative bg-gray-50">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6 h-[calc(100%-56px)] relative bg-gray-50 pb-4 rounded-b-xl">
                 <AnimatePresence mode="wait">
                     {loading ? (
                         <motion.div
@@ -214,12 +213,14 @@ export default function ChatView({ handleClick }) {
                             ))}
                         </motion.div>
                     ) : grupoSeleccionado ? (
-                        <Card className="h-full flex flex-col">
+
+                        <Card className="h-full flex flex-col border-[#023047] pt-6 pb-2">
                             {fechaVisible && (
                                 <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-muted px-3 py-1 rounded-full text-xs text-muted-foreground shadow">
                                     {fechaVisible}
                                 </div>
                             )}
+
                             {/* Área de mensajes que hace scroll */}
                             <ScrollArea className="flex-1 overflow-y-auto px-4 py-4" id="chat-scroll" ref={scrollContainerRef}>
                                 <div className="flex flex-col gap-3 pb-2">
@@ -236,12 +237,10 @@ export default function ChatView({ handleClick }) {
                                                         key={mensaje.id}
                                                         className={`flex ${esMio ? "justify-end" : "justify-start"} mb-4`}
                                                         data-fecha={index === mensajes.length - 1 ? fecha : undefined}
-
                                                     >
-
                                                         <div
                                                             className={`max-w-[75%] p-3 rounded-2xl shadow text-sm ${esMio
-                                                                ? "bg-primary text-white rounded-br-none"
+                                                                ? "bg-[#219EBC] text-white rounded-br-none"
                                                                 : "bg-muted text-foreground rounded-bl-none"
                                                                 }`}
                                                         >
@@ -272,7 +271,7 @@ export default function ChatView({ handleClick }) {
                             </ScrollArea>
 
                             {/* Input de mensaje fijo abajo */}
-                            <div className="border-t p-4 bg-white flex items-center gap-2">
+                            <div className="border-t p-4 bg-white flex items-center gap-2 rounded-b-xl border-[#023047]">
                                 <Input
                                     placeholder="Escribe tu mensaje..."
                                     className="flex-1"
@@ -282,11 +281,12 @@ export default function ChatView({ handleClick }) {
                                         if (e.key === "Enter") handleMensajeClick();
                                     }}
                                 />
-                                <Button onClick={handleMensajeClick}>Enviar</Button>
+                                <Button onClick={handleMensajeClick} className="bg-[#FFB703] hover:bg-[#FB8500]/90 text-[#023047]" disabled={!nuevoMensaje || !grupoSeleccionado}>Enviar</Button>
                             </div>
                         </Card>
 
                     ) : (
+
                         <motion.div
                             key="lista"
                             initial={{ opacity: 0, x: -50 }}
@@ -302,10 +302,10 @@ export default function ChatView({ handleClick }) {
                                         {grupos.map((grupo) => (
                                             <div
                                                 key={grupo.id}
-                                                className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white shadow-sm hover:bg-muted transition cursor-pointer"
+                                                className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white shadow-md hover:bg-muted transition cursor-pointer"
                                                 onClick={() => setGrupoSeleccionado(grupo)}
                                             >
-                                                <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                                <div className="w-10 h-10 bg-[#8ECAE6] text-white rounded-full flex items-center justify-center font-bold text-sm">
                                                     {grupo.nombre[0]}
                                                 </div>
                                                 <span className="font-medium text-sm">{grupo.nombre}</span>
@@ -319,6 +319,184 @@ export default function ChatView({ handleClick }) {
                     )}
                 </AnimatePresence>
             </div>
+
+
         </div >
     );
+
+
+
+
+    // return (
+    //     <div className="relative w-full h-full">
+    //         {/* Encabezado */}
+    //         <div className="flex justify-between items-center border-b px-4 py-3 shadow-md bg-[#023047]">
+    //             <div className="flex items-center gap-2">
+    //                 {grupoSeleccionado && (
+    //                     <Button
+    //                         variant="ghost"
+    //                         size="icon"
+    //                         onClick={() => setGrupoSeleccionado(null)}
+    //                     >
+    //                         <span className="text-xl"><MoveLeft className="w-5 h-5" /></span>
+    //                     </Button>
+    //                 )}
+    //                 <h2 className="text-lg font-semibold text-white ">
+    //                     {grupoSeleccionado ? grupoSeleccionado.nombre : "Tus grupos"}
+    //                 </h2>
+    //             </div>
+    //             <div>
+    //                 {grupoSeleccionado ? < Button
+    //                     variant="ghost"
+    //                     size="icon"
+    //                     className="text-muted-foreground"
+    //                     onClick={handleGrupoClick}
+    //                 >
+    //                     <RefreshCcw className="w-5 h-5" />
+    //                 </Button> : null
+    //             }
+    //                 <Button
+    //                     variant="ghost"
+    //                     size="icon"
+    //                     className="text-muted-foreground"
+    //                     onClick={handleClick}
+    //                 >
+    //                     <X className="w-5 h-5" />
+    //                 </Button>
+    //             </div>
+    //         </div>
+
+    //         {/* Contenido */}
+    //         <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6 h-[calc(100%-56px)] relative bg-gray-50">
+    //             <AnimatePresence mode="wait">
+    //                 {loading ? (
+    //                     <motion.div
+    //                         key="loading"
+    //                         initial={{ opacity: 0 }}
+    //                         animate={{ opacity: 1 }}
+    //                         exit={{ opacity: 0 }}
+    //                     >
+    //                         {Array.from({ length: 3 }).map((_, idx) => (
+    //                             <div key={idx}>
+    //                                 <Skeleton className="h-5 w-[180px] mb-2 rounded-md" />
+    //                                 {Array.from({ length: 2 }).map((_, i) => (
+    //                                     <div
+    //                                         key={i}
+    //                                         className="flex items-center gap-3 p-3 rounded-lg bg-background mb-2"
+    //                                     >
+    //                                         <Skeleton className="w-10 h-10 rounded-full" />
+    //                                         <Skeleton className="h-4 w-[150px] rounded-md" />
+    //                                     </div>
+    //                                 ))}
+    //                             </div>
+    //                         ))}
+    //                     </motion.div>
+    //                 ) : grupoSeleccionado ? (
+    //                     <Card className="h-full flex flex-col">
+    //                         {fechaVisible && (
+    //                             <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-muted px-3 py-1 rounded-full text-xs text-muted-foreground shadow">
+    //                                 {fechaVisible}
+    //                             </div>
+    //                         )}
+    //                         {/* Área de mensajes que hace scroll */}
+    //                         <ScrollArea className="flex-1 overflow-y-auto px-4 py-4" id="chat-scroll" ref={scrollContainerRef}>
+    //                             <div className="flex flex-col gap-3 pb-2">
+    //                                 {Object.entries(mensajesPorFecha).map(([fecha, mensajes]) => (
+    //                                     <div key={fecha}>
+    //                                         <div className="text-center text-xs text-muted-foreground my-2">
+    //                                             {fecha}
+    //                                         </div>
+
+    //                                         {mensajes.map((mensaje, index) => {
+    //                                             const esMio = mensaje.remitenteId === user.id;
+    //                                             return (
+    //                                                 <div
+    //                                                     key={mensaje.id}
+    //                                                     className={`flex ${esMio ? "justify-end" : "justify-start"} mb-4`}
+    //                                                     data-fecha={index === mensajes.length - 1 ? fecha : undefined}
+
+    //                                                 >
+
+    //                                                     <div
+    //                                                         className={`max-w-[75%] p-3 rounded-2xl shadow text-sm ${esMio
+    //                                                             ? "bg-primary text-white rounded-br-none"
+    //                                                             : "bg-muted text-foreground rounded-bl-none"
+    //                                                             }`}
+    //                                                     >
+    //                                                         {!esMio && (
+    //                                                             <div className="text-xs font-semibold text-muted-foreground mb-1">
+    //                                                                 {mensaje.remitenteNombreUsuario}
+    //                                                             </div>
+    //                                                         )}
+    //                                                         <div>{mensaje.contenido}</div>
+    //                                                         <div
+    //                                                             className={`text-[10px] mt-1 text-right ${esMio ? "text-blue-100" : "text-gray-500"
+    //                                                                 }`}
+    //                                                         >
+    //                                                             {new Date(mensaje.fecha).toLocaleTimeString([], {
+    //                                                                 hour: "2-digit",
+    //                                                                 minute: "2-digit",
+    //                                                             })}
+    //                                                         </div>
+    //                                                     </div>
+    //                                                 </div>
+    //                                             );
+    //                                         })}
+
+    //                                         <div ref={chatEndRef} /> {/* ⬅ Aquí se hace scroll */}
+    //                                     </div>
+    //                                 ))}
+    //                             </div>
+    //                         </ScrollArea>
+
+    //                         {/* Input de mensaje fijo abajo */}
+    //                         <div className="border-t p-4 bg-white flex items-center gap-2">
+    //                             <Input
+    //                                 placeholder="Escribe tu mensaje..."
+    //                                 className="flex-1"
+    //                                 value={nuevoMensaje}
+    //                                 onChange={(e) => setNuevoMensaje(e.target.value)}
+    //                                 onKeyDown={(e) => {
+    //                                     if (e.key === "Enter") handleMensajeClick();
+    //                                 }}
+    //                             />
+    //                             <Button onClick={handleMensajeClick}>Enviar</Button>
+    //                         </div>
+    //                     </Card>
+
+    //                 ) : (
+    //                     <motion.div
+    //                         key="lista"
+    //                         initial={{ opacity: 0, x: -50 }}
+    //                         animate={{ opacity: 1, x: 0 }}
+    //                         exit={{ opacity: 0, x: 50 }}
+    //                         transition={{ duration: 0.3 }}
+    //                         className="space-y-6"
+    //                     >
+    //                         {Object.entries(gruposPorEvento).map(([evento, grupos]) => (
+    //                             <div key={evento} className="space-y-3">
+    //                                 <h3 className="text-sm font-semibold text-muted-foreground px-2">{evento}</h3>
+    //                                 <div className="space-y-2">
+    //                                     {grupos.map((grupo) => (
+    //                                         <div
+    //                                             key={grupo.id}
+    //                                             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white shadow-sm hover:bg-muted transition cursor-pointer"
+    //                                             onClick={() => setGrupoSeleccionado(grupo)}
+    //                                         >
+    //                                             <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">
+    //                                                 {grupo.nombre[0]}
+    //                                             </div>
+    //                                             <span className="font-medium text-sm">{grupo.nombre}</span>
+    //                                         </div>
+    //                                     ))}
+    //                                 </div>
+    //                             </div>
+    //                         ))}
+    //                     </motion.div>
+
+    //                 )}
+    //             </AnimatePresence>
+    //         </div>
+    //     </div >
+    // );
 }

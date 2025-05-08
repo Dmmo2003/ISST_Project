@@ -12,6 +12,8 @@ import data from "./constants/data";
 import AcordeonEventosPerfil from './AcordeonEventosPerfil';
 import CardPerfil from './CardPerfil';
 import CardEventosPerfil from './CardEventosPerfil';
+import { useContext } from 'react';
+import { UserContext } from "./context/UserContext";
 
 
 // Paleta de colores
@@ -22,6 +24,7 @@ const colors = {
 };
 
 export default function Perfil() {
+  const { user, logout } = useContext(UserContext);
 
 
   const [usuario, setUsuario] = useState(null);
@@ -39,23 +42,36 @@ export default function Perfil() {
   const [contraseña, setContraseña] = useState('');
   // const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const navigate = useNavigate();
-  
 
-  const userId = localStorage.getItem('userId');
   useEffect(() => {
     console.log("CAMBIOS DEL DIALOG", nombre, apellido, nombreUsuario, correo, contraseña);
   }, [nombre, apellido, nombreUsuario, correo, contraseña]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const usuarioData = await getUsuario(userId);
-        setUsuario(usuarioData);
-        setNombre(usuarioData.nombre);
-        setUsuarioName(usuarioData.nombreUsuario);
+  console.log("USER", user);
 
-        const eventosData = await getEventosSeguidos(userId);
-        setEventosSeguidos(eventosData);
+  useEffect(() => {
+    
+    const fetchData = async () => {
+
+      if (!user?.id) {
+        console.log("No hay userId");
+        return
+      };
+
+      try {
+
+        console.log("userId", user);
+
+        // const usuarioData = await getUsuario(user.id);
+
+        // setUsuario(usuarioData);
+        // setNombre(usuarioData.nombre);
+        // setApellido(usuarioData.apellido);
+        // setNombreUsuario(usuarioData.nombreUsuario);
+        // setCorreo(usuarioData.correo);
+
+        // const eventosData = await obtenerEventosSeguidos(userId);
+        // setEventosSeguidos(eventosData);
 
       } catch (error) {
         console.error('Error al cargar los datos:', error);
@@ -65,7 +81,8 @@ export default function Perfil() {
     };
 
     fetchData();
-  }, [userId]);
+  }, [user]);
+
 
   // const eventosSeguidos = usuarioActual.gruposSeguidos 
   //   ? usuarioActual.gruposSeguidos
@@ -102,7 +119,7 @@ export default function Perfil() {
           <div className="flex flex-col lg:flex-row gap-6">
 
             {/* Tarjeta de perfil */}
-            <CardPerfil usuario={usuario} setApellido={setApellido} setNombre={setNombre} setUsuarioName={setUsuarioName} setCorreo={setCorreo} setContrasena={setContrasena}  navigate={navigate}/>
+            <CardPerfil usuario={usuario} setApellido={setApellido} setNombre={setNombre} setUsuarioName={setUsuarioName} setCorreo={setCorreo} setContrasena={setContrasena} navigate={navigate} />
 
             {/* Sección de eventos en columnas paralelas */}
             <div className="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-2 gap-6">

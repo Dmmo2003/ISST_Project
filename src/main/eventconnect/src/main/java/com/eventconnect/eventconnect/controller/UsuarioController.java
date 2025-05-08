@@ -33,15 +33,15 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{id}/eventos-creados")
+    @GetMapping("/{id}/eventos/creados")
     public ResponseEntity<List<EventoDTO>> getEventosCreados(@PathVariable int id) {
         return ResponseEntity.ok(usuarioService.getEventosCreadosPorUsuario(id));
     }
 
-    @GetMapping("/{id}/eventos-seguidos")
-    public ResponseEntity<List<EventoDTO>> getEventosSeguidos(@PathVariable int id) {
-        return ResponseEntity.ok(usuarioService.getEventosSeguidosPorUsuario(id));
-    }
+    // @GetMapping("/{id}/eventos-seguidos")
+    // public ResponseEntity<List<EventoDTO>> getEventosSeguidos(@PathVariable int id) {
+    //     return ResponseEntity.ok(usuarioService.getEventosSeguidosPorUsuario(id));
+    // }
 
     // @PostMapping("/{usuarioId}/seguir/{eventoId}")
     // public ResponseEntity<Void> seguirEvento(@PathVariable int usuarioId,
@@ -72,7 +72,7 @@ public class UsuarioController {
     }
 
     // Este es opcional si estás eliminando eventos desde el frontend
-    @DeleteMapping("/{usuarioId}/eliminar-evento/{eventoId}")
+    @DeleteMapping("/{usuarioId}/evento/{eventoId}")
     public ResponseEntity<Void> eliminarEvento(@PathVariable int usuarioId, @PathVariable int eventoId) {
         usuarioService.eliminarEventoCreadoPorUsuario(usuarioId, eventoId);
         return ResponseEntity.ok().build();

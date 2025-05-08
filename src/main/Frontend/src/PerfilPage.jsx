@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getUsuario, getEventosSeguidos, updateUsuario } from './api/perfil';
+import { getUsuario, updateUsuario, obtenerEventosCreados } from './api/perfil';
 import CardPerfil from './CardPerfil';
 import CardEventosPerfil from './CardEventosPerfil';
 import { Button } from '@/components/ui/button';
+import { useContext } from 'react';
+import { UserContext } from "./context/UserContext";
+import { obtenerEventosSeguidos } from './api/usuario';
+import { dejarSeguirEvento } from './api/usuario';
+import { eliminarEvento } from './api/usuario';
 
 const colors = {
   primary: '#219EBC',
@@ -22,32 +27,63 @@ export default function PerfilPage({ navigate }) {
   const [contraseña, setContraseña] = useState('');
   const [confirmarContraseña, setConfirmarContraseña] = useState('');
   const [error, setError] = useState('');
+  const { user, logout } = useContext(UserContext);
 
-  const userId = localStorage.getItem('userId');
+  console.log("USER", user);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const usuarioData = await getUsuario(userId);
-        setUsuario(usuarioData);
-        setNombre(usuarioData.nombre);
-        setNombreUsuario(usuarioData.nombreUsuario);
+    if (!user) {
+      console.log("No hay user");
+      return
+    }
+    load();
 
-        const eventosSeguidosData = await getEventosSeguidos(userId);
-        setEventosSeguidos(eventosSeguidosData);
 
-        const eventosCreadosRes = await fetch(`/api/usuarios/${userId}/eventos-creados`);
-        const eventosCreadosData = await eventosCreadosRes.json();
-        setEventosCreados(eventosCreadosData);
-      } catch (error) {
-        console.error('Error al cargar los datos:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchData();
-  }, [userId]);
+
+
+  }, [user]);
+
+  const load = async () => {
+    console.log("Hay user", user);
+    const eventosSeguidosData = await obtenerEventosSeguidos(user.id);
+
+    setEventosSeguidos(eventosSeguidosData);
+    // console.log("Eventos seguidos", eventosSeguidos);
+
+    const eventosCreadosData = await obtenerEventosCreados(user.id);
+    setEventosCreados(eventosCreadosData);
+    console.log("Eventos creados", eventosCreadosData);
+    setLoading(false);
+
+
+  }
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const usuarioData = await getUsuario(userId);
+  //       setUsuario(usuarioData);
+  //       setNombre(usuarioData.nombre);
+  //       setNombreUsuario(usuarioData.nombreUsuario);
+
+  //       const eventosSeguidosData = await getEventosSeguidos(userId);
+  //       setEventosSeguidos(eventosSeguidosData);
+
+  //       const eventosCreadosRes = await fetch(`/api/usuarios/${userId}/eventos-creados`);
+  //       const eventosCreadosData = await eventosCreadosRes.json();
+  //       setEventosCreados(eventosCreadosData);
+  //     } catch (error) {
+  //       console.error('Error al cargar los datos:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userId]);
 
   const handleSave = async () => {
     if (contraseña && contraseña !== confirmarContraseña) {
@@ -71,29 +107,31 @@ export default function PerfilPage({ navigate }) {
   };
 
   const handleAbandonarEvento = async (eventoId) => {
-    try {
-      await fetch(`/api/usuarios/${userId}/seguir/${eventoId}`, {
-        method: 'DELETE',
-      });
-      setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
-    } catch (err) {
-      console.error("Error al dejar de seguir el evento:", err);
-    }
+    const response = await dejarSeguirEvento(user.id, eventoId);
+    console.log(response);
   };
 
   const handleEliminarEvento = async (eventoId) => {
+    // try {
+    //   await fetch(`/api/usuarios/${userId}/eliminar-evento/${eventoId}`, {
+    //     method: 'DELETE',
+    //   });
+    //   setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
+    // } catch (err) {
+    //   console.error("Error al eliminar el evento:", err);
+    // }
     try {
-      await fetch(`/api/usuarios/${userId}/eliminar-evento/${eventoId}`, {
-        method: 'DELETE',
-      });
+      const response = await eliminarEvento(eventoId, user.id);
+      console.log(response);
       setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
     } catch (err) {
       console.error("Error al eliminar el evento:", err);
     }
+
   };
 
   return (
-    loading || !usuario ? (
+    loading ? (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="flex flex-col items-center space-y-4">
           <p className="text-lg text-gray-800">Cargando tu perfil...</p>
@@ -107,7 +145,7 @@ export default function PerfilPage({ navigate }) {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Tarjeta de perfil */}
-            <CardPerfil usuario={usuario} navigate={navigate} />
+            <CardPerfil user={user} navigate={navigate} />
 
             {/* Sección de eventos */}
             <div className="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -242,11 +280,11 @@ export default function PerfilPage({ navigate }) {
 //         </div>
 //       </div>
 //     ) : (
-//       <div 
-//         className="min-h-screen" 
-//         style={{ 
-//           backgroundImage: "url('/images/fondoPerfil.jpg')", 
-//           backgroundSize: "cover", 
+//       <div
+//         className="min-h-screen"
+//         style={{
+//           backgroundImage: "url('/images/fondoPerfil.jpg')",
+//           backgroundSize: "cover",
 //           backgroundPosition: "center",
 //           backgroundRepeat: "no-repeat"
 //         }}
@@ -386,7 +424,7 @@ export default function PerfilPage({ navigate }) {
 //         </div>
 //       </div>
 //     ) : (
-//       <div 
+//       <div
 //         className="min-h-screen bg-cover bg-center"
 //         style={{ backgroundImage: "url('/images/fondoPerfil.jpg')" }}
 //       >
