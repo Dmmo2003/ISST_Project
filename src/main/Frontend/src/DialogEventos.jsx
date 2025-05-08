@@ -74,6 +74,8 @@ export default function DialogEventos() {
     setLoading(true);
 
     try {
+      console.log("Evento a crear:", evento);
+      console.log("organizador:", user);
       await crearEvento(evento, imagenFile);
       setEvento({
         nombre: "",

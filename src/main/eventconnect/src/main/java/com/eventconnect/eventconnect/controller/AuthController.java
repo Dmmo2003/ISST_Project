@@ -155,6 +155,23 @@ public class AuthController {
                 
 
                 Usuario usuario = usuarioService.findByCorreo(email);
+                // if (usuario == null) {
+                //     usuario = new Usuario();
+                //     usuario.setNombre(givenName);
+                //     usuario.setPrimer_Apellido(familyName);
+                //     usuario.setCorreo(email);
+                //     usuario.setNombreUsuario(email.split("@")[0]);
+                //     usuario.setContraseña("oauth_google");
+
+                //     // Crear fecha de nacimiento ficticia asi te va
+                //     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                //     Date fechaNacimiento = formatter.parse("2000-01-01");
+                //     usuario.setFechaNacimiento(fechaNacimiento);
+
+                //     // Asignar tipo por defecto
+                //     usuario.setTipo("persona");
+
+                // }
                 if (usuario == null) {
                     usuario = new Usuario();
                     usuario.setNombre(givenName);
@@ -162,16 +179,17 @@ public class AuthController {
                     usuario.setCorreo(email);
                     usuario.setNombreUsuario(email.split("@")[0]);
                     usuario.setContraseña("oauth_google");
-
-                    // Crear fecha de nacimiento ficticia asi te va
+                
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     Date fechaNacimiento = formatter.parse("2000-01-01");
                     usuario.setFechaNacimiento(fechaNacimiento);
-
-                    // Asignar tipo por defecto
+                
                     usuario.setTipo("persona");
-
+                
+                    // Aquí guardas el nuevo usuario en la base de datos
+                    usuario = usuarioService.registrarUsuario(usuario);
                 }
+                
                 Usuario u = usuario;
                 UsuarioDTO usuarioDTO = new UsuarioDTO(
                         u.getId(),

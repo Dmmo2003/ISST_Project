@@ -1,22 +1,30 @@
 package com.eventconnect.eventconnect.controller;
 
-import com.eventconnect.eventconnect.model.Evento;
-import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
-import com.eventconnect.eventconnect.model.EventoDTO;
-import com.eventconnect.eventconnect.service.EventoService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.Evento;
+import com.eventconnect.eventconnect.model.EventoConOrganizadorDTO;
+import com.eventconnect.eventconnect.model.EventoDTO;
+import com.eventconnect.eventconnect.service.EventoService;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -48,11 +56,21 @@ public class EventoController {
         return ResponseEntity.ok(eventoConOrganizador);
     }
 
+    // @PostMapping(value = "/nuevo", consumes = "multipart/form-data")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // public Evento crearEvento(@RequestPart("evento") Evento evento,
+    // @RequestPart(value = "imagen", required = false) MultipartFile imagenFile)
+    // throws IOException {
+    // if (imagenFile != null && !imagenFile.isEmpty()) {
+    // evento.setImagen(imagenFile.getBytes());
+    // }
+    // return eventoService.crearEvento(evento);
+    // }
     @PostMapping(value = "/nuevo", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public Evento crearEvento(
-            @RequestPart("evento") Evento evento,
-            @RequestPart("imagen") MultipartFile imagenFile) throws IOException {
+            @Validated @RequestPart("evento") Evento evento,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagenFile) throws IOException {
         if (imagenFile != null && !imagenFile.isEmpty()) {
             evento.setImagen(imagenFile.getBytes());
         }
