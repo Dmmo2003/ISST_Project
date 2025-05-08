@@ -1,5 +1,6 @@
 package com.eventconnect.eventconnect.controller;
 
+import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoProjectionDTO;
 import com.eventconnect.eventconnect.service.GrupoService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -41,9 +43,24 @@ public class GrupoController {
 
     // Obtener un grupo por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Grupo> obtenerPorId(@PathVariable int id) {
-        Grupo grupo = grupoService.obtenerGrupoId(id);
-        return grupo != null ? ResponseEntity.ok(grupo) : ResponseEntity.notFound().build();
+    public ResponseEntity<Grupo> obtenerGrupoPorId(@PathVariable int id) {
+        return grupoService.obtenerGrupoPorId(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/imagen")
+    public ResponseEntity<byte[]> obtenerImagenGrupo(@PathVariable int id) {
+        Optional<Grupo> grupo = grupoService.obtenerGrupoPorId(id);
+
+        if (grupo.isPresent() && grupo.get().getImagen() != null) {
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Type", "image/jpeg") // o image/png si es el caso
+                    .body(grupo.get().getImagen());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping(value = "/nuevo", consumes = "multipart/form-data")

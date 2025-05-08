@@ -26,6 +26,19 @@ export const crearGrupo = async (grupo, imagenFile) => {
 };
 ;
 
+export const obtenerImagenGrupo = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${id}/imagen`);
+        if (!response.ok) throw new Error("Imagen no encontrada");
+
+        const blob = await response.blob();
+        return URL.createObjectURL(blob); // genera una URL temporal para usar en un <img>
+    } catch (error) {
+        console.error("Error al obtener imagen del grupo:", error);
+        return null;
+    }
+};
+
 // Eliminar un evento por ID
 export const eliminarGrupo = async (id) => {
     try {

@@ -129,6 +129,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { Heart, X } from "lucide-react";
 import DialogEventos from "./DialogEventos";
 import DialogGrupos from "./DialogGrupos";
+import ImagenGrupo from "./ImagenGrupo";
 
 const containerStyle = {
   width: "100%",
@@ -140,6 +141,7 @@ const containerStyle = {
 
 import GroupList from "./GroupList";
 import ImagenEvento from "./ImagenEvento";
+
 
 
 const EventDetails = () => {
@@ -393,15 +395,7 @@ const EventDetails = () => {
 
                 {/* Imagen del grupo */}
                 <div className="w-[100px] h-[100px] bg-gray-100 rounded-md overflow-hidden border border-gray-300">
-                  {grupo.imagen ? (
-                    <img
-                      src={`data:image/jpeg;base64,${grupo.imagen}`}
-                      alt="Imagen del grupo"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">Sin imagen</div>
-                  )}
+                  <ImagenGrupo idGrupo={grupo.id} />
                 </div>
 
                 {/* Info y botón */}

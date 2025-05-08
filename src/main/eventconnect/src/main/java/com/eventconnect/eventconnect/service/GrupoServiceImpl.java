@@ -34,9 +34,8 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Grupo obtenerGrupoId(int id) {
-        // return null;
-        return grupoRepository.findById(id).orElse(null);
+    public Optional<Grupo> obtenerGrupoPorId(int id) {
+        return grupoRepository.findById(id);
     }
 
     @Override
