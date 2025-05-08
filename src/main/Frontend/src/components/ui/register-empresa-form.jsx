@@ -115,7 +115,7 @@ export function RegisterEmpresaForm({ className, ...props }) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="CIF">CIF de la empresa</Label>
-              <Input id="CIF" name="CIF" value={formData.CIF} onChange={handleChange} required placeholder="ej: A123456768" />
+              <Input id="CIF" name="CIF" value={formData.CIF} onChange={handleChange} required placeholder="ej: A12345678" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="nombreUsuario">Nombre de usuario de la empresa</Label>
