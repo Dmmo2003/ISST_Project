@@ -12,7 +12,7 @@ export default function DialogGrupos({ evento, onGrupoCreado }) {
   const [open, setOpen] = useState(false);
   const [grupo, setGrupo] = useState({
     nombre: "",
-    descripcion: ""
+    descripcion: "",
   });
   const [imagenFile, setImagenFile] = useState(null);
   const [error, setError] = useState(null);
@@ -20,10 +20,14 @@ export default function DialogGrupos({ evento, onGrupoCreado }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setGrupo(prev => ({ ...prev, [name]: value }));
+    setGrupo((prev) => ({
+      ...prev,
+      [name]: value,
+      admin: user.id,
+    }));
   };
 
-  const handleCrearGrupo = async () => {
+/*   const handleCrearGrupo = async () => {
     if (!grupo.nombre || !grupo.descripcion) {
       setError("Todos los campos son obligatorios.");
       return;
@@ -58,6 +62,40 @@ export default function DialogGrupos({ evento, onGrupoCreado }) {
       setLoading(false);
     }
   };
+ */
+
+  const handleCrearGrupo = async () => {
+    if (!grupo.nombre || !grupo.descripcion) {
+      setError("Todos los campos son obligatorios.");
+      return;
+    }
+  
+    setError(null);
+    setLoading(true);
+  
+    try {
+      const grupoConIds = {
+        nombre: grupo.nombre,
+        descripcion: grupo.descripcion,
+        admin: { id: user.id },
+        evento: { id: evento.id },
+      };
+  
+      await crearGrupo(grupoConIds, imagenFile);
+  
+      setGrupo({ nombre: "", descripcion: "", admin: "" });
+      setImagenFile(null);
+      setOpen(false);
+      onGrupoCreado?.(); // refresca lista si hace falta
+    } catch (err) {
+      console.error("Error al crear el grupo:", err);
+      setError("Hubo un problema al crear el grupo.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
