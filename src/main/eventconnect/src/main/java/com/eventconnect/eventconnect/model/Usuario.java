@@ -1,13 +1,24 @@
 package com.eventconnect.eventconnect.model;
 
-import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Base64;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
@@ -50,7 +61,7 @@ public class Usuario {
 
 
     @Lob
-    @Column(name = "foto_perfil")
+    @Column(name = "imagen")
     private byte[] fotoPerfil;
 
     // @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
