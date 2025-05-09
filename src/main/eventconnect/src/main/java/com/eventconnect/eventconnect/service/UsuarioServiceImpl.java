@@ -1,17 +1,20 @@
 package com.eventconnect.eventconnect.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eventconnect.eventconnect.model.Evento;
 import com.eventconnect.eventconnect.model.EventoDTO;
 import com.eventconnect.eventconnect.model.Grupo;
 import com.eventconnect.eventconnect.model.GrupoDTO;
 import com.eventconnect.eventconnect.model.Usuario;
+import com.eventconnect.eventconnect.model.UsuarioDTO;
 import com.eventconnect.eventconnect.repository.EventoRepository;
 import com.eventconnect.eventconnect.repository.GrupoRepository;
 import com.eventconnect.eventconnect.repository.UsuarioEventoRepository;
@@ -187,4 +190,46 @@ public class UsuarioServiceImpl implements UsuarioService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public void salirDeGrupoPorEvento(int usuarioId, int eventoId) {
+        List<Grupo> grupos = grupoRepository.findByEventoId(eventoId); // este método aún NO existe, lo vemos abajo
+        for (Grupo grupo : grupos) {
+            grupo.getMiembros().removeIf(usuario -> usuario.getId() == usuarioId);
+            grupoRepository.save(grupo);
+        }
+    }
+    
+    @Override
+    @Transactional
+    public Usuario actualizarUsuario(int id, UsuarioDTO datosActualizados) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setNombre(datosActualizados.getNombre());
+        usuario.setPrimer_Apellido(datosActualizados.getPrimerApellido());
+        usuario.setCorreo(datosActualizados.getCorreo());
+
+        if (datosActualizados.getPassword() != null && !datosActualizados.getPassword().isEmpty()) {
+            usuario.setContraseña(datosActualizados.getPassword());
+        }
+
+        return usuarioRepository.save(usuario);
+    }
+    
+    @Override
+    @Transactional
+    public Usuario subirFotoPerfil(int id, MultipartFile file) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    
+        try {
+            usuario.setFotoPerfil(file.getBytes());
+            return usuarioRepository.save(usuario); // ✅ Devuelve el usuario actualizado
+        } catch (IOException e) {
+            throw new RuntimeException("Error al procesar la imagen", e);
+        }
+    }
+    
+    
 }

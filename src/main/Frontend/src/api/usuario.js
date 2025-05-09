@@ -56,3 +56,21 @@ export const eliminarEvento = async (eventoId, userId) => {
         throw error;
     }
 };
+
+export async function dejarGrupoPorEvento(usuarioId, eventoId) {
+    try {
+      const response = await fetch(`/api/usuarios/${usuarioId}/salir-grupo/${eventoId}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al salir del grupo del evento');
+      }
+  
+      return; // sin intentar leer JSON
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  

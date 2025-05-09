@@ -7,6 +7,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Base64;
+
 
 @Entity
 @Table(name = "Usuario")
@@ -46,6 +48,11 @@ public class Usuario {
     @JsonProperty("CIF")
     private String CIF; // Solo si es tipo 'empresa'
 
+
+    @Lob
+    @Column(name = "foto_perfil")
+    private byte[] fotoPerfil;
+
     // @OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL)
     // private List<Evento> eventosOrganizados;
     @JsonIgnore
@@ -61,6 +68,11 @@ public class Usuario {
     @JsonIgnore
     @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesEnviados;
+
+ 
+
+
+
 
     // Constructor vacío (JPA lo necesita)
     public Usuario() {
@@ -180,6 +192,15 @@ public class Usuario {
     public void setGrupos (List<Grupo> grupos) {
         this.grupos = grupos;
     }
+
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
+    }
+    
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+    
 
     @Override
 public String toString() {

@@ -296,9 +296,13 @@ export default function Header({ navigate }) {
               <Menu as="div" className="relative">
                 <MenuButton className="flex items-center">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage
-                      src={user.avatarUrl || "https://github.com/shadcn.png"}
-                    />
+              <AvatarImage
+                src={
+                  user.fotoPerfil
+                    ? `data:image/jpeg;base64,${user.fotoPerfil}`
+                    : "https://github.com/shadcn.png"
+                }
+              />
                     <AvatarFallback>
                       {user.email?.[0].toUpperCase() || "U"}
                     </AvatarFallback>
