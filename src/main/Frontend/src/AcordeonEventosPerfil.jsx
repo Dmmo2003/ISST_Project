@@ -25,9 +25,8 @@ export default function AcordeonEventosPerfil({ eventos, onAction, actionText, n
             <p className="text-sm text-gray-700">🏷️ {evento.categoria || 'sin categoría'}</p>
             <div className="flex justify-between pt-2">
               <Button
-                variant="outline"
                 size="sm"
-                className="text-primary border-primary hover:bg-primary/10"
+                className="bg-[#023047] text-white hover:bg-[#219EBC] "
                 onClick={() => navigate(`/eventos/${evento.id}`)}
               >
                 Ver detalles

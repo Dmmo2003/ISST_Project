@@ -70,7 +70,7 @@ export default function AcordeonEventos({ eventosFiltrados, navigate }) {
                                     }
                                 </p>
                                 <div className="pt-2">
-                                    <Button className="w-full" onClick={() => navigate(`/eventos/${evento.id}`)}>
+                                    <Button className="w-full bg-[#023047] hover:bg-[#219EBC]" onClick={() => navigate(`/eventos/${evento.id}`)}>
                                         ⭐ Me interesa
                                     </Button>
                                 </div>

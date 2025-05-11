@@ -97,7 +97,7 @@ export default function ListaEventos(props) {
 
 
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 md:p-8">
+        <div className="flex bg-gray-50 flex-col lg:flex-row items-center justify-center min-h-screen p-4 md:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 w-full max-w-9xl">
                 {/* Mapa de Google con react-google-maps */}
                 <div className="w-full lg:col-span-7 h-[400px] lg:h-[800px] rounded-lg overflow-hidden shadow-lg shadow-gray-400 ">
