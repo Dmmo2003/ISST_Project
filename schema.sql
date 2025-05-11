@@ -55,6 +55,13 @@ INSERT INTO Evento (nombre, fecha, ubicacion, organizador_Id, descripcion, categ
 ('Torneo de Ajedrez', '2025-04-20 15:00:00', 'Valencia, España', 3, 'Competencia abierta para jugadores de todos los niveles.', 'Deportes', 10.00),
 ('Feria del Libro', '2025-07-05 11:00:00', 'Sevilla, España', 4, 'Encuentro con autores y presentaciones de libros.', 'Cultura', 0.00);
 
+INSERT INTO Evento (nombre, fecha, ubicacion, organizador_Id, descripcion, categoria, precio, imagen) VALUES
+('Festival de Música Indie', '2025-06-15 18:00:00', 'Madrid, España', 1, 'Un festival con bandas emergentes de la escena indie española.', 'Música', 25.00, NULL),
+('Conferencia de Tecnología AI', '2025-07-10 09:30:00', 'Barcelona, España', 2, 'Evento sobre las últimas tendencias en inteligencia artificial.', 'Tecnología', 100.00, NULL),
+('Taller de Cerámica Artesanal', '2025-05-25 16:00:00', 'Valencia, España', 3, 'Aprende técnicas tradicionales de cerámica en este taller práctico.', 'Arte', 40.00, NULL),
+('Ruta de Senderismo Sierra Nevada', '2025-08-05 07:00:00', 'Granada, España', 4, 'Excursión guiada de dificultad media con vistas espectaculares.', 'Naturaleza', 15.00, NULL),
+('Cata de Vinos y Quesos', '2025-06-20 20:00:00', 'La Rioja, España', 4, 'Descubre sabores únicos en una experiencia gastronómica local.', 'Gastronomía', 35.00, NULL);
+
 
 CREATE TABLE Grupo (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -74,26 +74,54 @@ export default function PerfilPage() {
     }
   };
 
-  const handleAbandonarEvento = async (eventoId) => {
-    try {
-      await dejarSeguirEvento(user.id, eventoId);
-      await dejarGrupoPorEvento(user.id, eventoId);
-      setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId)); // igual que handleEliminarEvento
-    } catch (err) {
-      console.error("Error al dejar de seguir el evento:", err);
-    }
-  };
+  // const handleAbandonarEvento = async (eventoId) => {
+  //   try {
+  //     await dejarSeguirEvento(user.id, eventoId);
+  //     await dejarGrupoPorEvento(user.id, eventoId);
+  //     setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId)); // igual que handleEliminarEvento
+  //   } catch (err) {
+  //     console.error("Error al dejar de seguir el evento:", err);
+  //   }
+  // };
 
-  const handleEliminarEvento = async (eventoId) => {
-    try {
-      const response = await eliminarEvento(eventoId, user.id);
-      console.log(response);
-      setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
-      setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
-    } catch (err) {
-      console.error("Error al eliminar el evento:", err);
-    }
-  };
+  // const handleEliminarEvento = async (eventoId) => {
+  //   try {
+  //     const response = await eliminarEvento(eventoId, user.id);
+  //     console.log(response);
+  //     setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
+  //     setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
+  //   } catch (err) {
+  //     console.error("Error al eliminar el evento:", err);
+  //   }
+  // };
+
+  const handleAbandonarEvento = async (eventoId) => {
+  const confirmado = window.confirm("¿Estás seguro de que deseas dejar de seguir este evento?");
+  if (!confirmado) return;
+
+  try {
+    await dejarSeguirEvento(user.id, eventoId);
+    await dejarGrupoPorEvento(user.id, eventoId);
+    setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
+  } catch (err) {
+    console.error("Error al dejar de seguir el evento:", err);
+  }
+};
+
+const handleEliminarEvento = async (eventoId) => {
+  const confirmado = window.confirm("¿Estás seguro de que deseas eliminar este evento? Esta acción no se puede deshacer.");
+  if (!confirmado) return;
+
+  try {
+    const response = await eliminarEvento(eventoId, user.id);
+    console.log(response);
+    setEventosCreados(eventosCreados.filter(e => e.id !== eventoId));
+    setEventosSeguidos(eventosSeguidos.filter(e => e.id !== eventoId));
+  } catch (err) {
+    console.error("Error al eliminar el evento:", err);
+  }
+};
+
 
   return (
     loading ? (
